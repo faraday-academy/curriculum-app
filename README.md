@@ -4,6 +4,15 @@ This app allows users to create their own learning curriculum. They can then kee
 
 To see the playlist where I livestream the building of this app, [click here](https://www.youtube.com/playlist?list=PLFBirL3MAv2-c8VpBJMvH8Hci975MLVU1).
 
+## Table of Contents
+
+1. [Mockups](#mockups)
+1. [Running Locally](#running-locally)
+1. [MVP Features](#mvp-features)
+1. [Version 1 Features](#version-1-features)
+1. [Tech Stack](#tech-stack)
+1. Initial, Front-end TODOs
+
 ## Mockups
 
 <p align="center">
@@ -19,6 +28,11 @@ To see the playlist where I livestream the building of this app, [click here](ht
 </p>
 
 ## Running Locally
+
+1. Clone this repo
+1. `cd curriculum-front`
+1. `npm i`
+1. `npm run serve`
 
 ## MVP Features
 
