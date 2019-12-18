@@ -2,6 +2,24 @@
 
 This app allows users to create their own learning curriculum. They can then keep track of their progress, share it with friends, and make changes as they go along.
 
+To see the playlist where I livestream the building of this app, [click here](https://www.youtube.com/playlist?list=PLFBirL3MAv2-c8VpBJMvH8Hci975MLVU1).
+
+## Mockups
+
+<p align="center">
+  <img src="https://github.com/gwenf/curriculum-app/blob/master/Home%20Page.png" alt="Home Page Mockup">
+</p>
+
+<p align="center">
+  <img src="https://github.com/gwenf/curriculum-app/blob/master/Create_update%20curriculum.png" alt="Create or Update Page Mockup">
+</p>
+
+<p align="center">
+  <img src="https://github.com/gwenf/curriculum-app/blob/master/Display%20Curriculum.png" alt="Display Curriculum Page Mockup">
+</p>
+
+## Running Locally
+
 ## MVP Features
 
 1. Home Page with list of curriculums
