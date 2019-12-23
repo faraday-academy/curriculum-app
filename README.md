@@ -8,6 +8,7 @@ To see the playlist where I livestream the building of this app, [click here](ht
 
 1. [Mockups](#mockups)
 1. [Schema](#schema)
+1. [Routes](#routes)
 1. [Running Locally](#running-locally)
 1. [MVP Features](#mvp-features)
 1. [Version 1 Features](#version-1-features)
@@ -42,6 +43,13 @@ To see the playlist where I livestream the building of this app, [click here](ht
     * projects: [string]
 * createdAt: timestamp
 * updatedAt: timestamp
+
+## Routes
+
+curricula --> shows all curricula
+curricula/create --> shows form to create
+curricula/id --> shows single curriculum
+curricula/id/update --> update single curriculum
 
 ## Running Locally
 
