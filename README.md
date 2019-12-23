@@ -40,6 +40,8 @@ To see the playlist where I livestream the building of this app, [click here](ht
     * name: string
     * resources: [string]
     * projects: [string]
+* createdAt: timestamp
+* updatedAt: timestamp
 
 ## Running Locally
 
