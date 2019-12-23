@@ -46,10 +46,11 @@ To see the playlist where I livestream the building of this app, [click here](ht
 
 ## Routes
 
-curricula --> shows all curricula
-curricula/create --> shows form to create
-curricula/id --> shows single curriculum
-curricula/id/update --> update single curriculum
+* / --> Home Page/Landing Page
+* curricula --> shows all curricula
+* curricula/create --> shows form to create
+* curricula/id --> shows single curriculum
+* curricula/id/update --> update single curriculum
 
 ## Running Locally
 
