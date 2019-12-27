@@ -7,6 +7,8 @@ To see the playlist where I livestream the building of this app, [click here](ht
 ## Table of Contents
 
 1. [Mockups](#mockups)
+1. [Schema](#schema)
+1. [Routes](#routes)
 1. [Running Locally](#running-locally)
 1. [MVP Features](#mvp-features)
 1. [Version 1 Features](#version-1-features)
@@ -26,6 +28,29 @@ To see the playlist where I livestream the building of this app, [click here](ht
 <p align="center">
   <img src="https://github.com/gwenf/curriculum-app/blob/master/Display%20Curriculum.png" alt="Display Curriculum Page Mockup">
 </p>
+
+## Schema
+
+**curricula**
+
+* id: UUID (pk)
+* name: string
+* goal: string
+* description: string
+* sections: [object]
+    * name: string
+    * resources: [string]
+    * projects: [string]
+* createdAt: timestamp
+* updatedAt: timestamp
+
+## Routes
+
+* / --> Home Page/Landing Page
+* curricula --> shows all curricula
+* curricula/create --> shows form to create
+* curricula/id --> shows single curriculum
+* curricula/id/update --> update single curriculum
 
 ## Running Locally
 
