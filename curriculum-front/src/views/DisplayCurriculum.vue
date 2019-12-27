@@ -15,8 +15,13 @@
       <v-row>
         <v-col>
           <v-expansion-panels multiple>
-            <v-expansion-panel>
-              <v-expansion-panel-header>Section 1</v-expansion-panel-header>
+            <v-expansion-panel
+              v-for="(section, i) in selectedCurriculum.sections"
+              :key="i"
+            >
+              <v-expansion-panel-header>
+                Section {{ i + 1 }} - {{ section.name }}
+              </v-expansion-panel-header>
               <v-expansion-panel-content>
                 <v-list
                   subheader
@@ -26,10 +31,12 @@
                   <v-subheader>Resources</v-subheader>
 
                   <v-list-item-group
-                    v-model="settings"
                     multiple
                   >
-                    <v-list-item>
+                    <v-list-item
+                      v-for="(resource, j) in section.resources"
+                      :key="resource + j"
+                    >
                       <template v-slot:default="{ active, toggle }">
                         <v-list-item-action>
                           <v-checkbox
@@ -40,59 +47,7 @@
                         </v-list-item-action>
 
                         <v-list-item-content>
-                          <v-list-item-title>Notifications</v-list-item-title>
-                          <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                    </v-list-item>
-
-                    <v-list-item>
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                          <v-list-item-title>Sound</v-list-item-title>
-                          <v-list-item-subtitle>Hangouts message</v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                    </v-list-item>
-
-                    <v-list-item>
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                          <v-list-item-title>Video sounds</v-list-item-title>
-                          <v-list-item-subtitle>Hangouts video call</v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                    </v-list-item>
-
-                    <v-list-item>
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                          <v-list-item-title>Invites</v-list-item-title>
-                          <v-list-item-subtitle>Notify when receiving invites</v-list-item-subtitle>
+                          <v-list-item-title>{{ resource }}</v-list-item-title>
                         </v-list-item-content>
                       </template>
                     </v-list-item>
@@ -106,10 +61,12 @@
                   <v-subheader>Projects</v-subheader>
 
                   <v-list-item-group
-                    v-model="settings"
                     multiple
                   >
-                    <v-list-item>
+                    <v-list-item
+                      v-for="(project, k) in section.projects"
+                      :key="project + k"
+                    >
                       <template v-slot:default="{ active, toggle }">
                         <v-list-item-action>
                           <v-checkbox
@@ -120,76 +77,12 @@
                         </v-list-item-action>
 
                         <v-list-item-content>
-                          <v-list-item-title>Notifications</v-list-item-title>
-                          <v-list-item-subtitle>Allow notifications</v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                    </v-list-item>
-
-                    <v-list-item>
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                          <v-list-item-title>Sound</v-list-item-title>
-                          <v-list-item-subtitle>Hangouts message</v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                    </v-list-item>
-
-                    <v-list-item>
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                          <v-list-item-title>Video sounds</v-list-item-title>
-                          <v-list-item-subtitle>Hangouts video call</v-list-item-subtitle>
-                        </v-list-item-content>
-                      </template>
-                    </v-list-item>
-
-                    <v-list-item>
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
-
-                        <v-list-item-content>
-                          <v-list-item-title>Invites</v-list-item-title>
-                          <v-list-item-subtitle>Notify when receiving invites</v-list-item-subtitle>
+                          <v-list-item-title>{{ project }}</v-list-item-title>
                         </v-list-item-content>
                       </template>
                     </v-list-item>
                   </v-list-item-group>
                 </v-list>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-              <v-expansion-panel-header>Section 2</v-expansion-panel-header>
-              <v-expansion-panel-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-            <v-expansion-panel>
-              <v-expansion-panel-header>Section 3</v-expansion-panel-header>
-              <v-expansion-panel-content>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -203,6 +96,7 @@
 import { mapState } from 'vuex'
 
 export default {
+  name: 'DisplayCurriculum',
   data() {
     return {
       selectedCurriculum: {}

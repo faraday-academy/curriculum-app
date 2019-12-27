@@ -8,7 +8,9 @@
     >
       <div class="page-header">
         <h1>All Curricula</h1>
-        <v-btn>Create New</v-btn>
+        <v-btn @click="$router.push('/curricula/create')">
+          Create New
+        </v-btn>
       </div>
 
       <div class="curricula-list">
