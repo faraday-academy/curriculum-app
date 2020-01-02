@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-var timestamps = require('mongoose-timestamp')
 
 const CurriculumSchema = new mongoose.Schema({
   name: {
@@ -20,9 +19,8 @@ const CurriculumSchema = new mongoose.Schema({
     resources: [String],
     projects: [String]
   }]
-})
+}, { timestamps: true })
 
-CurriculumSchema.plugin(timestamps);
 const Curriculum = mongoose.model('Curriculum', CurriculumSchema)
 
 module.exports = Curriculum

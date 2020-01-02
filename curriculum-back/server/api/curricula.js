@@ -23,14 +23,17 @@ router.route('/')
   })
 
 router.route('/:id')
-  .get(function (req, res) {
-    res.send(req.params)
+  .get(async function (req, res) {
+    const curriculum = await Curriculum.findById(req.params.id)
+    res.send(curriculum)
   })
-  .patch(function (req, res) {
-    res.send('Got a POST request')
+  .patch(async function (req, res) {
+    await Curriculum.updateOne({ _id: req.params.id }, { ...req.body })
+    res.send('Success')
   })
-  .delete(function (req, res) {
-    res.send('Got a DELETE request')
+  .delete(async function (req, res) {
+    await Curriculum.deleteOne({ _id: req.params.id })
+    res.send('Success')
   })
 
 module.exports = router

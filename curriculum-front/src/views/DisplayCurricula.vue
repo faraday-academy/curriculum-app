@@ -17,11 +17,11 @@
         <v-card
           class="curriculum-card"
           outlined
-          v-for="curriculum in curriculaData"
-          :key="curriculum.id"
+          v-for="curriculum in curricula"
+          :key="curriculum._id"
         >
           <v-card-title class="headline">
-            <router-link :to="`/curricula/${curriculum.id}`">{{ curriculum.name }}</router-link>
+            <router-link :to="`/curricula/${curriculum._id}`">{{ curriculum.name }}</router-link>
           </v-card-title>
           
           <v-card-subtitle>
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'DisplayCurricula',
@@ -42,7 +42,13 @@ export default {
     return {}
   },
   computed: {
-    ...mapState(['curriculaData'])
+    ...mapState(['curricula'])
+  },
+  methods: {
+    ...mapActions(['getCurricula'])
+  },
+  mounted() {
+    this.getCurricula()
   }
 }
 </script>
