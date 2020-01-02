@@ -9,6 +9,7 @@ To see the playlist where I livestream the building of this app, [click here](ht
 1. [Running Locally](#running-locally)
 1. [Tech Stack](#tech-stack)
 1. [Mockups](#mockups)
+1. [Design](#design)
 1. [Routes](#routes)
 1. [Schema](#schema)
 1. [API](#api)
@@ -44,6 +45,12 @@ To see the playlist where I livestream the building of this app, [click here](ht
 <p align="center">
   <img src="https://github.com/gwenf/curriculum-app/blob/master/Display%20Curriculum.png" alt="Display Curriculum Page Mockup">
 </p>
+
+## Design
+
+Color Palette:
+<img src="color_palette.png" alt="color palete for application">
+710627 - EA5455 - FAA275 - F5E4C3 - 34A7B2
 
 ## Routes
 
