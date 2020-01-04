@@ -56,7 +56,9 @@
                       <v-subheader>Name</v-subheader>
                     </v-col>
                     <v-col cols="9">
-                      <v-text-field />
+                      <v-text-field
+                        v-model="section.name"
+                      />
                     </v-col>
                   </v-row>
                   <v-row>
@@ -64,7 +66,9 @@
                       <v-subheader>Goal</v-subheader>
                     </v-col>
                     <v-col cols="9">
-                      <v-text-field />
+                      <v-text-field
+                        v-model="section.goal"
+                      />
                     </v-col>
                   </v-row>
                   <v-card class="resources-card">
@@ -73,14 +77,19 @@
                         <v-col cols="12">
                           <v-text-field
                             placeholder="Enter Resource Link"
+                            v-model="section.newResource"
+                            @keyup.enter="addItem('resource', k)"
                           />
                         </v-col>
                       </v-row>
                       <v-row no-gutters>
                         <v-col cols="12">
-                          <p>List of resources</p>
-                          <p>List of resources</p>
-                          <p>List of resources</p>
+                          <p
+                            v-for="(resource, m) in section.resources"
+                            :key="resource + m"
+                          >
+                            {{ resource }}
+                          </p>
                         </v-col>
                       </v-row>
                     </v-card-text>
@@ -91,14 +100,19 @@
                         <v-col cols="12">
                           <v-text-field
                             placeholder="Enter Projects Link"
+                            v-model="section.newProject"
+                            @keyup.enter="addItem('project', k)"
                           />
                         </v-col>
                       </v-row>
                       <v-row no-gutters>
                         <v-col cols="12">
-                          <p>List of projects</p>
-                          <p>List of projects</p>
-                          <p>List of projects</p>
+                          <p
+                            v-for="(project, m) in section.projects"
+                            :key="project + m"
+                          >
+                            {{ project }}
+                          </p>
                         </v-col>
                       </v-row>
                     </v-card-text>
@@ -133,17 +147,25 @@ export default {
       sections: [{
         name: '',
         goal: '',
+        newResource: '',
         resources: [],
-        project: []
+        newProject: '',
+        projects: []
       }]
     }
   },
   methods: {
     ...mapActions(['postCurriculum']),
     saveCurriculum() {
-      const { name, goal, description } = this
+      const { name, goal, description, sections } = this
 
-      const curriculum = { name, goal, description }
+      const newSections = sections.map((section, i) => {
+        delete section.newResource
+        delete section.newProject
+        return section
+      })
+
+      const curriculum = { name, goal, description, sections: newSections }
 
       this.postCurriculum(curriculum)
     },
@@ -152,8 +174,14 @@ export default {
         name: '',
         goal: '',
         resources: [],
-        project: []
+        projects: []
       })
+    },
+    addItem(type, i) {
+      let key = `new${type[0].toUpperCase()}${type.slice(1)}`
+      let item = this.sections[i][key]
+      this.sections[i][`${type}s`].push(item)
+      this.sections[i][key] = ''
     }
   }
 }
