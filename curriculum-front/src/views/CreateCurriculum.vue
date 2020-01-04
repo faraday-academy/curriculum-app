@@ -160,9 +160,10 @@ export default {
       const { name, goal, description, sections } = this
 
       const newSections = sections.map((section, i) => {
-        delete section.newResource
-        delete section.newProject
-        return section
+        let updatedSection = { ...section }
+        delete updatedSection.newResource
+        delete updatedSection.newProject
+        return updatedSection
       })
 
       const curriculum = { name, goal, description, sections: newSections }
