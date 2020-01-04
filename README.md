@@ -39,6 +39,10 @@ To see the playlist where I livestream the building of this app, [click here](ht
 </p>
 
 <p align="center">
+  <img src="https://github.com/gwenf/curriculum-app/blob/master/User%20Dashboard.png" alt="User Dashboard Mockup">
+</p>
+
+<p align="center">
   <img src="https://github.com/gwenf/curriculum-app/blob/master/Create_update%20curriculum.png" alt="Create or Update Page Mockup">
 </p>
 
