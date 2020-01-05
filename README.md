@@ -29,7 +29,7 @@ To see the playlist where I livestream the building of this app, [click here](ht
 1. Vue.js/Vue Router/Vuex
 1. Vuetify
 1. Node.js/Express.js
-1. MongoDB/Mongoose (subject to change)
+1. MongoDB/Mongoose
 1. Digital Ocean (hosting)
 
 ## Mockups
