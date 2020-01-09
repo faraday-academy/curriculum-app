@@ -16,7 +16,8 @@
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuetify": "^2.1.0",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "vuex-persist": "2.2.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",

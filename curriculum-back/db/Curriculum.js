@@ -16,8 +16,32 @@ const CurriculumSchema = new mongoose.Schema({
       type: String,
       required: true
     },
-    resources: [String],
-    projects: [String]
+    resources: [{
+      isCompleted: {
+        type: Boolean,
+        default: false
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      url: {
+        type: String
+      }
+    }],
+    projects: [{
+      isCompleted: {
+        type: Boolean,
+        default: false
+      },
+      name: {
+        type: String,
+        required: true
+      },
+      url: {
+        type: String
+      }
+    }]
   }]
 }, { timestamps: true })
 

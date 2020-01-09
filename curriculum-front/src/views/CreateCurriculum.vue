@@ -77,10 +77,23 @@
                       <v-row no-gutters>
                         <v-col cols="12">
                           <v-text-field
+                            placeholder="Enter Resource Name"
+                            v-model="section.newResource.name"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <v-text-field
                             placeholder="Enter Resource Link"
-                            v-model="section.newResource"
+                            v-model="section.newResource.link"
                             @keyup.enter="addItem('resource', k)"
                           />
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <v-btn @click="addItem('resource', k)">Save Resource</v-btn>
                         </v-col>
                       </v-row>
                       <v-row v-if="section.resources.length">
@@ -91,7 +104,7 @@
                                 :key="resource + m"
                               >
                                 <v-list-item-content>
-                                  <v-list-item-title>{{ resource }}</v-list-item-title>
+                                  <v-list-item-title>{{ resource.name }}</v-list-item-title>
                                 </v-list-item-content>
                                 <v-list-item-action>
                                   <v-btn icon>
@@ -116,10 +129,23 @@
                       <v-row no-gutters>
                         <v-col cols="12">
                           <v-text-field
+                            placeholder="Enter Projects Name"
+                            v-model="section.newProject.name"
+                          />
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <v-text-field
                             placeholder="Enter Projects Link"
-                            v-model="section.newProject"
+                            v-model="section.newProject.link"
                             @keyup.enter="addItem('project', k)"
                           />
+                        </v-col>
+                      </v-row>
+                      <v-row no-gutters>
+                        <v-col cols="12">
+                          <v-btn @click="addItem('project', k)">Save Project</v-btn>
                         </v-col>
                       </v-row>
                       <v-row v-if="section.projects.length">
@@ -130,7 +156,7 @@
                                 :key="project + m"
                               >
                                 <v-list-item-content>
-                                  <v-list-item-title>{{ project }}</v-list-item-title>
+                                  <v-list-item-title>{{ project.name }}</v-list-item-title>
                                 </v-list-item-content>
                                 <v-list-item-action>
                                   <v-btn icon>
@@ -164,6 +190,21 @@
         </v-row>
       </v-form>
     </v-col>
+    <v-snackbar
+      v-model="snackbar"
+      :right="true"
+      :top="true"
+      :timeout="5000"
+    >
+      {{ snackbarText }}
+      <v-btn
+        dark
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
   </v-row>
 </template>
 
@@ -180,11 +221,19 @@ export default {
       sections: [{
         name: '',
         goal: '',
-        newResource: '',
+        newResource: {
+          link: '',
+          name: ''
+        },
         resources: [],
-        newProject: '',
+        newProject: {
+          link: '',
+          name: ''
+        },
         projects: []
-      }]
+      }],
+      snackbarText: '',
+      snackbar: false
     }
   },
   methods: {
@@ -207,15 +256,35 @@ export default {
       this.sections.push({
         name: '',
         goal: '',
+        newResource: {
+          link: '',
+          name: ''
+        },
         resources: [],
+        newProject: {
+          link: '',
+          name: ''
+        },
         projects: []
       })
     },
     addItem(type, i) {
       let key = `new${type[0].toUpperCase()}${type.slice(1)}`
-      let item = this.sections[i][key]
-      this.sections[i][`${type}s`].push(item)
-      this.sections[i][key] = ''
+      const item = this.sections[i][key]
+
+      if (item.name) {
+        let obj = {
+          name: item.name,
+          link: item.link
+        }
+        this.sections[i][`${type}s`].push(obj)
+
+        this.sections[i][key].name = ''
+        this.sections[i][key].link = ''
+      } else {
+        this.snackbarText = `Must provide ${type} name.`
+        this.snackbar = true
+      }
     },
     deleteItem(type, sectionIndex, itemIndex) {
       this.sections[sectionIndex][type].splice(itemIndex, 1)

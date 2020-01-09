@@ -47,7 +47,11 @@
                         </v-list-item-action>
 
                         <v-list-item-content>
-                          <v-list-item-title>{{ resource }}</v-list-item-title>
+                          <v-list-item-title>
+                            <!-- <router-link :to="resource.link"> -->
+                              {{ resource.name }}
+                            <!-- </router-link> -->
+                          </v-list-item-title>
                         </v-list-item-content>
                       </template>
                     </v-list-item>
@@ -77,7 +81,7 @@
                         </v-list-item-action>
 
                         <v-list-item-content>
-                          <v-list-item-title>{{ project }}</v-list-item-title>
+                          <v-list-item-title>{{ project.name }}</v-list-item-title>
                         </v-list-item-content>
                       </template>
                     </v-list-item>
