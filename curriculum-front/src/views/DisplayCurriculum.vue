@@ -8,8 +8,18 @@
     >
       <v-row>
         <v-col>
-          <h1>{{ selectedCurriculum.name }}</h1>
-          <p>{{ selectedCurriculum.description }}</p>
+          <h1 class="hover-icon-container">
+            {{ selectedCurriculum.name }}
+            <v-icon color="gray lighten-1 editable-icon">
+              mdi-pencil-box-outline
+            </v-icon>
+          </h1>
+          <p class="hover-icon-container">
+            {{ selectedCurriculum.description }}
+            <v-icon color="gray lighten-1 editable-icon">
+              mdi-pencil-box-outline
+            </v-icon>
+          </p>
         </v-col>
       </v-row>
       <v-row>
@@ -37,23 +47,17 @@
                       v-for="(resource, j) in section.resources"
                       :key="resource + j"
                     >
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
+                      <v-checkbox
+                        color="primary"
+                      />
 
-                        <v-list-item-content>
-                          <v-list-item-title>
-                            <!-- <router-link :to="resource.link"> -->
-                              {{ resource.name }}
-                            <!-- </router-link> -->
-                          </v-list-item-title>
-                        </v-list-item-content>
-                      </template>
+                      <v-list-item-content>
+                        <v-list-item-title>
+                          <router-link to="/">
+                            {{ resource.name }}
+                          </router-link>
+                        </v-list-item-title>
+                      </v-list-item-content>
                     </v-list-item>
                   </v-list-item-group>
                 </v-list>

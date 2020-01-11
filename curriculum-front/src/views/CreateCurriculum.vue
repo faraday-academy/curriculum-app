@@ -16,10 +16,14 @@
       <v-form class="upsert-form">
         <v-row>
           <v-col cols="3">
-            <v-subheader>Name</v-subheader>
+            <v-subheader>Name *</v-subheader>
           </v-col>
           <v-col cols="9">
-            <v-text-field v-model="name" />
+            <v-text-field
+              v-model="name"
+              :rules="nameRules"
+              required
+            />
           </v-col>
         </v-row>
         <v-row>
@@ -54,11 +58,13 @@
                 <v-card-text>
                   <v-row no-gutters>
                     <v-col cols="3">
-                      <v-subheader>Name</v-subheader>
+                      <v-subheader>Name *</v-subheader>
                     </v-col>
                     <v-col cols="9">
                       <v-text-field
                         v-model="section.name"
+                        :rules="nameRules"
+                        required
                       />
                     </v-col>
                   </v-row>
@@ -85,6 +91,7 @@
                       <v-row no-gutters>
                         <v-col cols="12">
                           <v-text-field
+                            :rules="urlRules"
                             placeholder="Enter Resource Link"
                             v-model="section.newResource.link"
                             @keyup.enter="addItem('resource', k)"
@@ -215,6 +222,12 @@ export default {
   name: "CreateCurriculum",
   data() {
     return {
+      urlRules: [
+        v => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(v) || 'Must be valid url',
+      ],
+      nameRules: [
+        v => !!v || 'Name is required'
+      ],
       name: '',
       goal: '',
       description: '',
