@@ -1,5 +1,5 @@
 <template>
-  <v-row no-gutters class="upsert-curriculum-page">
+  <v-row no-gutters class="create-curriculum-page">
     <v-col
       md="6"
       offset-md="3"
@@ -13,7 +13,7 @@
         </v-btn>
       </div>
 
-      <v-form class="upsert-form">
+      <v-form class="create-form">
         <v-row>
           <v-col cols="3">
             <v-subheader>Name *</v-subheader>
