@@ -18,8 +18,8 @@ router.route('/')
       description,
       sections
     })
-    await curriculum.save()
-    res.send(201, "Success")
+    const currRes = await curriculum.save()
+    res.send(201, currRes)
   })
 
 router.route('/:id')
