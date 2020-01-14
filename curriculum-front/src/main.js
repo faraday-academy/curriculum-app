@@ -1,6 +1,5 @@
 import Vue from 'vue'
-import { ValidationProvider, extend } from 'vee-validate'
-import { required } from 'vee-validate/dist/rules'
+import Vuelidate from 'vuelidate'
 
 import App from './App.vue'
 import router from './router'
@@ -10,12 +9,7 @@ import vuetify from './plugins/vuetify';
 
 import './sass/index.sass'
 
-extend('required', {
-  ...required,
-  message: 'This field is required'
-})
-
-Vue.component('ValidationProvider', ValidationProvider)
+Vue.use(Vuelidate)
 
 Vue.config.productionTip = false
 
