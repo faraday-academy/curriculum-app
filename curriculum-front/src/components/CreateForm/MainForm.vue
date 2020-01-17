@@ -168,24 +168,24 @@ export default {
       let key = `new${type[0].toUpperCase()}${type.slice(1)}`
       const item = this.sections[i][key]
 
-      // const urlCheck = !item.url || urlRegex.test(item.url)
-      // const nameCheck = !!item.name
+      const urlCheck = !item.url || this.$v.sections.$each.$iter[i][key].url.url
+      const nameCheck = !!item.name
 
-      // if (nameCheck) {
-      let obj = {
-        name: item.name,
-        url: item.url
+      if (nameCheck && urlCheck) {
+        let obj = {
+          name: item.name,
+          url: item.url
+        }
+        this.sections[i][`${type}s`].push(obj)
+
+        this.sections[i][key].name = ''
+        this.sections[i][key].url = ''
+      } else {
+        const urlMessage = !urlCheck ? 'URL must be valid.' : ''
+        const nameMessage = !nameCheck ? 'Must provide a name.' : ''
+        const message = `${nameMessage} ${urlMessage}`
+        this.updateSnackbar({ message, show: true, variant: 'error' })
       }
-      this.sections[i][`${type}s`].push(obj)
-
-      this.sections[i][key].name = ''
-      this.sections[i][key].url = ''
-      // } else {
-      //   const urlMessage = !urlCheck ? 'URL must be valid.' : ''
-      //   const nameMessage = !nameCheck ? 'Must provide a name.' : ''
-      //   const message = `${nameMessage} ${urlMessage}`
-      //   this.updateSnackbar({ message, show: true, variant: 'error' })
-      // }
     },
     deleteItem(type, sectionIndex, itemIndex) {
       this.sections[sectionIndex][type].splice(itemIndex, 1)
