@@ -27,18 +27,16 @@ export default {
     ...mapActions(['postCurriculum']),
     ...mapMutations(['updateSnackbar']),
     saveCurriculum(petInfo, sections) {
-      if (this.$refs['pet-info-form'].validate()) {
-        const newSections = sections.map((section, i) => {
-          let updatedSection = { ...section }
-          delete updatedSection.newResource
-          delete updatedSection.newProject
-          return updatedSection
-        })
+      const newSections = sections.map((section, i) => {
+        let updatedSection = { ...section }
+        delete updatedSection.newResource
+        delete updatedSection.newProject
+        return updatedSection
+      })
 
-        const curriculum = { ...petInfo, sections: newSections }
+      const curriculum = { ...petInfo, sections: newSections }
 
-        this.postCurriculum(curriculum)
-      }
+      this.postCurriculum(curriculum)
     }
   }
 }

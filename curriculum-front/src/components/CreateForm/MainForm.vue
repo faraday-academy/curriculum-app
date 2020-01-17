@@ -1,8 +1,8 @@
 <template>
-  <v-form class="create-form" ref="pet-info-form">
+  <v-form class="create-form">
     <div class="page-header">
       <h1>Create Curriculum</h1>
-      <v-btn @click.prevent="saveCurriculum(petInfo, sections)">
+      <v-btn @click.prevent="submit">
         Save
       </v-btn>
     </div>
@@ -13,7 +13,10 @@
       <v-col cols="9">
         <v-text-field
           v-model="$v.petInfo.name.$model"
+          :error-messages="nameErrors"
           required
+          @input="$v.petInfo.name.$touch()"
+          @blur="$v.petInfo.name.$touch()"
         />
       </v-col>
     </v-row>
@@ -41,6 +44,8 @@
       :addItem="addItem"
       :deleteItem="deleteItem"
       :v="$v"
+      :nameErrors="sectionNameErrors"
+      :sectionUrlErrors="sectionUrlErrors"
     />
 
     <v-row>
@@ -54,7 +59,7 @@
 </template>
 
 <script>
-import { required, url } from 'vuelidate/lib/validators'
+import { required, maxLength, url } from 'vuelidate/lib/validators'
 import FormSections from './FormSections.vue'
 
 export default {
@@ -66,7 +71,6 @@ export default {
   },
   data() {
     return {
-      name: '',
       petInfo: {
         name: '',
         goal: '',
@@ -91,21 +95,59 @@ export default {
   validations: {
     petInfo: {
       name: {
-        required
-      }
+        required,
+        maxLength: maxLength(20)
+      },
+      goal: {},
+      description: {}
     },
     sections: {
       $each: {
         name: {
-          required
-        }
+          required,
+          maxLength: maxLength(20)
+        },
+        goal: {},
+        newResource: {
+          url: {
+            url
+          },
+          name: {}
+        },
+        newProject: {
+          url: {
+            url
+          },
+          name: {}
+        },
+        resources: {},
+        projects: {}
       }
     }
-    // url: {
-    //   url
-    // }
+  },
+  computed: {
+    nameErrors() {
+      const errors = []
+      if (!this.$v.petInfo.name.$dirty) return errors
+      !this.$v.petInfo.name.maxLength && errors.push('Name must be at most 20 characters long.')
+      !this.$v.petInfo.name.required && errors.push('Name is required.')
+      return errors
+    }
   },
   methods: {
+    sectionNameErrors(i) {
+      const errors = []
+      if (!this.$v.sections.$each.$iter[i].name.$dirty) return errors
+      !this.$v.sections.$each.$iter[i].name.maxLength && errors.push('Name must be at most 20 characters long.')
+      !this.$v.sections.$each.$iter[i].name.required && errors.push('Name is required.')
+      return errors
+    },
+    sectionUrlErrors(i, type) {
+      const errors = []
+      if (!this.$v.sections.$each.$iter[i][`new${type}`].url.$model.length) return errors
+      !this.$v.sections.$each.$iter[i][`new${type}`].url.url && errors.push('Must be a valid url.')
+      return errors
+    },
     addSection() {
       this.sections.push({
         name: '',
@@ -126,27 +168,33 @@ export default {
       let key = `new${type[0].toUpperCase()}${type.slice(1)}`
       const item = this.sections[i][key]
 
-      const urlCheck = !item.url || urlRegex.test(item.url)
-      const nameCheck = !!item.name
+      // const urlCheck = !item.url || urlRegex.test(item.url)
+      // const nameCheck = !!item.name
 
-      if (nameCheck && urlCheck) {
-        let obj = {
-          name: item.name,
-          url: item.url
-        }
-        this.sections[i][`${type}s`].push(obj)
-
-        this.sections[i][key].name = ''
-        this.sections[i][key].url = ''
-      } else {
-        const urlMessage = !urlCheck ? 'URL must be valid.' : ''
-        const nameMessage = !nameCheck ? 'Must provide a name.' : ''
-        const message = `${nameMessage} ${urlMessage}`
-        this.updateSnackbar({ message, show: true, variant: 'error' })
+      // if (nameCheck) {
+      let obj = {
+        name: item.name,
+        url: item.url
       }
+      this.sections[i][`${type}s`].push(obj)
+
+      this.sections[i][key].name = ''
+      this.sections[i][key].url = ''
+      // } else {
+      //   const urlMessage = !urlCheck ? 'URL must be valid.' : ''
+      //   const nameMessage = !nameCheck ? 'Must provide a name.' : ''
+      //   const message = `${nameMessage} ${urlMessage}`
+      //   this.updateSnackbar({ message, show: true, variant: 'error' })
+      // }
     },
     deleteItem(type, sectionIndex, itemIndex) {
       this.sections[sectionIndex][type].splice(itemIndex, 1)
+    },
+    submit() {
+      this.$v.$touch()
+      if (!this.$v.$anyError) {
+        this.saveCurriculum(this.petInfo, this.sections)
+      }
     }
   }
 }

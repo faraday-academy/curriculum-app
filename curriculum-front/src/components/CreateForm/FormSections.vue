@@ -8,7 +8,7 @@
           :key="section.name + k"
           class="section-card"
         >
-          <v-card-title class="headline">Section #{{ k + 1 }}</v-card-title>
+          <v-card-title class="headline">Section #{{ parseInt(k) + 1 }}</v-card-title>
           
           <v-card-text>
             <v-row no-gutters>
@@ -18,7 +18,10 @@
               <v-col cols="9">
                 <v-text-field
                   v-model="section.name.$model"
+                  :error-messages="nameErrors(parseInt(k))"
                   required
+                  @input="section.name.$touch()"
+                  @blur="section.name.$touch()"
                 />
               </v-col>
             </v-row>
@@ -28,7 +31,7 @@
               </v-col>
               <v-col cols="9">
                 <v-text-field
-                  v-model="section.goal"
+                  v-model="section.goal.$model"
                 />
               </v-col>
             </v-row>
@@ -38,7 +41,7 @@
                   <v-col cols="12">
                     <v-text-field
                       placeholder="Enter Resource Name"
-                      v-model="section.newResource.name"
+                      v-model="section.newResource.name.$model"
                       @keyup.enter="addItem('resource', k)"
                     />
                   </v-col>
@@ -47,8 +50,11 @@
                   <v-col cols="12">
                     <v-text-field
                       placeholder="Enter Resource Link"
-                      v-model="section.newResource.url"
+                      :error-messages="sectionUrlErrors(parseInt(k), 'Resource')"
+                      v-model="section.newResource.url.$model"
                       @keyup.enter="addItem('resource', k)"
+                      @input="section.newResource.url.$touch()"
+                      @blur="section.newResource.url.$touch()"
                     />
                   </v-col>
                 </v-row>
@@ -57,10 +63,10 @@
                     <v-btn @click="addItem('resource', k)">Save Resource</v-btn>
                   </v-col>
                 </v-row>
-                <v-row v-if="section.resources.length">
+                <v-row v-if="section.resources.$model.length">
                   <v-col cols="12">
                     <v-card tile>
-                      <template v-for="(resource, m) in section.resources">
+                      <template v-for="(resource, m) in section.resources.$model">
                         <v-list-item
                           :key="resource + m"
                         >
@@ -91,7 +97,7 @@
                   <v-col cols="12">
                     <v-text-field
                       placeholder="Enter Projects Name"
-                      v-model="section.newProject.name"
+                      v-model="section.newProject.name.$model"
                     />
                   </v-col>
                 </v-row>
@@ -99,8 +105,11 @@
                   <v-col cols="12">
                     <v-text-field
                       placeholder="Enter Projects Link"
-                      v-model="section.newProject.url"
+                      v-model="section.newProject.url.$model"
+                      :error-messages="sectionUrlErrors(parseInt(k), 'Project')"
                       @keyup.enter="addItem('project', k)"
+                      @input="section.newProject.url.$touch()"
+                      @blur="section.newProject.url.$touch()"
                     />
                   </v-col>
                 </v-row>
@@ -109,10 +118,10 @@
                     <v-btn @click="addItem('project', k)">Save Project</v-btn>
                   </v-col>
                 </v-row>
-                <v-row v-if="section.projects.length">
+                <v-row v-if="section.projects.$model.length">
                   <v-col cols="12">
                     <v-card tile>
-                      <template v-for="(project, m) in section.projects">
+                      <template v-for="(project, m) in section.projects.$model">
                         <v-list-item
                           :key="project + m"
                         >
@@ -150,7 +159,9 @@ export default {
     sections: Array,
     addItem: Function,
     deleteItem: Function,
-    v: Object
+    v: Object,
+    nameErrors: Function,
+    sectionUrlErrors: Function
   }  
 }
 </script>

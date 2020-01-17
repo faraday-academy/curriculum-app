@@ -75,19 +75,17 @@
                       v-for="(project, k) in section.projects"
                       :key="project + k"
                     >
-                      <template v-slot:default="{ active, toggle }">
-                        <v-list-item-action>
-                          <v-checkbox
-                            v-model="active"
-                            color="primary"
-                            @click="toggle"
-                          ></v-checkbox>
-                        </v-list-item-action>
+                      <v-checkbox
+                        color="primary"
+                      />
 
-                        <v-list-item-content>
-                          <v-list-item-title>{{ project.name }}</v-list-item-title>
-                        </v-list-item-content>
-                      </template>
+                      <v-list-item-content>
+                        <v-list-item-title>
+                          <router-link to="/">
+                            {{ project.name }}
+                          </router-link>
+                        </v-list-item-title>
+                      </v-list-item-content>
                     </v-list-item>
                   </v-list-item-group>
                 </v-list>
