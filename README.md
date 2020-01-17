@@ -74,11 +74,11 @@ Color Palette:
 * description: string
 * sections: [object]
     * name: string
-    * resources: []
+    * resources: [object]
         * isCompleted: boolean (default: false)
         * name: string
         * url: string
-    * projects:  []
+    * projects:  [object]
         * isCompleted: boolean (default: false)
         * name: string
         * url: string
