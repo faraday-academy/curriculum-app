@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+mongoose.set('debug', true)
 
 const { Curriculum } = require('@db')
 
@@ -28,7 +29,8 @@ router.route('/:id')
     res.send(curriculum)
   })
   .patch(async function (req, res) {
-    await Curriculum.updateOne({ _id: req.params.id }, { ...req.body })
+    const mongoRes = await Curriculum.updateOne({ _id: req.params.id }, { ...req.body })
+    console.log(mongoRes)
     res.send('Success')
   })
   .delete(async function (req, res) {

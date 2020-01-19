@@ -49,6 +49,8 @@
                     >
                       <v-checkbox
                         color="primary"
+                        v-model="resource.isCompleted"
+                        @change="toggleComplete('resources', i, j)"
                       />
 
                       <v-list-item-content>
@@ -77,6 +79,8 @@
                     >
                       <v-checkbox
                         color="primary"
+                        v-model="project.isCompleted"
+                        @change="toggleComplete('projects', i, k)"
                       />
 
                       <v-list-item-content>
@@ -99,7 +103,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'DisplayCurriculum',
@@ -110,6 +114,18 @@ export default {
   },
   computed: {
     ...mapState(['curricula'])
+  },
+  methods: {
+    ...mapActions(['patchCurriculum']),
+    toggleComplete(type, sectionIndex, typeIndex) {
+      // this.selectedCurriculum.sections[sectionIndex][type][typeIndex]
+      const { sections, _id } = this.selectedCurriculum
+      const payload = {
+        body: sections,
+        curriculumId: _id
+      }
+      this.patchCurriculum(payload)
+    }
   },
   mounted() {
     this.selectedCurriculum = this.curricula.find((curriculum) => {
