@@ -74,8 +74,14 @@ Color Palette:
 * description: string
 * sections: [object]
     * name: string
-    * resources: [string]
-    * projects: [string]
+    * resources: [object]
+        * isCompleted: boolean (default: false)
+        * name: string
+        * url: string
+    * projects:  [object]
+        * isCompleted: boolean (default: false)
+        * name: string
+        * url: string
 * createdAt: timestamp
 * updatedAt: timestamp
 
