@@ -30,7 +30,6 @@ router.route('/:id')
   })
   .patch(async function (req, res) {
     const mongoRes = await Curriculum.updateOne({ _id: req.params.id }, { ...req.body })
-    console.log(mongoRes)
     res.send('Success')
   })
   .delete(async function (req, res) {

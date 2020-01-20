@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon app.js"
+    "start": "npx nodemon app.js",
+    "debug": "npx nodemon --inspect app.js"
   },
   "keywords": [],
   "author": "Gwendolyn Faraday <gwenfaraday@pm.me> (https://gwenfaraday.com/)",
