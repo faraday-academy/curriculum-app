@@ -35,25 +35,25 @@ To see the playlist where I livestream the building of this app, [click here](ht
 ## Mockups
 
 <p align="center">
-  <img src="https://github.com/gwenf/curriculum-app/blob/master/Home%20Page.png" alt="Home Page Mockup">
+  <img src="mockups/home_page.png" alt="Home Page Mockup">
 </p>
 
 <p align="center">
-  <img src="https://github.com/gwenf/curriculum-app/blob/master/User%20Dashboard.png" alt="User Dashboard Mockup">
+  <img src="mockups/user_dashboard.png" alt="User Dashboard Mockup">
 </p>
 
 <p align="center">
-  <img src="https://github.com/gwenf/curriculum-app/blob/master/Create_update%20curriculum.png" alt="Create or Update Page Mockup">
+  <img src="mockups/create_update_curriculum.png" alt="Create or Update Page Mockup">
 </p>
 
 <p align="center">
-  <img src="https://github.com/gwenf/curriculum-app/blob/master/Display%20Curriculum.png" alt="Display Curriculum Page Mockup">
+  <img src="display_curriculum.png" alt="Display Curriculum Page Mockup">
 </p>
 
 ## Design
 
 Color Palette:
-<img src="color_palette.png" alt="color palete for application">
+<img src="mockups/color_palette.png" alt="color palete for application">
 710627 - EA5455 - FAA275 - F5E4C3 - 34A7B2
 
 ## Routes
