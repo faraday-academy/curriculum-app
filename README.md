@@ -47,7 +47,7 @@ To see the playlist where I livestream the building of this app, [click here](ht
 </p>
 
 <p align="center">
-  <img src="display_curriculum.png" alt="Display Curriculum Page Mockup">
+  <img src="mockups/display_curriculum.png" alt="Display Curriculum Page Mockup">
 </p>
 
 ## Design
