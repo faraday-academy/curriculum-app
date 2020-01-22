@@ -14,9 +14,27 @@ export default {
     commit('appendCurriculum', res.data)
     router.push(`/curricula/${res.data._id}`)
   },
-  async patchCurriculum({ commit }, payload) {
-    const { curriculumId, body } = payload
-    const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
-    commit('updateCurriculum', payload)
+  // async patchCurriculum({ commit }, payload) {
+  //   const { curriculumId, body } = payload
+  //   const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
+  //   commit('updateCurriculum', payload)
+  // },
+  // async patchSection({ commit }, payload) {
+  //   const { curriculumId, body } = payload
+  //   const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
+  //   commit('updateCurriculum', payload)
+  // },
+  async patchType({ commit }, payload) {
+    const {
+      curriculum,
+      type,
+      sectionId,
+      item
+    } = payload
+    const res = await axios.patch(
+      `${API_URL}/${curriculum._id}/sections/${sectionId}/${type}/${item._id}`,
+      item
+    )
+    commit('updateCurriculum', curriculum)
   }
 }

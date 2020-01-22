@@ -23,6 +23,38 @@ router.route('/')
     res.send(201, currRes)
   })
 
+router.route('/:id/sections/:sectionId/:type/:typeId')
+  .get(async function (req, res) {
+    // this function is only for testing purposes
+    const { id, sectionId, type, typeId } = req.params
+    const doc = await Curriculum.findById(id)
+
+    const section = doc.sections.id(sectionId)
+    const item = section[type].id(typeId)
+
+    res.send(item)
+  })
+  .patch(async function (req, res) {
+    try {
+      const { id, sectionId, type, typeId } = req.params
+      const { isCompleted, name, url } = req.body
+      const doc = await Curriculum.findById(id)
+
+      const section = doc.sections.id(sectionId)
+      let item = section[type].id(typeId)
+
+      item.isCompleted = isCompleted
+      item.name = name
+      item.url = url
+
+      await doc.save()
+
+      res.send(item)
+    } catch(err) {
+      res.status(500).send(err)
+    }
+  })
+
 router.route('/:id')
   .get(async function (req, res) {
     const curriculum = await Curriculum.findById(req.params.id)
