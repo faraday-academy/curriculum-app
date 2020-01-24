@@ -1,12 +1,24 @@
 <template>
-  <v-row no-gutters class="home-page">
-    <v-col
-      md="6"
-      offset-md="3"
-      sm="8"
-      offset-sm="2"
-    >
-      <h1>Welcome! Get started by creating your own curriculum.</h1>
-    </v-col>
-  </v-row>
+  <div>
+    <Header />
+    <SecondSection />
+    <ThirdSection />
+    <Footer />
+  </div>
 </template>
+
+<script>
+import Header from '@/components/home/Header.vue'
+import SecondSection from '@/components/home/SecondSection.vue'
+import ThirdSection from '@/components/home/ThirdSection.vue'
+import Footer from '@/components/home/Footer.vue'
+
+export default {
+  components: {
+    Header,
+    SecondSection,
+    ThirdSection,
+    Footer
+  }  
+}
+</script>

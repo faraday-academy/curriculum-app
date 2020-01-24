@@ -60,7 +60,9 @@
                 </v-row>
                 <v-row no-gutters>
                   <v-col cols="12">
-                    <v-btn @click="addItem('resource', k)">Save Resource</v-btn>
+                    <v-btn @click="addItem('resource', k)" color="secondary" class="black--text">
+                      Save Resource
+                    </v-btn>
                   </v-col>
                 </v-row>
                 <v-row v-if="section.resources.$model.length">
@@ -115,7 +117,9 @@
                 </v-row>
                 <v-row no-gutters>
                   <v-col cols="12">
-                    <v-btn @click="addItem('project', k)">Save Project</v-btn>
+                    <v-btn @click="addItem('project', k)" color="secondary" class="black--text">
+                      Save Project
+                    </v-btn>
                   </v-col>
                 </v-row>
                 <v-row v-if="section.projects.$model.length">

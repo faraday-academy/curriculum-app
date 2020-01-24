@@ -2,9 +2,7 @@
   <v-app id="app">
     <TopNav />
     <v-content>
-      <v-container>
-        <router-view/>
-      </v-container>
+      <router-view/>
     </v-content>
     <v-snackbar
       v-model="snackbar.show"
@@ -16,7 +14,7 @@
     >
       {{ snackbar.message }}
       <v-btn
-        dark
+        light
         text
         @click="updateSnackbar({show: false})"
       >

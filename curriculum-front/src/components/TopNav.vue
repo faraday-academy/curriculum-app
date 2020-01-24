@@ -1,18 +1,21 @@
 <template>
-  <v-toolbar>
-    <v-toolbar-title>Title</v-toolbar-title>
+  <v-toolbar color="info">
+    <v-toolbar-title>Curricula App</v-toolbar-title>
 
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
-      <v-btn href="#/" text>
+      <v-btn to="/" text>
         Home
       </v-btn>
-      <v-btn href="#/curricula" text>
+      <v-btn to="/curricula" text>
         View All
       </v-btn>
-      <v-btn href="#/curricula/create" text>
+      <v-btn to="/curricula/create" text>
         Create
+      </v-btn>
+      <v-btn color="secondary" class="black--text">
+        Log In
       </v-btn>
     </v-toolbar-items>
   </v-toolbar>

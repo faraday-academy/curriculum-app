@@ -2,7 +2,7 @@
   <v-form class="create-form">
     <div class="page-header">
       <h1>Create Curriculum</h1>
-      <v-btn @click.prevent="submit">
+      <v-btn color="primary" @click.prevent="submit">
         Save
       </v-btn>
     </div>
@@ -50,7 +50,7 @@
 
     <v-row>
       <v-col cols="12">
-        <v-btn @click="addSection">
+        <v-btn color="secondary" class="black--text" @click="addSection">
           Add Section
         </v-btn>
       </v-col>
