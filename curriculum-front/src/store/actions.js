@@ -14,11 +14,11 @@ export default {
     commit('appendCurriculum', res.data)
     router.push(`/curricula/${res.data._id}`)
   },
-  // async patchCurriculum({ commit }, payload) {
-  //   const { curriculumId, body } = payload
-  //   const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
-  //   commit('updateCurriculum', payload)
-  // },
+  async patchCurriculum({ commit }, payload) {
+    const { curriculumId, body } = payload
+    const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
+    // commit('updateCurriculum', payload)
+  },
   // async patchSection({ commit }, payload) {
   //   const { curriculumId, body } = payload
   //   const res = await axios.patch(`${API_URL}/${curriculumId}`, body)

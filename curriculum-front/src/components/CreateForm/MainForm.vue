@@ -96,7 +96,7 @@ export default {
     petInfo: {
       name: {
         required,
-        maxLength: maxLength(20)
+        maxLength: maxLength(30)
       },
       goal: {},
       description: {}
@@ -105,7 +105,7 @@ export default {
       $each: {
         name: {
           required,
-          maxLength: maxLength(20)
+          maxLength: maxLength(30)
         },
         goal: {},
         newResource: {
