@@ -6,192 +6,43 @@
       sm="8"
       offset-sm="2"
     >
-      <v-row>
-        <v-col>
-          <h1
-            class="hover-icon-container"
-            v-if="editField !== 'name'"
-          >
-            {{ selectedCurriculum.name }}
-            <v-icon
-              color="gray lighten-1 editable-icon"
-              @click="toggleEdit('name')"
-            >
-              mdi-pencil-box-outline
-            </v-icon>
-          </h1>
-          <v-text-field
-            v-else
-            v-model="selectedCurriculum.name"
-          >
-            <template v-slot:append-outer>
-              <v-btn
-                small
-                outlined
-                color="primary"
-                class="mr-1"
-                @click="saveEdit('name')"
-              >
-                Save
-              </v-btn>
-              <v-btn outlined small @click="cancelEdit">
-                Cancel
-              </v-btn>
-            </template>
-          </v-text-field>
+      <Header
+        :editField="editField"
+        :selectedCurriculum="selectedCurriculum"
+        :toggleEdit="toggleEdit"
+        :saveEdit="saveEdit"
+        :cancelEdit="cancelEdit"
+      />
 
-          <p
-            class="hover-icon-container"
-            v-if="editField !== 'description'"
-          >
-            {{ selectedCurriculum.description }}
-            <v-icon
-              color="gray lighten-1 editable-icon"
-              @click="toggleEdit('description')"
-            >
-              mdi-pencil-box-outline
-            </v-icon>
-          </p>
-          <v-text-field
-            v-else
-            v-model="selectedCurriculum.description"
-          >
-            <template v-slot:append-outer>
-              <v-btn
-                small
-                outlined
-                color="primary"
-                class="mr-1"
-                @click="saveEdit('description')"
-              >
-                Save
-              </v-btn>
-              <v-btn outlined small @click="cancelEdit">
-                Cancel
-              </v-btn>
-            </template>
-          </v-text-field>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <v-expansion-panels multiple>
-            <v-expansion-panel
-              v-for="(section, i) in selectedCurriculum.sections"
-              :key="i"
-            >
-              <v-expansion-panel-header>
-                Section {{ i + 1 }} - {{ section.name }}
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-list
-                  subheader
-                  two-line
-                  flat
-                >
-                  <v-subheader>
-                    Resources
-                    <v-icon
-                      color="success lighten-1"
-                      class="ml-1"
-                      @click="toggleEdit('name')"
-                    >
-                      mdi-plus-box-outline
-                    </v-icon>
-                  </v-subheader>
-
-                  <v-list-item-group
-                    multiple
-                  >
-                    <v-list-item
-                      v-for="(resource, j) in section.resources"
-                      :key="resource + j"
-                    >
-                      <v-checkbox
-                        color="primary"
-                        v-model="resource.isCompleted"
-                        @change="toggleComplete('resources', i, j)"
-                      />
-
-                      <v-list-item-content>
-                        <v-list-item-title class="hover-icon-container">
-                          <router-link to="/">
-                            {{ resource.name }}
-                          </router-link>
-                          <v-icon
-                            color="gray lighten-1 editable-icon"
-                            @click="toggleEdit('name')"
-                          >
-                            mdi-pencil-box-outline
-                          </v-icon>
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list-item-group>
-                </v-list>
-                <v-list
-                  subheader
-                  two-line
-                  flat
-                >
-                  <v-subheader>
-                    Projects
-                    <v-icon
-                      color="success lighten-1"
-                      class="ml-1"
-                      @click="toggleEdit('name')"
-                    >
-                      mdi-plus-box-outline
-                    </v-icon>
-                  </v-subheader>
-
-                  <v-list-item-group
-                    multiple
-                  >
-                    <v-list-item
-                      v-for="(project, k) in section.projects"
-                      :key="project + k"
-                    >
-                      <v-checkbox
-                        color="primary"
-                        v-model="project.isCompleted"
-                        @change="toggleComplete('projects', i, k)"
-                      />
-
-                      <v-list-item-content>
-                        <v-list-item-title class="hover-icon-container">
-                          <router-link to="/">
-                            {{ project.name }}
-                          </router-link>
-                          <v-icon
-                            color="gray lighten-1 editable-icon"
-                            @click="toggleEdit('name')"
-                          >
-                            mdi-pencil-box-outline
-                          </v-icon>
-                        </v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list-item-group>
-                </v-list>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-        </v-col>
-      </v-row>
+      <Sections
+        :showResourceForm="showResourceForm"
+        :showProjectForm="showProjectForm"
+        :selectedCurriculum="selectedCurriculum"
+        :toggleComplete="toggleComplete"
+        :saveNewItem="saveNewItem"
+        :toggleForm="toggleForm"
+      />
     </v-col>
   </v-row>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import Header from '@/components/display-curriculum/Header.vue'
+import Sections from '@/components/display-curriculum/Sections.vue'
 
 export default {
   name: 'DisplayCurriculum',
+  components: {
+    Header,
+    Sections
+  },
   data() {
     return {
       selectedCurriculum: {},
-      editField: ''
+      editField: '',
+      showResourceForm: false,
+      showProjectForm: false
     }
   },
   computed: {
@@ -228,6 +79,14 @@ export default {
       }
       this.patchCurriculum(payload)
       this.editField = ''
+    },
+    toggleForm(type) {
+      this[type] = !this[type]
+    },
+    saveNewItem(type, section) {
+
+      this.showResourceForm = false
+      this.showProjectForm = false
     }
   },
   mounted() {
@@ -237,3 +96,15 @@ export default {
   }
 }
 </script>
+
+<style lang="sass" scoped>
+.slide-fade-enter-active
+  transition: all .3s ease
+
+.slide-fade-leave-active
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0)
+
+.slide-fade-enter, .slide-fade-leave-to
+  transform: translateX(10px)
+  opacity: 0
+</style>
