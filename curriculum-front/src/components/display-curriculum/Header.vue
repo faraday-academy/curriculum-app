@@ -43,6 +43,7 @@
           color="gray lighten-1 editable-icon"
           class="togglable-icon"
           @click="toggleEdit('goal')"
+          small
         >
           mdi-pencil-box-outline
         </v-icon>
@@ -76,6 +77,7 @@
           color="gray lighten-1 editable-icon"
           class="togglable-icon"
           @click="toggleEdit('description')"
+          small
         >
           mdi-pencil-box-outline
         </v-icon>

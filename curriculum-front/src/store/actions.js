@@ -19,11 +19,14 @@ export default {
     const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
     // commit('updateCurriculum', payload)
   },
-  // async patchSection({ commit }, payload) {
-  //   const { curriculumId, body } = payload
-  //   const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
-  //   commit('updateCurriculum', payload)
-  // },
+  async patchSection({ commit }, payload) {
+    const { curriculumId, sectionId, type, body } = payload
+    const res = await axios.patch(
+      `${API_URL}/${curriculumId}/sections/${sectionId}/${type}`,
+      body
+    )
+    commit('updateCurriculum', payload)
+  },
   async patchType({ commit }, payload) {
     const {
       curriculum,

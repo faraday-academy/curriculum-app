@@ -15,12 +15,11 @@
       />
 
       <Sections
-        :showResourceForm="showResourceForm"
-        :showProjectForm="showProjectForm"
+        :dialog="dialog"
         :selectedCurriculum="selectedCurriculum"
         :toggleComplete="toggleComplete"
         :saveNewItem="saveNewItem"
-        :toggleForm="toggleForm"
+        :toggleDialog="toggleDialog"
       />
     </v-col>
   </v-row>
@@ -41,15 +40,23 @@ export default {
     return {
       selectedCurriculum: {},
       editField: '',
-      showResourceForm: false,
-      showProjectForm: false
+      dialog: {
+        type: '',
+        show: false,
+        name: '',
+        link: ''
+      }
     }
   },
   computed: {
     ...mapState(['curricula'])
   },
   methods: {
-    ...mapActions(['patchCurriculum', 'patchType']),
+    ...mapActions([
+      'patchCurriculum',
+      'patchSection',
+      'patchType'
+    ]),
     toggleComplete(type, sectionIndex, typeIndex) {
       const { sections, _id } = this.selectedCurriculum
       const section = sections[sectionIndex]
@@ -80,13 +87,36 @@ export default {
       this.patchCurriculum(payload)
       this.editField = ''
     },
-    toggleForm(type) {
-      this[type] = !this[type]
+    toggleDialog(type) {
+      if (this.dialog.show) {
+        this.dialog.name = ''
+        this.dialog.link = ''
+      }
+      this.dialog.show = !this.dialog.show
+      this.dialog.type = type
     },
-    saveNewItem(type, section) {
+    saveNewItem(type, sectionIndex) {
+      // type == 'resources' or 'projects'
+      const { sections, _id } = this.selectedCurriculum
+      const section = sections[sectionIndex]
+      const { name, link } = this.dialog
 
-      this.showResourceForm = false
-      this.showProjectForm = false
+      const body = {
+        name,
+        link
+      }
+      const payload = {
+        curriculumId: _id,
+        sectionId: section._id,
+        type,
+        body
+      }
+
+      this.patchSection(payload)
+
+      this.dialog.name = ''
+      this.dialog.link = ''
+      this.dialog.show = false
     }
   },
   mounted() {

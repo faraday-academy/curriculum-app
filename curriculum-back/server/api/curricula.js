@@ -55,6 +55,51 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
     }
   })
 
+router.route('/:id/sections/:sectionId/:type')
+  .post(async function (req, res) {
+    try {
+      const { id, sectionId, type } = req.params
+      const { name, link } = req.body
+
+      const doc = await Curriculum.findById(id)
+
+      const section = doc.sections.id(sectionId)
+      let item = section[type]
+
+      item.push({
+        name,
+        link,
+        isCompleted: false
+      })
+
+      await doc.save()
+
+      res.send(item)
+    } catch(err) {
+      res.status(500).send(err)
+    }
+  })
+  .patch(async function (req, res) {
+    // try {
+    //   const { id, sectionId, type, typeId } = req.params
+    //   const { isCompleted, name, url } = req.body
+    //   const doc = await Curriculum.findById(id)
+
+    //   const section = doc.sections.id(sectionId)
+    //   let item = section[type].id(typeId)
+
+    //   item.isCompleted = isCompleted
+    //   item.name = name
+    //   item.url = url
+
+    //   await doc.save()
+
+    //   res.send(item)
+    // } catch(err) {
+    //   res.status(500).send(err)
+    // }
+  })
+
 router.route('/:id')
   .get(async function (req, res) {
     const curriculum = await Curriculum.findById(req.params.id)

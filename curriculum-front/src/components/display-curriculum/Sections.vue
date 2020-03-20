@@ -20,17 +20,18 @@
                 <v-icon
                   color="success lighten-1"
                   class="ml-1"
-                  @click="toggleForm('showResourceForm')"
+                  @click="toggleDialog('resource')"
                 >
                   mdi-plus-box-outline
                 </v-icon>
               </v-subheader>
               
               <transition name="slide-fade">
-                <AddItemForm
-                  v-if="showResourceForm"
+                <AddItemModal
+                  :dialog="dialog"
+                  :toggleDialog="toggleDialog"
                   :saveNewItem="saveNewItem"
-                  type="resource"
+                  :sectionIndex="i"
                 />
               </transition>
 
@@ -81,17 +82,18 @@
                 <v-icon
                   color="success lighten-1"
                   class="ml-1"
-                  @click="toggleForm('showProjectForm')"
+                  @click="toggleDialog('project')"
                 >
                   mdi-plus-box-outline
                 </v-icon>
               </v-subheader>
 
               <transition name="slide-fade">
-                <AddItemForm
-                  v-if="showProjectForm"
+                <AddItemModal
+                  :dialog="dialog"
+                  :toggleDialog="toggleDialog"
                   :saveNewItem="saveNewItem"
-                  type="project"
+                  :sectionIndex="i"
                 />
               </transition>
 
@@ -140,19 +142,18 @@
 </template>
 
 <script>
-import AddItemForm from './AddItemForm.vue'
+import AddItemModal from './AddItemModal.vue'
 
 export default {
   props: {
-    showResourceForm: Boolean,
-    showProjectForm: Boolean,
+    dialog: Object,
     selectedCurriculum: Object,
     toggleComplete: Function,
-    toggleForm: Function,
+    toggleDialog: Function,
     saveNewItem: Function
   },
   components: {
-    AddItemForm
+    AddItemModal
   }
 }
 </script>
