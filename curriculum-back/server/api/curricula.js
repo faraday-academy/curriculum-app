@@ -34,6 +34,10 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
 
     res.send(item)
   })
+  .put(async function (req, res) {
+    const { id, sectionId, type, typeId } = req.params
+    const { name, url } = req.body
+  })
   .patch(async function (req, res) {
     try {
       const { id, sectionId, type, typeId } = req.params

@@ -20,21 +20,12 @@
                 <v-icon
                   color="success lighten-1"
                   class="ml-1"
-                  @click="toggleDialog('resource')"
+                  @click="toggleDialog('resource', i)"
                 >
                   mdi-plus-box-outline
                 </v-icon>
               </v-subheader>
               
-              <transition name="slide-fade">
-                <AddItemModal
-                  :dialog="dialog"
-                  :toggleDialog="toggleDialog"
-                  :saveNewItem="saveNewItem"
-                  :sectionIndex="i"
-                />
-              </transition>
-
               <v-list-item-group
                 multiple
               >
@@ -56,7 +47,7 @@
                       <v-icon
                         color="gray lighten-1 editable-icon"
                         class="togglable-icon"
-                        @click="console.log('temp')"
+                        @click="toggleDialog('resource', i, j)"
                       >
                         mdi-pencil-box-outline
                       </v-icon>
@@ -82,20 +73,11 @@
                 <v-icon
                   color="success lighten-1"
                   class="ml-1"
-                  @click="toggleDialog('project')"
+                  @click="toggleDialog('project', i)"
                 >
                   mdi-plus-box-outline
                 </v-icon>
               </v-subheader>
-
-              <transition name="slide-fade">
-                <AddItemModal
-                  :dialog="dialog"
-                  :toggleDialog="toggleDialog"
-                  :saveNewItem="saveNewItem"
-                  :sectionIndex="i"
-                />
-              </transition>
 
               <v-list-item-group
                 multiple
@@ -118,7 +100,7 @@
                       <v-icon
                         color="gray lighten-1 editable-icon"
                         class="togglable-icon"
-                        @click="console.log('temp')"
+                        @click="toggleDialog('project', i, k)"
                       >
                         mdi-pencil-box-outline
                       </v-icon>
@@ -138,6 +120,13 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </v-col>
+    <transition name="slide-fade">
+      <AddItemModal
+        :dialog="dialog"
+        :toggleDialog="toggleDialog"
+        :saveItem="saveItem"
+      />
+    </transition>
   </v-row>
 </template>
 
@@ -150,7 +139,8 @@ export default {
     selectedCurriculum: Object,
     toggleComplete: Function,
     toggleDialog: Function,
-    saveNewItem: Function
+    saveItem: Function,
+    editItem: Function
   },
   components: {
     AddItemModal

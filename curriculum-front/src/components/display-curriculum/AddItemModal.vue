@@ -30,11 +30,12 @@
         <v-row no-gutters>
           <v-col cols="12">
             <v-btn
-              @click="saveNewItem(`${dialog.type}s`, sectionIndex)"
+              @click="saveItem(`${dialog.type}s`)"
               color="secondary"
               class="black--text mr-2"
             >
-              Save {{ dialog.type }}
+              {{ dialog.isEditing ? 'Update' : 'Create' }}
+              {{ dialog.type }}
             </v-btn>
             <v-btn @click="toggleDialog('')">
               Cancel
@@ -49,7 +50,7 @@
 <script>
 export default {
   props: {
-    saveNewItem: Function,
+    saveItem: Function,
     toggleDialog: Function,
     sectionIndex: Number,
     dialog: Object

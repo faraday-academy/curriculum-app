@@ -18,7 +18,7 @@
         :dialog="dialog"
         :selectedCurriculum="selectedCurriculum"
         :toggleComplete="toggleComplete"
-        :saveNewItem="saveNewItem"
+        :saveItem="saveItem"
         :toggleDialog="toggleDialog"
       />
     </v-col>
@@ -44,7 +44,10 @@ export default {
         type: '',
         show: false,
         name: '',
-        link: ''
+        link: '',
+        isEditing: false,
+        itemIndex: null,
+        sectionIndex: null
       }
     }
   },
@@ -54,8 +57,9 @@ export default {
   methods: {
     ...mapActions([
       'patchCurriculum',
-      'patchSection',
-      'patchType'
+      'patchItem',
+      'postItem',
+      'putItem'
     ]),
     toggleComplete(type, sectionIndex, typeIndex) {
       const { sections, _id } = this.selectedCurriculum
@@ -66,7 +70,7 @@ export default {
         sectionId: section._id,
         item: section[type][typeIndex]
       }
-      this.patchType(payload)
+      this.patchItem(payload)
     },
     toggleEdit(field) {
       this.editField = field
@@ -87,32 +91,49 @@ export default {
       this.patchCurriculum(payload)
       this.editField = ''
     },
-    toggleDialog(type) {
+    toggleDialog(type, sectionIndex, itemIndex) {
       if (this.dialog.show) {
         this.dialog.name = ''
         this.dialog.link = ''
+        this.dialog.sectionIndex = null
+        this.dialog.itemIndex = null
+      } else if (itemIndex) {
+        this.dialog.type = type
+        this.dialog.isEditing = true
+        this.dialog.itemIndex = itemIndex
+        this.dialog.sectionIndex = sectionIndex
+        this.dialog.show = true
+      } else {
+        this.dialog.sectionIndex = sectionIndex
+        this.dialog.isEditing = false
       }
       this.dialog.show = !this.dialog.show
       this.dialog.type = type
     },
-    saveNewItem(type, sectionIndex) {
+    saveItem(type) {
       // type == 'resources' or 'projects'
       const { sections, _id } = this.selectedCurriculum
+      const { name, link, sectionIndex, itemIndex, isEditing } = this.dialog
       const section = sections[sectionIndex]
-      const { name, link } = this.dialog
 
       const body = {
         name,
         link
       }
-      const payload = {
+      let payload = {
         curriculumId: _id,
         sectionId: section._id,
         type,
         body
       }
 
-      this.patchSection(payload)
+      if (isEditing) {
+        const { _id } = section[type][itemIndex]
+        payload.itemId = _id
+        this.putItem(payload)
+      } else {
+        this.postItem(payload)
+      }
 
       this.dialog.name = ''
       this.dialog.link = ''
