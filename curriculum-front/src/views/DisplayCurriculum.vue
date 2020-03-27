@@ -44,7 +44,7 @@ export default {
         type: '',
         show: false,
         name: '',
-        link: '',
+        url: '',
         isEditing: false,
         itemIndex: null,
         sectionIndex: null
@@ -94,15 +94,17 @@ export default {
     toggleDialog(type, sectionIndex, itemIndex) {
       if (this.dialog.show) {
         this.dialog.name = ''
-        this.dialog.link = ''
+        this.dialog.url = ''
         this.dialog.sectionIndex = null
         this.dialog.itemIndex = null
-      } else if (itemIndex) {
-        this.dialog.type = type
-        this.dialog.isEditing = true
+      } else if (itemIndex !== undefined) {
         this.dialog.itemIndex = itemIndex
         this.dialog.sectionIndex = sectionIndex
-        this.dialog.show = true
+        this.dialog.isEditing = true
+
+        const item = this.selectedCurriculum.sections[sectionIndex][`${type}s`][itemIndex]
+        this.dialog.name = item.name
+        this.dialog.url = item.url
       } else {
         this.dialog.sectionIndex = sectionIndex
         this.dialog.isEditing = false
@@ -113,13 +115,13 @@ export default {
     saveItem(type) {
       // type == 'resources' or 'projects'
       const { sections, _id } = this.selectedCurriculum
-      const { name, link, sectionIndex, itemIndex, isEditing } = this.dialog
+      const { name, url, sectionIndex, itemIndex, isEditing } = this.dialog
       const section = sections[sectionIndex]
 
-      const body = {
-        name,
-        link
+      let body = {
+        name
       }
+      if (url) body.url = url
       let payload = {
         curriculumId: _id,
         sectionId: section._id,
@@ -128,15 +130,14 @@ export default {
       }
 
       if (isEditing) {
-        const { _id } = section[type][itemIndex]
-        payload.itemId = _id
+        payload.itemId = section[type][itemIndex]._id
         this.putItem(payload)
       } else {
         this.postItem(payload)
       }
 
       this.dialog.name = ''
-      this.dialog.link = ''
+      this.dialog.url = ''
       this.dialog.show = false
     }
   },

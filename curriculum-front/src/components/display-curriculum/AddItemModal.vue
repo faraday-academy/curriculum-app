@@ -23,7 +23,7 @@
           <v-col cols="12">
             <v-text-field
               :placeholder="`Enter ${dialog.type} Link`.toUpperCase()"
-              v-model="dialog.link"
+              v-model="dialog.url"
             />
           </v-col>
         </v-row>

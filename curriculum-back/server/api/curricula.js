@@ -60,6 +60,20 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
   })
 
 router.route('/:id/sections/:sectionId/:type')
+  .get(async function (req, res) {
+    try {
+      const { id, sectionId, type } = req.params
+
+      const doc = await Curriculum.findById(id)
+
+      const section = doc.sections.id(sectionId)
+      let item = section[type]
+
+      res.send(item)
+    } catch(err) {
+      res.status(500).send(err)
+    }
+  })
   .post(async function (req, res) {
     try {
       const { id, sectionId, type } = req.params

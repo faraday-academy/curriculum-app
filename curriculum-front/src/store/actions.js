@@ -21,11 +21,11 @@ export default {
   },
   async postItem({ commit }, payload) {
     const { curriculumId, sectionId, type, body } = payload
-    const res = await axios.patch(
+    const res = await axios.post(
       `${API_URL}/${curriculumId}/sections/${sectionId}/${type}`,
       body
     )
-    commit('updateCurriculum', payload)
+    commit('upsertItem', payload)
   },
   async putItem({ commit }, payload) {
     const { curriculumId, sectionId, itemId, type, body } = payload
@@ -33,7 +33,7 @@ export default {
       `${API_URL}/${curriculumId}/sections/${sectionId}/${type}/${itemId}`,
       body
     )
-    commit('updateCurriculum', payload)
+    commit('upsertItem', payload)
   },
   async patchItem({ commit }, payload) {
     const {
@@ -46,6 +46,6 @@ export default {
       `${API_URL}/${curriculum._id}/sections/${sectionId}/${type}/${item._id}`,
       item
     )
-    commit('updateCurriculum', curriculum)
+    commit('upsertItem', curriculum)
   }
 }
