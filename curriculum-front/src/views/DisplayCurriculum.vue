@@ -19,6 +19,7 @@
         :selectedCurriculum="selectedCurriculum"
         :toggleComplete="toggleComplete"
         :saveItem="saveItem"
+        :deleteItem="deleteItem"
         :toggleDialog="toggleDialog"
       />
     </v-col>
@@ -59,7 +60,8 @@ export default {
       'patchCurriculum',
       'patchItem',
       'postItem',
-      'putItem'
+      'putItem',
+      'deleteItem'
     ]),
     toggleComplete(type, sectionIndex, typeIndex) {
       const { sections, _id } = this.selectedCurriculum
@@ -139,6 +141,18 @@ export default {
       this.dialog.name = ''
       this.dialog.url = ''
       this.dialog.show = false
+    },
+    removeItem(type, sectionIndex, itemIndex) {
+      const { sections, _id } = this.selectedCurriculum
+      const section = sections[sectionIndex]
+
+      const payload = {
+        curriculumId: _id,
+        sectionId: section._id,
+        type,
+        itemId: section[type][itemIndex]._id
+      }
+      this.deleteItem(payload)
     }
   },
   mounted() {

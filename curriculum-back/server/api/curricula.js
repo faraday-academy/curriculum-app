@@ -58,6 +58,22 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
       res.status(500).send(err)
     }
   })
+  .delete(async function (req, res) {
+    const { id, sectionId, type, typeId } = req.params
+
+    try {
+      // const doc = await Curriculum.findById(id)
+      // const section = doc.sections.id(sectionId)
+      // // let item = section[type].id(typeId)
+
+      // await section[type].remove({ _id: typeId })
+      // res.send('Success')
+      const item = await Curriculum.findById(typeId)
+      res.send(item)
+    } catch (err) {
+      throw new Error(err)
+    }
+  })
 
 router.route('/:id/sections/:sectionId/:type')
   .get(async function (req, res) {

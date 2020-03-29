@@ -5,6 +5,7 @@ import VuexPersistence from 'vuex-persist'
 import actions from './actions'
 import state from './state'
 import mutations from './mutations'
+import getters from './getters'
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
@@ -16,6 +17,6 @@ export default new Vuex.Store({
   state,
   actions,
   mutations,
-  getters: {},
+  getters,
   plugins: [vuexLocal.plugin]
 })

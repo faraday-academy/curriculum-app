@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 export default {
   updateCurricula(state, curricula) {
     state.curricula = curricula
@@ -17,6 +19,7 @@ export default {
     const sIndex = state.curricula[cIndex].sections.findIndex((obj) => {
       return obj._id === sectionId
     })
+
     if (payload.itemId !== undefined) {
       const iIndex = state.curricula[cIndex].sections[sIndex][type].findIndex((obj) => {
         return obj._id === payload.itemId
@@ -29,17 +32,17 @@ export default {
       if (url) updatedItem.url = url
       if (isCompleted) updatedItem.isCompleted = isCompleted
 
-      // TODO: try adding vm.Set to fix the problem here
-      // item is being updated in store but not in template
-
-      let item = state.curricula[cIndex].sections[sIndex][type][iIndex]
-      state.curricula[cIndex].sections[sIndex][type][iIndex] = {
-        ...item,
+      let item = {
+        ...state.curricula[cIndex].sections[sIndex][type][iIndex],
         ...updatedItem
       }
+      state.curricula[cIndex].sections[sIndex][type].splice(iIndex, 1, item)
     } else {
       state.curricula[cIndex].sections[sIndex][type].push(body)
     }
+  },
+  removeItem(state, payload) {
+
   },
   updateSnackbar(state, settings) {
     state.snackbar = {

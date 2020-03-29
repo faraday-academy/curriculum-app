@@ -47,5 +47,18 @@ export default {
       item
     )
     commit('upsertItem', curriculum)
+  },
+  async deleteItem({ commit }, payload) {
+    const {
+      curriculumId,
+      type,
+      sectionId,
+      itemId
+    } = payload
+    const res = await axios.delete(
+      `${API_URL}/${curriculumId}/sections/${sectionId}/${type}/${itemId}`,
+      item
+    )
+    commit('removeItem', curriculum)
   }
 }
