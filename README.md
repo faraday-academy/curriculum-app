@@ -15,7 +15,6 @@ To see the playlist where I livestream the building of this app, [click here](ht
 1. [API](#api)
 1. [MVP Features](#mvp-features)
 1. [Version 1 Features](#version-1-features)
-1. Initial, Front-end TODOs
 
 ## Running Locally
 

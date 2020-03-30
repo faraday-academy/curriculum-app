@@ -16,7 +16,7 @@
 <script>
 import { mapActions, mapMutations } from 'vuex'
 
-import MainForm from '@/components/CreateForm/MainForm.vue'
+import MainForm from '@/components/create-form/MainForm.vue'
 
 export default {
   name: "CreateCurriculum",
