@@ -63,13 +63,22 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
 
     try {
       // const doc = await Curriculum.findById(id)
-      // const section = doc.sections.id(sectionId)
-      // // let item = section[type].id(typeId)
-
+      // const section = await doc.sections.id(sectionId)
+      // let item = await section[type].id(typeId)
+      // await item.remove()
+      // const doc = await Curriculum.findById(id) 
+      // const section = await doc.sections.id(sectionId)
+      // section[type].id(typeId).remove()
       // await section[type].remove({ _id: typeId })
-      // res.send('Success')
-      const item = await Curriculum.findById(typeId)
-      res.send(item)
+      let result = await Curriculum.updateOne(
+        { _id: id, 'sections._id': sectionId },
+        { $pull: 
+          {[`sections.$.${type}`]:
+            {'_id': typeId}
+          }
+        }
+      )
+      res.send(result)
     } catch (err) {
       throw new Error(err)
     }
@@ -98,15 +107,19 @@ router.route('/:id/sections/:sectionId/:type')
       const doc = await Curriculum.findById(id)
 
       const section = doc.sections.id(sectionId)
-      let item = section[type]
+      let items = section[type]
+      const itemId = mongoose.Types.ObjectId()
 
-      item.push({
+      items.push({
+        _id: itemId,
         name,
         link,
         isCompleted: false
       })
 
       await doc.save()
+
+      const item = section[type].id(itemId)
 
       res.send(item)
     } catch(err) {
@@ -132,6 +145,59 @@ router.route('/:id/sections/:sectionId/:type')
     // } catch(err) {
     //   res.status(500).send(err)
     // }
+  })
+
+router.route('/:id/sections/:sectionId')
+  .patch(async function (req, res) {
+    try {
+      const { id, sectionId, type, typeId } = req.params
+      const { isCompleted, name, url } = req.body
+      const doc = await Curriculum.findById(id)
+
+      const section = doc.sections.id(sectionId)
+      let item = section[type].id(typeId)
+
+      item.isCompleted = isCompleted
+      item.name = name
+      item.url = url
+
+      await doc.save()
+
+      res.send(item)
+    } catch(err) {
+      res.status(500).send(err)
+    }
+  })
+  .delete(async function (req, res) {
+    const { id, sectionId, type, typeId } = req.params
+
+    try {
+      // const doc = await Curriculum.findById(id)
+      // const section = await doc.sections.id(sectionId)
+      // let item = await section[type].id(typeId)
+      // await item.remove()
+      // const doc = await Curriculum.findById(id) 
+      // const section = await doc.sections.id(sectionId)
+      // section[type].id(typeId).remove()
+      // await section[type].remove({ _id: typeId })
+      let result = await Curriculum.updateOne(
+        { _id: id, 'sections._id': sectionId },
+        { $pull: 
+          {[`sections.$.${type}`]:
+            {'_id': typeId}
+          }
+        }
+      )
+      res.send(result)
+    } catch (err) {
+      throw new Error(err)
+    }
+  })
+
+router.route('/:id/sections')
+  .post(async function (req, res) {
+    const { id, sectionId, type, typeId } = req.params
+    const { name, url } = req.body
   })
 
 router.route('/:id')

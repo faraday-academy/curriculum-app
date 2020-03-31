@@ -20,11 +20,14 @@ export default {
     // commit('updateCurriculum', payload)
   },
   async postItem({ commit }, payload) {
-    const { curriculumId, sectionId, type, body } = payload
+    let { curriculumId, sectionId, type, body } = payload
     const res = await axios.post(
       `${API_URL}/${curriculumId}/sections/${sectionId}/${type}`,
       body
     )
+
+    // doing this because I need the object Id returned from Mongo
+    payload.body = res.data
     commit('upsertItem', payload)
   },
   async putItem({ commit }, payload) {
@@ -55,10 +58,11 @@ export default {
       sectionId,
       itemId
     } = payload
+    console.log(payload)
     const res = await axios.delete(
-      `${API_URL}/${curriculumId}/sections/${sectionId}/${type}/${itemId}`,
-      item
+      `${API_URL}/${curriculumId}/sections/${sectionId}/${type}/${itemId}`
     )
-    commit('removeItem', curriculum)
+    console.log(res)
+    commit('removeItem', payload)
   }
 }

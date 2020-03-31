@@ -54,7 +54,7 @@
                       <v-icon
                         color="error lighten-1 editable-icon"
                         class="ml-1 togglable-icon"
-                        @click="deleteItem('resource', i, j)"
+                        @click="removeItem('resources', i, j)"
                       >
                         mdi-close-box-outline
                       </v-icon>
@@ -107,7 +107,7 @@
                       <v-icon
                         color="error lighten-1 editable-icon"
                         class="ml-1 togglable-icon"
-                        @click="deleteItem('resource', i, j)"
+                        @click="removeItem('projects', i, j)"
                       >
                         mdi-close-box-outline
                       </v-icon>
@@ -141,7 +141,7 @@ export default {
     toggleDialog: Function,
     saveItem: Function,
     editItem: Function,
-    deleteItem: Function
+    removeItem: Function
   },
   components: {
     AddItemModal

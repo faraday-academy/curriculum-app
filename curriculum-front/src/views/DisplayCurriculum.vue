@@ -19,9 +19,13 @@
         :selectedCurriculum="selectedCurriculum"
         :toggleComplete="toggleComplete"
         :saveItem="saveItem"
-        :deleteItem="deleteItem"
+        :removeItem="removeItem"
         :toggleDialog="toggleDialog"
       />
+
+      <v-btn color="primary">
+        Add Section
+      </v-btn>
     </v-col>
   </v-row>
 </template>
@@ -156,6 +160,7 @@ export default {
     }
   },
   mounted() {
+    // TODO: make a call here to get fresh data
     this.selectedCurriculum = this.curricula.find((curriculum) => {
       return curriculum._id === this.$route.params.id
     })

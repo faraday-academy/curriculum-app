@@ -42,7 +42,17 @@ export default {
     }
   },
   removeItem(state, payload) {
-
+    const { curriculumId, sectionId, type, body } = payload
+    const cIndex = state.curricula.findIndex((obj) => {
+      return obj._id === curriculumId
+    })
+    const sIndex = state.curricula[cIndex].sections.findIndex((obj) => {
+      return obj._id === sectionId
+    })
+    const iIndex = state.curricula[cIndex].sections[sIndex][type].findIndex((obj) => {
+      return obj._id === payload.itemId
+    })
+    state.curricula[cIndex].sections[sIndex][type].splice(iIndex, 1)
   },
   updateSnackbar(state, settings) {
     state.snackbar = {
