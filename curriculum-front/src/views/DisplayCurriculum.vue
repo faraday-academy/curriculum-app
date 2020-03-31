@@ -23,7 +23,10 @@
         :toggleDialog="toggleDialog"
       />
 
-      <v-btn color="primary">
+      <v-btn
+        color="primary"
+        @click="addSection"
+      >
         Add Section
       </v-btn>
     </v-col>
@@ -157,6 +160,15 @@ export default {
         itemId: section[type][itemIndex]._id
       }
       this.deleteItem(payload)
+    },
+    addSection() {
+
+    },
+    updateSection() {
+
+    },
+    removeSection() {
+
     }
   },
   mounted() {

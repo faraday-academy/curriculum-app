@@ -195,9 +195,27 @@ router.route('/:id/sections/:sectionId')
   })
 
 router.route('/:id/sections')
+  .get(async function(req, res) {
+    const { id } = req.params
+    const doc = await Curriculum.findById(id)
+
+    res.send(doc.sections)
+  })
   .post(async function (req, res) {
-    const { id, sectionId, type, typeId } = req.params
-    const { name, url } = req.body
+    const { id } = req.params
+    const { name } = req.body
+    const sectionId = mongoose.Types.ObjectId()
+
+    const doc = await Curriculum.findById(id)
+    doc.sections.push({
+      _id: sectionId,
+      name
+    })
+    await doc.save()
+
+    const section = await doc.sections.id(sectionId)
+
+    res.send(section)
   })
 
 router.route('/:id')
