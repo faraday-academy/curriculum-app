@@ -62,14 +62,6 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
     const { id, sectionId, type, typeId } = req.params
 
     try {
-      // const doc = await Curriculum.findById(id)
-      // const section = await doc.sections.id(sectionId)
-      // let item = await section[type].id(typeId)
-      // await item.remove()
-      // const doc = await Curriculum.findById(id) 
-      // const section = await doc.sections.id(sectionId)
-      // section[type].id(typeId).remove()
-      // await section[type].remove({ _id: typeId })
       let result = await Curriculum.updateOne(
         { _id: id, 'sections._id': sectionId },
         { $pull: 
@@ -126,26 +118,6 @@ router.route('/:id/sections/:sectionId/:type')
       res.status(500).send(err)
     }
   })
-  .patch(async function (req, res) {
-    // try {
-    //   const { id, sectionId, type, typeId } = req.params
-    //   const { isCompleted, name, url } = req.body
-    //   const doc = await Curriculum.findById(id)
-
-    //   const section = doc.sections.id(sectionId)
-    //   let item = section[type].id(typeId)
-
-    //   item.isCompleted = isCompleted
-    //   item.name = name
-    //   item.url = url
-
-    //   await doc.save()
-
-    //   res.send(item)
-    // } catch(err) {
-    //   res.status(500).send(err)
-    // }
-  })
 
 router.route('/:id/sections/:sectionId')
   .patch(async function (req, res) {
@@ -169,22 +141,14 @@ router.route('/:id/sections/:sectionId')
     }
   })
   .delete(async function (req, res) {
-    const { id, sectionId, type, typeId } = req.params
+    const { id, sectionId } = req.params
 
     try {
-      // const doc = await Curriculum.findById(id)
-      // const section = await doc.sections.id(sectionId)
-      // let item = await section[type].id(typeId)
-      // await item.remove()
-      // const doc = await Curriculum.findById(id) 
-      // const section = await doc.sections.id(sectionId)
-      // section[type].id(typeId).remove()
-      // await section[type].remove({ _id: typeId })
       let result = await Curriculum.updateOne(
-        { _id: id, 'sections._id': sectionId },
+        { _id: id },
         { $pull: 
-          {[`sections.$.${type}`]:
-            {'_id': typeId}
+          {sections:
+            {'_id': sectionId}
           }
         }
       )
