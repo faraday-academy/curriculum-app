@@ -59,5 +59,8 @@ export default {
       ...state.snackbar,
       ...settings
     }
+  },
+  updateCount(state, count) {
+    state.completeCounts = count
   }
 }

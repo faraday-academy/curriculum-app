@@ -2,7 +2,8 @@ import axios from 'axios'
 
 import router from '../router'
 
-const API_URL = 'http://localhost:5000/api/v1/curricula'
+const BASE_URL = 'http://localhost:5000/api/v1'
+const API_URL = `${BASE_URL}/curricula`
 
 export default {
   async getCurricula({ commit }) {
@@ -64,5 +65,12 @@ export default {
     )
     console.log(res)
     commit('removeItem', payload)
+  },
+  async countAllCompleted({ commit }) {
+    console.log(`${API_URL}/count`)
+    const res = await axios.get(
+      `${BASE_URL}/count`
+    )
+    commit('updateCount', res.data)
   }
 }

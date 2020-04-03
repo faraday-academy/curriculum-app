@@ -27,6 +27,18 @@
           <v-card-subtitle>
             {{ curriculum.description }}
           </v-card-subtitle>
+          
+          <v-card-text>
+            <v-progress-linear
+              :value="retrieveCompleted(curriculum._id)"
+              color="blue-grey"
+              height="25"
+            >
+              <template v-slot="{ value }">
+                <strong>{{ value }}%</strong>
+              </template>
+            </v-progress-linear>
+          </v-card-text>
         </v-card>
       </div>
     </v-col>
@@ -39,16 +51,27 @@ import { mapState, mapActions } from 'vuex'
 export default {
   name: 'DisplayCurricula',
   data() {
-    return {}
+    return {
+      ratioCompleted: 35
+    }
   },
   computed: {
-    ...mapState(['curricula'])
+    ...mapState(['curricula', 'completeCounts'])
   },
   methods: {
-    ...mapActions(['getCurricula'])
+    ...mapActions(['getCurricula', 'countAllCompleted']),
+    retrieveCompleted(id) {
+      const totals = this.completeCounts.find((obj) => {
+        return obj.id === id
+      })
+      return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
+    }
   },
   mounted() {
     this.getCurricula()
+  },
+  created() {
+    this.countAllCompleted()
   }
 }
 </script>

@@ -4,5 +4,6 @@ export default {
     show: false,
     variant: 'success',
     message: ''
-  }
+  },
+  completeCounts: []
 }
