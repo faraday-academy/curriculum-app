@@ -23,6 +23,15 @@
         :toggleDialog="toggleDialog"
       />
 
+      <FormSection
+        v-if="showSectionForm"
+        :k="`${selectedCurriculum.sections.length}`"
+        :nameErrors="sectionNameErrors"
+        :section="$v.tempSection"
+        :sectionUrlErrors="sectionUrlErrors"
+        :addItem="addItem"
+      />
+
       <v-btn
         color="primary"
         @click="addSection"
@@ -35,18 +44,36 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { required, maxLength, url } from 'vuelidate/lib/validators'
 import Header from '@/components/display-curriculum/Header.vue'
 import Sections from '@/components/display-curriculum/Sections.vue'
+import FormSection from '@/components/create-form/FormSection.vue'
 
 export default {
   name: 'DisplayCurriculum',
   components: {
     Header,
-    Sections
+    Sections,
+    FormSection
   },
   data() {
     return {
       selectedCurriculum: {},
+      tempSection: {
+        name: '',
+        goal: '',
+        newResource: {
+          url: '',
+          name: ''
+        },
+        resources: [],
+        newProject: {
+          url: '',
+          name: ''
+        },
+        projects: []
+      },
+      showSectionForm: false,
       editField: '',
       dialog: {
         type: '',
@@ -57,6 +84,29 @@ export default {
         itemIndex: null,
         sectionIndex: null
       }
+    }
+  },
+  validations: {
+    tempSection: {
+      name: {
+        required,
+        maxLength: maxLength(30)
+      },
+      goal: {},
+      newResource: {
+        url: {
+          url
+        },
+        name: {}
+      },
+      newProject: {
+        url: {
+          url
+        },
+        name: {}
+      },
+      resources: {},
+      projects: {}
     }
   },
   computed: {
@@ -161,8 +211,44 @@ export default {
       }
       this.deleteItem(payload)
     },
-    addSection() {
+    addItem(type, i) {
+      let key = `new${type[0].toUpperCase()}${type.slice(1)}`
+      const item = this.tempSection[key]
 
+      const urlCheck = !item.url || this.$v.tempSection[key].url.url
+      const nameCheck = !!item.name
+
+      if (nameCheck && urlCheck) {
+        let obj = {
+          name: item.name,
+          url: item.url
+        }
+        this.tempSection[`${type}s`].push(obj)
+
+        this.tempSection[key].name = ''
+        this.tempSection[key].url = ''
+      } else {
+        const urlMessage = !urlCheck ? 'URL must be valid.' : ''
+        const nameMessage = !nameCheck ? 'Must provide a name.' : ''
+        const message = `${nameMessage} ${urlMessage}`
+        this.updateSnackbar({ message, show: true, variant: 'error' })
+      }
+    },
+    sectionNameErrors(i) {
+      const errors = []
+      if (!this.$v.tempSection.name.$dirty) return errors
+      !this.$v.tempSection.name.maxLength && errors.push('Name must be at most 30 characters long.')
+      !this.$v.tempSection.name.required && errors.push('Name is required.')
+      return errors
+    },
+    sectionUrlErrors(i, type) {
+      const errors = []
+      if (!this.$v.tempSection[`new${type}`].url.$model.length) return errors
+      !this.$v.tempSection[`new${type}`].url.url && errors.push('Must be a valid url.')
+      return errors
+    },
+    addSection() {
+      this.showSectionForm = true
     },
     updateSection() {
 

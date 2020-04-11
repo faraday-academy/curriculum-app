@@ -12,11 +12,11 @@
       </v-col>
       <v-col cols="9">
         <v-text-field
-          v-model="$v.petInfo.name.$model"
+          v-model="$v.curriculumInfo.name.$model"
           :error-messages="nameErrors"
           required
-          @input="$v.petInfo.name.$touch()"
-          @blur="$v.petInfo.name.$touch()"
+          @input="$v.curriculumInfo.name.$touch()"
+          @blur="$v.curriculumInfo.name.$touch()"
         />
       </v-col>
     </v-row>
@@ -25,7 +25,7 @@
         <v-subheader>Goal</v-subheader>
       </v-col>
       <v-col cols="9">
-        <v-text-field v-model="petInfo.goal" />
+        <v-text-field v-model="curriculumInfo.goal" />
       </v-col>
     </v-row>
     <v-row>
@@ -34,7 +34,7 @@
         <v-textarea
           solo
           name="description"
-          v-model="petInfo.description"
+          v-model="curriculumInfo.description"
         />
       </v-col>
     </v-row>
@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      petInfo: {
+      curriculumInfo: {
         name: '',
         goal: '',
         description: ''
@@ -93,7 +93,7 @@ export default {
     }
   },
   validations: {
-    petInfo: {
+    curriculumInfo: {
       name: {
         required,
         maxLength: maxLength(30)
@@ -128,9 +128,9 @@ export default {
   computed: {
     nameErrors() {
       const errors = []
-      if (!this.$v.petInfo.name.$dirty) return errors
-      !this.$v.petInfo.name.maxLength && errors.push('Name must be at most 20 characters long.')
-      !this.$v.petInfo.name.required && errors.push('Name is required.')
+      if (!this.$v.curriculumInfo.name.$dirty) return errors
+      !this.$v.curriculumInfo.name.maxLength && errors.push('Name must be at most 20 characters long.')
+      !this.$v.curriculumInfo.name.required && errors.push('Name is required.')
       return errors
     }
   },
@@ -138,7 +138,7 @@ export default {
     sectionNameErrors(i) {
       const errors = []
       if (!this.$v.sections.$each.$iter[i].name.$dirty) return errors
-      !this.$v.sections.$each.$iter[i].name.maxLength && errors.push('Name must be at most 20 characters long.')
+      !this.$v.sections.$each.$iter[i].name.maxLength && errors.push('Name must be at most 30 characters long.')
       !this.$v.sections.$each.$iter[i].name.required && errors.push('Name is required.')
       return errors
     },
@@ -193,7 +193,7 @@ export default {
     submit() {
       this.$v.$touch()
       if (!this.$v.$anyError) {
-        this.saveCurriculum(this.petInfo, this.sections)
+        this.saveCurriculum(this.curriculumInfo, this.sections)
       }
     }
   }
