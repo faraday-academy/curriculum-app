@@ -6,10 +6,6 @@ const { Curriculum } = require('@db')
 
 const router = express.Router()
 
-// count total number of resources and projects for
-// each curriculum.
-// count number of resources and projects completed
-
 router.route('/')
   .get(async function (req, res) {
     // return values: [{ id, totalProjects, totalResources }]

@@ -20,6 +20,7 @@
             light
             large
             outlined
+            to="/register"
             color="primary"
           >
             Sign Up

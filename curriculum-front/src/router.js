@@ -4,6 +4,8 @@ import Home from './views/Home.vue'
 import DisplayCurricula from './views/DisplayCurricula.vue'
 import DisplayCurriculum from './views/DisplayCurriculum.vue'
 import CreateCurriculum from './views/CreateCurriculum.vue'
+import Login from './views/auth/Login.vue'
+import Register from './views/auth/Register.vue'
 
 Vue.use(Router)
 
@@ -13,6 +15,16 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register
     },
     {
       path: '/curricula',

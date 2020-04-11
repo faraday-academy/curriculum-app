@@ -14,7 +14,7 @@
       <v-btn to="/curricula/create" text>
         Create
       </v-btn>
-      <v-btn color="secondary" class="black--text">
+      <v-btn to="/login" color="secondary" class="black--text">
         Log In
       </v-btn>
     </v-toolbar-items>
