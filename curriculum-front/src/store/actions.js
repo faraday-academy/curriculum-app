@@ -20,6 +20,16 @@ export default {
     const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
     // commit('updateCurriculum', payload)
   },
+  async postSection({ commit }, payload) {
+    const { curriculumId, body } = payload
+    const res = await axios.post(
+      `${API_URL}/${curriculumId}/sections`,
+      body
+    )
+    let updatedPayload = {...payload}
+    updatedPayload.body = res.data
+    commit('updateSection', updatedPayload)
+  },
   async postItem({ commit }, payload) {
     let { curriculumId, sectionId, type, body } = payload
     const res = await axios.post(

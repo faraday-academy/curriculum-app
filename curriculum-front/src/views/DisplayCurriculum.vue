@@ -33,11 +33,23 @@
       />
 
       <v-btn
+        v-if="!showSectionForm"
         color="primary"
-        @click="addSection"
+        @click="toggleSectionForm"
       >
         Add Section
       </v-btn>
+      <div v-else>
+        <v-btn
+          color="primary"
+          @click="saveSection" 
+        >
+          Save Section
+        </v-btn>
+        <v-btn @click="toggleSectionForm">
+          Cancel
+        </v-btn>
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -115,6 +127,7 @@ export default {
   methods: {
     ...mapActions([
       'patchCurriculum',
+      'postSection',
       'patchItem',
       'postItem',
       'putItem',
@@ -247,8 +260,45 @@ export default {
       !this.$v.tempSection[`new${type}`].url.url && errors.push('Must be a valid url.')
       return errors
     },
-    addSection() {
-      this.showSectionForm = true
+    toggleSectionForm() {
+      if (this.showSectionForm) {
+        this.clearSectionForm()
+      }
+      this.showSectionForm = !this.showSectionForm
+    },
+    clearSectionForm() {
+      this.$v.$reset()
+      this.tempSection = {
+        name: '',
+        goal: '',
+        newResource: {
+          url: '',
+          name: ''
+        },
+        resources: [],
+        newProject: {
+          url: '',
+          name: ''
+        },
+        projects: []
+      }
+    },
+    saveSection() {
+      const { name, goal, resources, projects } = this.tempSection
+      const body = {
+        name,
+        goal,
+        resources,
+        projects
+      }
+      const payload = {
+        curriculumId: this.selectedCurriculum._id,
+        body
+      }
+      this.postSection(payload)
+
+      this.clearSectionForm()
+      this.toggleSectionForm()
     },
     updateSection() {
 

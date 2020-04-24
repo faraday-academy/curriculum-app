@@ -16,6 +16,9 @@ const CurriculumSchema = new mongoose.Schema({
       type: String,
       required: true
     },
+    goal: {
+      type: String
+    },
     resources: [{
       isCompleted: {
         type: Boolean,

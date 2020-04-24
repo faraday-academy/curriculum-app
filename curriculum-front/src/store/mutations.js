@@ -11,6 +11,14 @@ export default {
     // payload: { id, body }
     // find and update one curriculum
   },
+  updateSection(state, payload) {
+    const { curriculumId, body } = payload
+    const cIndex = state.curricula.findIndex((obj) => {
+      return obj._id === curriculumId
+    })
+    const len = state.curricula[cIndex].sections.length
+    state.curricula[cIndex].sections.splice(len, 0, body)
+  },
   upsertItem(state, payload) {
     const { curriculumId, sectionId, type, body } = payload
     const cIndex = state.curricula.findIndex((obj) => {
