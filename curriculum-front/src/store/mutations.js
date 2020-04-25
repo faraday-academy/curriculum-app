@@ -19,6 +19,16 @@ export default {
     const len = state.curricula[cIndex].sections.length
     state.curricula[cIndex].sections.splice(len, 0, body)
   },
+  removeSection(state, payload) {
+    const { curriculumId, sectionId } = payload
+    const cIndex = state.curricula.findIndex((obj) => {
+      return obj._id === curriculumId
+    })
+    const sIndex = state.curricula[cIndex].sections.findIndex((obj) => {
+      return obj._id === sectionId
+    })
+    state.curricula[cIndex].sections.splice(sIndex, 1)
+  },
   upsertItem(state, payload) {
     const { curriculumId, sectionId, type, body } = payload
     const cIndex = state.curricula.findIndex((obj) => {

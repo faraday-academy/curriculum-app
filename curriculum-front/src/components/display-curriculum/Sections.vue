@@ -7,7 +7,24 @@
           :key="i"
         >
           <v-expansion-panel-header>
-            Section {{ i + 1 }} - {{ section.name }}
+            <div class="d-flex align-center justify-space-between">
+              <span class="section-header-text">
+                Section {{ i + 1 }} - {{ section.name }}
+              </span>
+              <span>
+                <v-icon
+                  color="gray lighten-1"
+                >
+                  mdi-pencil-box-outline
+                </v-icon>
+                <v-icon
+                  color="error lighten-1"
+                  @click="toggleConfirmDelete(i)"
+                >
+                  mdi-close-box-outline
+                </v-icon>
+              </span>
+            </div>
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-list
@@ -45,14 +62,14 @@
                         {{ resource.name }}
                       </router-link>
                       <v-icon
-                        color="gray lighten-1 editable-icon"
+                        color="gray lighten-1"
                         class="togglable-icon"
                         @click="toggleDialog('resource', i, j)"
                       >
                         mdi-pencil-box-outline
                       </v-icon>
                       <v-icon
-                        color="error lighten-1 editable-icon"
+                        color="error lighten-1"
                         class="ml-1 togglable-icon"
                         @click="removeItem('resources', i, j)"
                       >
@@ -98,16 +115,16 @@
                         {{ project.name }}
                       </router-link>
                       <v-icon
-                        color="gray lighten-1 editable-icon"
+                        color="gray lighten-1"
                         class="togglable-icon"
                         @click="toggleDialog('project', i, k)"
                       >
                         mdi-pencil-box-outline
                       </v-icon>
                       <v-icon
-                        color="error lighten-1 editable-icon"
+                        color="error lighten-1"
                         class="ml-1 togglable-icon"
-                        @click="removeItem('projects', i, j)"
+                        @click.stop="removeItem('projects', i, j)"
                       >
                         mdi-close-box-outline
                       </v-icon>
@@ -127,11 +144,22 @@
         :saveItem="saveItem"
       />
     </transition>
+    <v-dialog v-model="showDeleteDialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="headline">Do you really want to delete this section?</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="showDeleteDialog = false">Cancel</v-btn>
+          <v-btn color="green darken-1" text @click="confirmDelete">Confirm</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 
 <script>
 import AddItemModal from './AddItemModal.vue'
+import { mapActions } from 'vuex'
 
 export default {
   props: {
@@ -143,8 +171,31 @@ export default {
     editItem: Function,
     removeItem: Function
   },
+  data() {
+    return {
+      showDeleteDialog: false,
+      selectedIndex: null
+    }
+  },
   components: {
     AddItemModal
+  },
+  methods: {
+    ...mapActions(['deleteSection']),
+    toggleConfirmDelete(index) {
+      this.selectedIndex = index || null
+      this.showDeleteDialog = !this.showDeleteDialog
+    },
+    confirmDelete() {
+      // curriculumId, sectionId
+      const section = this.selectedCurriculum.sections[this.selectedIndex]
+      const payload = {
+        curriculumId: this.selectedCurriculum._id,
+        sectionId: section._id
+      }
+      this.deleteSection(payload)
+      this.toggleConfirmDelete()
+    }
   }
 }
 </script>

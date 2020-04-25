@@ -7,7 +7,7 @@
       >
         {{ selectedCurriculum.name }}
         <v-icon
-          color="gray lighten-1 editable-icon"
+          color="gray lighten-1"
           class="togglable-icon"
           @click="toggleEdit('name')"
         >
@@ -40,7 +40,7 @@
       >
         Goal: {{ selectedCurriculum.goal }}
         <v-icon
-          color="gray lighten-1 editable-icon"
+          color="gray lighten-1"
           class="togglable-icon"
           @click="toggleEdit('goal')"
           small
@@ -74,7 +74,7 @@
       >
         {{ selectedCurriculum.description }}
         <v-icon
-          color="gray lighten-1 editable-icon"
+          color="gray lighten-1"
           class="togglable-icon"
           @click="toggleEdit('description')"
           small

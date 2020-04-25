@@ -30,6 +30,13 @@ export default {
     updatedPayload.body = res.data
     commit('updateSection', updatedPayload)
   },
+  async deleteSection({ commit }, payload) {
+    const { curriculumId, sectionId } = payload
+    await axios.delete(
+      `${API_URL}/${curriculumId}/sections/${sectionId}`
+    )
+    commit('removeSection', payload)
+  },
   async postItem({ commit }, payload) {
     let { curriculumId, sectionId, type, body } = payload
     const res = await axios.post(
