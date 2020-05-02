@@ -24,6 +24,7 @@
   "author": "Gwendolyn Faraday <gwenfaraday@pm.me> (https://gwenfaraday.com/)",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "4.0.1",
     "cors": "2.8.5",
     "express": "4.17.1",
     "helmet": "3.21.2",

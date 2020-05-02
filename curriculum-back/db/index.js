@@ -5,7 +5,9 @@ mongoose.connect('mongodb://localhost:27017/curriculumapp', {
 })
 
 const Curriculum = require('./Curriculum')
+const User = require('./User')
 
 module.exports = {
-  Curriculum
+  Curriculum,
+  User
 }
