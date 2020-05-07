@@ -1,6 +1,6 @@
 const express = require('express')
 const helmet = require('helmet')
-var cors = require('cors')
+const cors = require('cors')
 
 const routes = require('./api')
 require('../db')

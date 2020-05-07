@@ -31,7 +31,8 @@
     "module-alias": "2.2.2",
     "mongoose": "5.8.3",
     "mongoose-timestamp": "0.6.0",
-    "nodemon": "2.0.2"
+    "nodemon": "2.0.2",
+    "simple-jwt": "1.0.3"
   },
   "devDependencies": {
     "babel-eslint": "10.0.3",

@@ -45,7 +45,11 @@ const CurriculumSchema = new mongoose.Schema({
         type: String
       }
     }]
-  }]
+  }],
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true
+  }
 }, { timestamps: true })
 
 const Curriculum = mongoose.model('Curriculum', CurriculumSchema)
