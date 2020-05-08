@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 
 import MainForm from '@/components/create-form/MainForm.vue'
 
@@ -23,10 +23,13 @@ export default {
   components: {
     MainForm
   },
+  computed: {
+    ...mapState('auth', ['user'])
+  },
   methods: {
     ...mapActions(['postCurriculum']),
     ...mapMutations(['updateSnackbar']),
-    saveCurriculum(petInfo, sections) {
+    saveCurriculum(curriculumInfo, sections) {
       const newSections = sections.map((section, i) => {
         let updatedSection = { ...section }
         delete updatedSection.newResource
@@ -34,7 +37,11 @@ export default {
         return updatedSection
       })
 
-      const curriculum = { ...petInfo, sections: newSections }
+      const curriculum = {
+        ...curriculumInfo,
+        sections: newSections,
+        createdBy: this.user.id
+      }
 
       this.postCurriculum(curriculum)
     }

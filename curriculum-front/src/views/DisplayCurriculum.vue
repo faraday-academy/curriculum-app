@@ -309,6 +309,7 @@ export default {
   },
   mounted() {
     // TODO: make a call here to get fresh data
+    // instead of just pulling off of state 
     this.selectedCurriculum = this.curricula.find((curriculum) => {
       return curriculum._id === this.$route.params.id
     })

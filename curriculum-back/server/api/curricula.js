@@ -12,12 +12,13 @@ router.route('/')
     res.send(curricula)
   })
   .post(async function (req, res) {
-    const { name, goal, description, sections } = req.body
+    const { name, goal, description, sections, createdBy } = req.body
     const curriculum = new Curriculum({
       name,
       goal,
       description,
-      sections
+      sections,
+      createdBy
     })
     const currRes = await curriculum.save()
     res.send(201, currRes)

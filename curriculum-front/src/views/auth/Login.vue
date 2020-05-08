@@ -14,7 +14,7 @@
       />
     </template>
     <template #actions>
-      <v-btn color="primary">Submit</v-btn>
+      <v-btn @click="submit" color="primary">Submit</v-btn>
     </template>
     <template #link>
       <p class="pa-2">Don't have an account? <router-link :to="{name: 'register'}">Register here</router-link></p>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import AuthTemplate from './AuthTemplate'
 
 export default {
@@ -37,8 +38,13 @@ export default {
     }
   },
   methods: {
-    login() {
-
+    ...mapActions('auth', ['login']),
+    submit() {
+      const payload = {
+        email: this.email,
+        password: this.password
+      }
+      this.login(payload)
     }
   }
 }

@@ -11,7 +11,10 @@ export default {
     commit('updateCurricula', res.data)
   },
   async postCurriculum({ commit }, curriculum) {
-    const res = await axios.post(API_URL, curriculum)
+    const res = await axios.post(
+      API_URL,
+      curriculum
+    )
     commit('appendCurriculum', res.data)
     router.push(`/curricula/${res.data._id}`)
   },

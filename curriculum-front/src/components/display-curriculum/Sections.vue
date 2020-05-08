@@ -183,11 +183,10 @@ export default {
   methods: {
     ...mapActions(['deleteSection']),
     toggleConfirmDelete(index) {
-      this.selectedIndex = index || null
+      this.selectedIndex = index
       this.showDeleteDialog = !this.showDeleteDialog
     },
     confirmDelete() {
-      // curriculumId, sectionId
       const section = this.selectedCurriculum.sections[this.selectedIndex]
       const payload = {
         curriculumId: this.selectedCurriculum._id,

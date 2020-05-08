@@ -1,9 +1,9 @@
-const JWT = require('simple-jwt');
+const JWT = require('simple-jwt')
 
 const secret = 'gwenstacy'
 const header = {
-    typ: 'JWT',
-    alg: 'HS512'
+  typ: 'JWT',
+  alg: 'HS512'
 }
 
 function generateToken(userId) {
