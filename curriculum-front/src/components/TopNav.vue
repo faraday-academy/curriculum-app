@@ -11,7 +11,7 @@
       <v-btn to="/curricula" text>
         View All
       </v-btn>
-      <v-btn to="/curricula/create" text>
+      <v-btn v-if="user.token" to="/curricula/create" text>
         Create
       </v-btn>
       <v-btn v-if="!user.token" to="/login" color="secondary" class="black--text">

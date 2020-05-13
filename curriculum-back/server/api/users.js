@@ -4,9 +4,16 @@ const express = require('express')
 const mongoose = require('mongoose')
 mongoose.set('debug', true)
 
-const { User } = require('@db')
+const { User, Curriculum } = require('@db')
 
 const router = express.Router()
+
+router.route('/:id/curricula')
+  .get(async (req, res) => {
+    const userId = req.params.id
+    const curricula = await Curriculum.find({ createdBy: userId })
+    res.send(curricula)
+  })
 
 router.route('/:id')
   .get(async (req, res) => {

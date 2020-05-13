@@ -1,18 +1,18 @@
-import axios from 'axios'
-
+import axios from './axiosConfig'
 import router from '../router'
-
-const BASE_URL = 'http://localhost:5000/api/v1'
-const API_URL = `${BASE_URL}/curricula`
 
 export default {
   async getCurricula({ commit }) {
-    const res = await axios.get(API_URL)
+    const res = await axios.get('curricula')
+    commit('updateCurricula', res.data)
+  },
+  async getUserCurricula({ commit }, userId) {
+    const res = await axios.get(`users/${userId}/curricula`)
     commit('updateCurricula', res.data)
   },
   async postCurriculum({ commit }, curriculum) {
     const res = await axios.post(
-      API_URL,
+      'curricula',
       curriculum
     )
     commit('appendCurriculum', res.data)
@@ -20,13 +20,13 @@ export default {
   },
   async patchCurriculum({ commit }, payload) {
     const { curriculumId, body } = payload
-    const res = await axios.patch(`${API_URL}/${curriculumId}`, body)
+    const res = await axios.patch(`curricula/${curriculumId}`, body)
     // commit('updateCurriculum', payload)
   },
   async postSection({ commit }, payload) {
     const { curriculumId, body } = payload
     const res = await axios.post(
-      `${API_URL}/${curriculumId}/sections`,
+      `curricula/${curriculumId}/sections`,
       body
     )
     let updatedPayload = {...payload}
@@ -36,14 +36,14 @@ export default {
   async deleteSection({ commit }, payload) {
     const { curriculumId, sectionId } = payload
     await axios.delete(
-      `${API_URL}/${curriculumId}/sections/${sectionId}`
+      `curricula/${curriculumId}/sections/${sectionId}`
     )
     commit('removeSection', payload)
   },
   async postItem({ commit }, payload) {
     let { curriculumId, sectionId, type, body } = payload
     const res = await axios.post(
-      `${API_URL}/${curriculumId}/sections/${sectionId}/${type}`,
+      `curricula/${curriculumId}/sections/${sectionId}/${type}`,
       body
     )
 
@@ -54,7 +54,7 @@ export default {
   async putItem({ commit }, payload) {
     const { curriculumId, sectionId, itemId, type, body } = payload
     const res = await axios.patch(
-      `${API_URL}/${curriculumId}/sections/${sectionId}/${type}/${itemId}`,
+      `curricula/${curriculumId}/sections/${sectionId}/${type}/${itemId}`,
       body
     )
     commit('upsertItem', payload)
@@ -67,7 +67,7 @@ export default {
       item
     } = payload
     const res = await axios.patch(
-      `${API_URL}/${curriculum._id}/sections/${sectionId}/${type}/${item._id}`,
+      `curricula/${curriculum._id}/sections/${sectionId}/${type}/${item._id}`,
       item
     )
     commit('upsertItem', curriculum)
@@ -81,15 +81,14 @@ export default {
     } = payload
     console.log(payload)
     const res = await axios.delete(
-      `${API_URL}/${curriculumId}/sections/${sectionId}/${type}/${itemId}`
+      `curricula/${curriculumId}/sections/${sectionId}/${type}/${itemId}`
     )
     console.log(res)
     commit('removeItem', payload)
   },
   async countAllCompleted({ commit }) {
-    console.log(`${API_URL}/count`)
     const res = await axios.get(
-      `${BASE_URL}/count`
+      `count`
     )
     commit('updateCount', res.data)
   }

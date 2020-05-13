@@ -15,6 +15,7 @@ export default {
         `${AUTH_URL}/login`,
         payload
       )
+      localStorage.setItem('token', res.data.token)
       commit('updateUser', res.data)
       router.replace('/curricula')
     },
@@ -32,7 +33,11 @@ export default {
     },
     async logUserOut({ commit }, payload) {
       commit('updateUser', {})
+      localStorage.removeItem('token')
       router.replace('/')
+    },
+    async getUser() {
+
     }
   },
   mutations: {

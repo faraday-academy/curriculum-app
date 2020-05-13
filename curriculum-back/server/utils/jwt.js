@@ -8,7 +8,8 @@ const header = {
 
 function generateToken(userId) {
   const payload = {
-    userId
+    userId,
+    exp: new Date().getTime() + 86400000
   }  
   const token = JWT.getToken(header, payload, secret)
 

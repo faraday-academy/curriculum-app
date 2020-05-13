@@ -5,12 +5,15 @@ mongoose.set('debug', true)
 const { Curriculum } = require('@db')
 
 const router = express.Router()
+const authRouter = express.Router()
 
 router.route('/')
   .get(async function (req, res) {
     const curricula = await Curriculum.find()
     res.send(curricula)
   })
+
+authRouter.route('/')
   .post(async function (req, res) {
     const { name, goal, description, sections, createdBy } = req.body
     const curriculum = new Curriculum({
@@ -35,6 +38,7 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
 
     res.send(item)
   })
+authRouter.route('/:id/sections/:sectionId/:type/:typeId')
   .put(async function (req, res) {
     const { id, sectionId, type, typeId } = req.params
     const { name, url } = req.body
@@ -92,6 +96,7 @@ router.route('/:id/sections/:sectionId/:type')
       res.status(500).send(err)
     }
   })
+authRouter.route('/:id/sections/:sectionId/:type')  
   .post(async function (req, res) {
     try {
       const { id, sectionId, type } = req.params
@@ -141,6 +146,7 @@ router.route('/:id/sections/:sectionId')
       res.status(500).send(err)
     }
   })
+authRouter.route('/:id/sections/:sectionId')
   .delete(async function (req, res) {
     const { id, sectionId } = req.params
 
@@ -166,6 +172,7 @@ router.route('/:id/sections')
 
     res.send(doc.sections)
   })
+authRouter.route('/:id/sections')
   .post(async function (req, res) {
     const { id } = req.params
     const { name } = req.body
@@ -188,6 +195,7 @@ router.route('/:id')
     const curriculum = await Curriculum.findById(req.params.id)
     res.send(curriculum)
   })
+authRouter.route('/:id')
   .patch(async function (req, res) {
     try {
       await Curriculum.updateOne({ _id: req.params.id }, { ...req.body })
@@ -201,4 +209,7 @@ router.route('/:id')
     res.send('Success')
   })
 
-module.exports = router
+module.exports = {
+  curricula: router,
+  authCurricula: authRouter
+}

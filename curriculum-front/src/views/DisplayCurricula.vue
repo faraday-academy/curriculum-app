@@ -7,11 +7,16 @@
       offset-sm="2"
     >
       <div class="page-header">
-        <h1>All Curricula</h1>
-        <v-btn @click="$router.push('/curricula/create')">
+        <h1>Curricula</h1>
+        <v-btn v-if="user.token" @click="$router.push('/curricula/create')">
           Create New
         </v-btn>
       </div>
+
+      <v-tabs v-model="currentTab">
+        <v-tab>My Curricula</v-tab>
+        <v-tab>All Curricula</v-tab>
+      </v-tabs>
 
       <div class="curricula-list">
         <v-card
@@ -52,23 +57,37 @@ export default {
   name: 'DisplayCurricula',
   data() {
     return {
-      ratioCompleted: 35
+      ratioCompleted: 35,
+      currentTab: 0
     }
   },
   computed: {
-    ...mapState(['curricula', 'completeCounts'])
+    ...mapState(['curricula', 'completeCounts']),
+    ...mapState('auth', ['user'])
+  },
+  watch: {
+    currentTab(val) {
+      if (val == 0) {
+        this.getUserCurricula(this.user.id)
+      } else {
+        this.getCurricula()
+      }
+    }
   },
   methods: {
-    ...mapActions(['getCurricula', 'countAllCompleted']),
+    ...mapActions(['getCurricula', 'getUserCurricula', 'countAllCompleted']),
     retrieveCompleted(id) {
-      const totals = this.completeCounts.find((obj) => {
+      if (this.curricula) {
+        const totals = this.completeCounts.find((obj) => {
         return obj.id === id
-      })
-      return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
+        })
+        return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
+      }
+      return 0
     }
   },
   mounted() {
-    this.getCurricula()
+    this.getUserCurricula(this.user.id)
   },
   created() {
     this.countAllCompleted()
