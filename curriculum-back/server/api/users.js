@@ -22,7 +22,17 @@ router.route('/:id')
     res.send(user)
   })
   .patch(async (req, res) => {
+    const userId = req.params.id
+    const { username, email } = req.body
 
+    const user = await User.findById(userId)
+
+    if (email) user.email = email
+    if (username) user.username = username
+
+    await user.save()
+
+    res.send(201)
   })
   .delete(async (req, res) => {
 

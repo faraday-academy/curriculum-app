@@ -17,9 +17,31 @@
       <v-btn v-if="!user.token" to="/login" color="secondary" class="black--text">
         Log In
       </v-btn>
-      <v-btn v-else @click="logout" color="secondary" class="black--text">
-        Log Out
-      </v-btn>
+
+      <v-menu
+        v-else
+        left
+        bottom
+      >
+        <template v-slot:activator="{ on }">
+          <v-btn v-on="on" color="secondary" class="black--text">
+            User
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item
+            to="/settings"
+          >
+            <v-list-item-title>Settings</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            @click="logout"
+          >
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-toolbar-items>
   </v-toolbar>
 </template>

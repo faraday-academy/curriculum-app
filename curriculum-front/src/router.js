@@ -6,6 +6,7 @@ import DisplayCurriculum from './views/DisplayCurriculum.vue'
 import CreateCurriculum from './views/CreateCurriculum.vue'
 import Login from './views/auth/Login.vue'
 import Register from './views/auth/Register.vue'
+import Settings from './views/Settings.vue'
 
 Vue.use(Router)
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings
     },
     {
       path: '/curricula',

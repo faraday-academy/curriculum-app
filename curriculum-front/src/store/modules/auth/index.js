@@ -1,8 +1,6 @@
-import axios from 'axios'
+import axios from '../../axiosConfig'
 
 import router from '../../../router'
-
-const AUTH_URL = 'http://localhost:5000/api/v1/auth'
 
 export default {
   namespaced: true,
@@ -12,7 +10,7 @@ export default {
   actions: {
     async login({ commit }, payload) {
       const res = await axios.post(
-        `${AUTH_URL}/login`,
+        `auth/login`,
         payload
       )
       localStorage.setItem('token', res.data.token)
@@ -21,7 +19,7 @@ export default {
     },
     async register({ commit }, payload) {
       const res = await axios.post(
-        `${AUTH_URL}/register`,
+        `auth/register`,
         payload
       )
       const snackbar = {
@@ -42,7 +40,10 @@ export default {
   },
   mutations: {
     updateUser(state, payload) {
-      state.user = payload
+      state.user = {
+        ...state.user,
+        ...payload
+      }
     }
   },
   getters: {}
