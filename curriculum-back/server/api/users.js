@@ -5,6 +5,8 @@ const mongoose = require('mongoose')
 mongoose.set('debug', true)
 
 const { User, Curriculum } = require('@db')
+const bcrypt = require('bcrypt')
+const { hashPassword } = require('../utils/auth')
 
 const router = express.Router()
 
@@ -14,6 +16,28 @@ router.route('/:id/curricula')
     const curricula = await Curriculum.find({ createdBy: userId })
     res.send(curricula)
   })
+
+router.route('/:id/update-password')
+  .post(async (req, res) => {
+    const { oldPassword, newPassword } = req.body
+
+    if (newPassword.length >= 8) {
+      res.send(400)
+    }
+    
+    const id = req.params.id
+    const user = await User.findById(id)
+
+    const isValid = await bcrypt.compare(oldPassword, user.password)
+    if (!isValid) {
+      res.status(400).send('Invalid Password')
+    }
+
+    user.password =  await hashPassword(newPassword)
+    await user.save()
+
+    res.send(200)
+  })  
 
 router.route('/:id')
   .get(async (req, res) => {

@@ -21,13 +21,19 @@
                 <v-text-field
                   v-model="username"
                   label="Username"
+                  :error-messages="usernameErrors()"
                   required
+                  @input="$v.username.$touch()"
+                  @blur="$v.username.$touch()"
                 />
 
                 <v-text-field
                   v-model="email"
                   label="E-mail"
+                  :error-messages="emailErrors()"
                   required
+                  @input="$v.email.$touch()"
+                  @blur="$v.email.$touch()"
                 />
               </v-card-text>
               <v-card-actions>
@@ -64,14 +70,28 @@
               <v-card-text>
                 <v-text-field
                   v-model="currentPassword"
-                  label="Current Password"
+                  label="Current Password"                  
+                  :error-messages="currentPasswordErrors('currentPassword')"
                   required
+                  @input="$v.currentPassword.$touch()"
+                  @blur="$v.currentPassword.$touch()"
                 />
 
                 <v-text-field
                   v-model="newPassword"
                   label="New Password"
+                  :error-messages="currentPasswordErrors('newPassword')"
                   required
+                  @input="$v.newPassword.$touch()"
+                  @blur="$v.newPassword.$touch()"
+                />
+                <v-text-field
+                  v-model="confirmPassword"
+                  label="Confirm New Password"
+                  :error-messages="currentPasswordErrors('confirmPassword')"
+                  required
+                  @input="$v.confirmPassword.$touch()"
+                  @blur="$v.confirmPassword.$touch()"
                 />
               </v-card-text>
               <v-card-actions>
@@ -85,9 +105,10 @@
 
                 <v-btn
                   color="primary"
+                  :disabled="!currentPassword || !newPassword"
                   @click="updatePassword"
                 >
-                  Save
+                  Update
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -99,6 +120,7 @@
 </template>
 
 <script>
+import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -109,14 +131,64 @@ export default {
       username: '',
       email: '',
       currentPassword: '',
-      newPassword: ''
+      newPassword: '',
+      confirmPassword: ''
+    }
+  },
+  validations: {
+    username: {
+      minLength: minLength(3),
+      maxLength: maxLength(20)
+    },
+    email: {
+      email
+    },
+    currentPassword: {
+      minLength: minLength(8),
+      maxLength: maxLength(128),
+      required
+    },
+    newPassword: {
+      minLength: minLength(8),
+      maxLength: maxLength(128),
+      required
+    },
+    confirmPassword: {
+      minLength: minLength(8),
+      maxLength: maxLength(128),
+      sameAs: sameAs('newPassword'),
+      required
     }
   },
   computed: {
     ...mapState('auth', ['user'])
   },
   methods: {
-    ...mapActions('user', ['updateUser']),
+    ...mapActions('user', ['updateUser', 'updateUserPassword']),
+    currentPasswordErrors(fieldName) {
+      const errors = []
+      if (!this.$v[fieldName].$dirty) return errors
+      !this.$v[fieldName].required && errors.push('Password is required.')
+      !this.$v[fieldName].minLength && errors.push('Password must be at least 8 characters long.')
+      !this.$v[fieldName].maxLength && errors.push('Password must be at most 128 characters long.')
+      if (fieldName === 'confirmPassword') {
+        !this.$v[fieldName].sameAs && errors.push('Passwords must match.')
+      }
+      return errors
+    },
+    emailErrors() {
+      const errors = []
+      if (!this.$v.email.$dirty) return errors
+      !this.$v.email.email && errors.push('Invalid email.')
+      return errors
+    },
+    usernameErrors() {
+      const errors = []
+      if (!this.$v.username.$dirty) return errors
+      !this.$v.username.minLength && errors.push('Username must be at least 3 characters long.')
+      !this.$v.username.maxLength && errors.push('Username must be at most 20 characters long.')
+      return errors
+    },
     reset() {
       this.username = this.user.username
       this.email = this.user.email 
@@ -128,7 +200,17 @@ export default {
       this.updateUser(payload)
     },
     updatePassword() {
+      if (this.newPassword === this.confirmPassword) {
+        const payload = {
+          oldPassword: this.currentPassword,
+          newPassword: this.newPassword
+        }
+        this.updateUserPassword(payload)
+        this.currentPassword = ''
+        this.newPassword = ''
+      } else {
 
+      }
     }
   },
   mounted() {

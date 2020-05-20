@@ -1,23 +1,26 @@
 <template>
   <AuthTemplate>
     <template #title>
-      Login
+      Reset Password
     </template>
     <template #form>
       <v-text-field
-        label="Email"
-        v-model="email"
+        label="Code"
+        v-model="code"
       />
       <v-text-field
-        label="Password"
+        label="New Password"
         v-model="password"
+      />
+      <v-text-field
+        label="Confirm Password"
+        v-model="confirmPassword"
       />
     </template>
     <template #actions>
       <v-btn @click="submit" color="primary">Submit</v-btn>
     </template>
     <template #link>
-      <p class="pa-2 mb-n1">Forgot Password? <router-link :to="{name: 'forgot-password'}">Update password here</router-link></p>
       <p class="pa-2">Don't have an account? <router-link :to="{name: 'register'}">Register here</router-link></p>
     </template>
   </AuthTemplate>
@@ -28,21 +31,21 @@ import { mapActions } from 'vuex'
 import AuthTemplate from './AuthTemplate'
 
 export default {
-  name: 'login',
+  name: 'reset-password',
   components: {
     AuthTemplate
   },
   data() {
     return {
-      email: '',
-      password: ''
+      code: '',
+      password: '',
+      confirmPassword: ''
     }
   },
   methods: {
     ...mapActions('auth', ['login']),
     submit() {
       const payload = {
-        email: this.email,
         password: this.password
       }
       this.login(payload)

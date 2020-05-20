@@ -30,7 +30,7 @@ export default {
       router.replace('/login')
     },
     async logUserOut({ commit }, payload) {
-      commit('updateUser', {})
+      commit('clearUserInfo')
       localStorage.removeItem('token')
       router.replace('/')
     },
@@ -44,6 +44,9 @@ export default {
         ...state.user,
         ...payload
       }
+    },
+    clearUserInfo(state) {
+      state.user = {}
     }
   },
   getters: {}

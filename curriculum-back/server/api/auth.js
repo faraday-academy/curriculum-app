@@ -1,8 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-const saltRounds = 10
 
+const { hashPassword } = require('../utils/auth')
 const { generateToken } = require('../utils/jwt')
 
 mongoose.set('debug', true)
@@ -36,18 +36,25 @@ router.route('/login')
 router.route('/register')
   .post(async (req, res) => {
     const { username, email, password } = req.body
-    // TODO: check info is valid
 
-    const hash = await bcrypt.hash(password, saltRounds)
-    const user = new User({
-      username,
-      email,
-      password: hash
-    })
-    const userRes = await user.save()
-    res.send(201, { username, email })
+    try {
+      if (password.length >= 8) {
+        const hash = await hashPassword(password)
+        const user = new User({
+          username,
+          email,
+          password: hash
+        })
+        const userRes = await user.save()
+        res.send(201, { username, email })
+      }
+      res.send(400)
+    } catch(err) {
+      console.error(err)
+      res.send(400)
+    }
   })
- 
+
 router.route('/logout')
 
 module.exports = router
