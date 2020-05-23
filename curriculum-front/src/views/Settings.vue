@@ -40,6 +40,7 @@
                 <v-btn
                   color="primary"
                   @click.prevent="updateUserInfo"
+                  :disabled="this.username === this.user.username && this.email === this.user.email"
                 >
                   Save
                 </v-btn>
@@ -194,13 +195,17 @@ export default {
       this.email = this.user.email 
     },
     updateUserInfo() {
+      if (this.username === this.user.username && this.email === this.user.email) {
+        return false
+      }
+
       const payload = {}
-      if (this.username) payload.username = this.username 
-      if (this.email) payload.email = this.email 
+      if (this.username && !this.$v.username.$error) payload.username = this.username 
+      if (this.email && !this.$v.email.$error) payload.email = this.email 
       this.updateUser(payload)
     },
     updatePassword() {
-      if (this.newPassword === this.confirmPassword) {
+      if (!this.$v.newPassword.$error && !this.$v.confirmPassword.$error) {
         const payload = {
           oldPassword: this.currentPassword,
           newPassword: this.newPassword
@@ -208,8 +213,6 @@ export default {
         this.updateUserPassword(payload)
         this.currentPassword = ''
         this.newPassword = ''
-      } else {
-
       }
     }
   },
