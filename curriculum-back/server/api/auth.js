@@ -2,12 +2,15 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 
-const { hashPassword } = require('../utils/auth')
-const { generateToken } = require('../utils/jwt')
+const {
+  auth: { hashPassword },
+  jwt: { generateToken },
+  mailgun: { sendEmail }
+} = require('../utils')
 
 mongoose.set('debug', true)
 
-const { User } = require('@db')
+const { User, Verification } = require('@db')
 
 const router = express.Router()
 
@@ -46,6 +49,13 @@ router.route('/register')
           password: hash
         })
         const userRes = await user.save()
+
+        const code = Math.floor(Math.random() * (999999 - 100000) + 100000)
+        // TODO: save code and user id in verfication table
+        const payload = {
+          code
+        }
+        await sendEmail(payload)
         res.send(201, { username, email })
       }
       res.send(400)
@@ -54,6 +64,9 @@ router.route('/register')
       res.send(400)
     }
   })
+
+router.route('/verify')
+// TODO: verifying the code from the user email
 
 router.route('/logout')
 

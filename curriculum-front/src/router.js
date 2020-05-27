@@ -8,6 +8,7 @@ import Login from './views/auth/Login.vue'
 import Register from './views/auth/Register.vue'
 import ForgotPassword from './views/auth/ForgotPassword.vue'
 import ResetPassword from './views/auth/ResetPassword.vue'
+import Verify from './views/auth/Verify.vue'
 import Settings from './views/Settings.vue'
 
 Vue.use(Router)
@@ -38,6 +39,11 @@ export default new Router({
       path: '/reset-password',
       name: 'reset-password',
       component: ResetPassword
+    },
+    {
+      path: '/verify',
+      name: 'verify',
+      component: Verify
     },
     {
       path: '/settings',
