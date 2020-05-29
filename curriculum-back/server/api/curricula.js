@@ -2,7 +2,13 @@ const express = require('express')
 const mongoose = require('mongoose')
 mongoose.set('debug', true)
 
+const JWT = require('simple-jwt')
+const secret = 'gwenstacy'
+
 const { Curriculum } = require('@db')
+const {
+  jwt: { decodeToken }
+} = require('../utils')
 
 const router = express.Router()
 const authRouter = express.Router()
@@ -47,8 +53,16 @@ authRouter.route('/:id/sections/:sectionId/:type/:typeId')
     try {
       const { id, sectionId, type, typeId } = req.params
       const { isCompleted, name, url } = req.body
+      const token = req.header('authorization').split(' ')[1]
+
       const doc = await Curriculum.findById(id)
 
+      const decodedToken = JWT.decode(token, secret)
+      console.log('hello')
+      // console.log(decodeToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOiI1ZWQxNDE5Nzk2MDAxMDE2N2QxYmZkOWUiLCJleHAiOjE1OTA4NTk1MjQ1MjV9.PQ9hH0sWvwsPEUGGc2/thpWVwcHkHGbGNXuEdW5gO2Z26Pvh0fPt/Pnah/ngApLXXZVIb4+Nz4dXmLcxzL+h6w=='))
+      res.send(decodedToken)
+      return true
+      
       const section = doc.sections.id(sectionId)
       let item = section[type].id(typeId)
 

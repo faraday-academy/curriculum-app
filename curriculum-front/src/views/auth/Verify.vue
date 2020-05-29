@@ -5,6 +5,10 @@
     </template>
     <template #form>
       <v-text-field
+        label="E-mail"
+        v-model="email"
+      />
+      <v-text-field
         label="Code"
         v-model="code"
       />
@@ -19,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import AuthTemplate from './AuthTemplate'
 
 export default {
@@ -30,15 +34,24 @@ export default {
   data() {
     return {
       code: '',
+      email: ''
     }
   },
+  computed: {
+    ...mapState('auth', ['user'])
+  },
   methods: {
-    ...mapActions('auth', ['']),
+    ...mapActions('auth', ['verify']),
     submit() {
       const payload = {
+        email: this.email,
         code: this.code
       }
+      this.verify(payload)
     }
+  },
+  mounted() {
+    this.email = this.user.email
   }
 }
 </script>

@@ -8,9 +8,9 @@ axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : ''
 axios.interceptors.response.use(function (response) {
   return response
 }, function (error) {
-  if (error.response.status == 401) {
-    router.replace('/login')
-  }
+  // if (error.response.status == 401) {
+  //   router.replace('/login')
+  // }
   // handleErrorMessage
   return Promise.reject(error)
 })

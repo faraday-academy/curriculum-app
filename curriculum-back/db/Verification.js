@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const VerificationSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
+    unique: true,
     required: true
   },
   code: {

@@ -51,7 +51,12 @@ router.route('/register')
         const userRes = await user.save()
 
         const code = Math.floor(Math.random() * (999999 - 100000) + 100000)
-        // TODO: save code and user id in verfication table
+        const verification = new Verification({
+          userId: userRes._id,
+          code
+        })
+        await verification.save()
+
         const payload = {
           code
         }
@@ -66,7 +71,23 @@ router.route('/register')
   })
 
 router.route('/verify')
-// TODO: verifying the code from the user email
+  .post(async (req, res) => {
+    const { email, code } = req.body
+
+    try {
+      const user = await User.findOne({ email })
+      const verify = await Verification.findOne({ userId: user._id })
+
+      if (verify.code === parseInt(code)) {
+        user.isVerified = true
+        await user.save()
+        res.send('Verified')
+        return true
+      }
+    } finally {
+      res.status(400).send('Invalid Code')
+    }
+  })
 
 router.route('/logout')
 

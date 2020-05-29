@@ -16,8 +16,12 @@ function generateToken(userId) {
   return token
 }
 
+function decodeToken(token) {
+  return JWT.decode(token, secret)
+}
+
 function checkToken(token) {
   return JWT.verifyToken(token, secret)
 }
 
-module.exports = { generateToken, checkToken }
+module.exports = { generateToken, decodeToken, checkToken }

@@ -22,12 +22,30 @@ export default {
         `auth/register`,
         payload
       )
+      commit('updateUser', { email: payload.email })
+
       const snackbar = {
         show: true,
         message: 'Sign up successful!'
       }
       commit('updateSnackbar', snackbar, { root: true })
-      router.replace('/login')
+      router.replace('/verify')
+    },
+    async verify({ commit }, payload) {
+      try {
+        const res = await axios.post(
+          `auth/verify`,
+          payload
+        )
+        router.replace('/login')
+      } catch(err) {
+        const snackbar = {
+          show: true,
+          variant: 'error',
+          message: 'Invalid Code'
+        }
+        commit('updateSnackbar', snackbar, { root: true })
+      }
     },
     async logUserOut({ commit }, payload) {
       commit('clearUserInfo')
