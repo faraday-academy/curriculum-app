@@ -25,8 +25,18 @@
           v-for="curriculum in curricula"
           :key="curriculum._id"
         >
-          <v-card-title class="headline">
-            <router-link :to="`/curricula/${curriculum._id}`">{{ curriculum.name }}</router-link>
+          <v-card-title class="headline d-flex justify-space-between">
+            <router-link :to="`/curricula/${curriculum._id}`">
+              {{ curriculum.name }}
+            </router-link>
+            <v-icon
+              v-if="currentTab === 0"
+              color="error lighten-1"
+              class="ml-1 togglable-icon"
+              @click="toggleDeleteDialog(curriculum._id)"
+            >
+              mdi-trash-can-outline
+            </v-icon>
           </v-card-title>
           
           <v-card-subtitle>
@@ -46,6 +56,19 @@
           </v-card-text>
         </v-card>
       </div>
+
+      <v-dialog v-model="showCurriculumDelete" persistent max-width="390">
+        <v-card>
+          <v-card-title class="headline">Do you really want to delete this curriculum?</v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" text @click="showCurriculumDelete = false">
+              Cancel
+            </v-btn>
+            <v-btn color="green darken-1" text @click="confirmDelete">Confirm</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-col>
   </v-row>
 </template>
@@ -58,7 +81,9 @@ export default {
   data() {
     return {
       ratioCompleted: 35,
-      currentTab: 0
+      currentTab: 0,
+      showCurriculumDelete: false,
+      selectedCurriculumId: ''
     }
   },
   computed: {
@@ -75,7 +100,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getCurricula', 'getUserCurricula', 'countAllCompleted']),
+    ...mapActions([
+      'getCurricula',
+      'getUserCurricula',
+      'countAllCompleted',
+      'deleteCurriculum'
+    ]),
     retrieveCompleted(id) {
       if (this.curricula) {
         const totals = this.completeCounts.find((obj) => {
@@ -84,6 +114,16 @@ export default {
         return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
       }
       return 0
+    },
+    toggleDeleteDialog(curriculumId) {
+      // I am just saving the current curriculum id here for delete
+      // probably not the best thing long term, but works for now
+      this.selectedCurriculumId = curriculumId
+      this.showCurriculumDelete = !this.showCurriculumDelete
+    },
+    confirmDelete() {
+      this.deleteCurriculum(this.selectedCurriculumId)
+      this.showCurriculumDelete = false
     }
   },
   mounted() {

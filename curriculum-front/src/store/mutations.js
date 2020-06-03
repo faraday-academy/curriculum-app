@@ -11,6 +11,12 @@ export default {
     // payload: { id, body }
     // find and update one curriculum
   },
+  removeCurriculum(state, curriculumId) {
+    const cIndex = state.curricula.findIndex((obj) => {
+      return obj._id === curriculumId
+    })
+    state.curricula.splice(cIndex, 1) 
+  },
   updateSection(state, payload) {
     const { curriculumId, body } = payload
     const cIndex = state.curricula.findIndex((obj) => {

@@ -138,7 +138,7 @@
       </v-expansion-panels>
     </v-col>
     <transition name="slide-fade">
-      <AddItemModal
+      <AddItemDialog
         :dialog="dialog"
         :toggleDialog="toggleDialog"
         :saveItem="saveItem"
@@ -158,7 +158,7 @@
 </template>
 
 <script>
-import AddItemModal from './AddItemModal.vue'
+import AddItemDialog from './AddItemDialog.vue'
 import { mapActions } from 'vuex'
 
 export default {
@@ -178,7 +178,7 @@ export default {
     }
   },
   components: {
-    AddItemModal
+    AddItemDialog
   },
   methods: {
     ...mapActions(['deleteSection']),

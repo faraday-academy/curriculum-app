@@ -23,6 +23,11 @@ export default {
     const res = await axios.patch(`curricula/${curriculumId}`, body)
     // commit('updateCurriculum', payload)
   },
+  async deleteCurriculum({ commit }, curriculumId) {
+    const res = await axios.delete(`curricula/${curriculumId}`)
+    console.log(res)
+    commit('removeCurriculum', curriculumId)
+  },
   async postSection({ commit }, payload) {
     const { curriculumId, body } = payload
     const res = await axios.post(
