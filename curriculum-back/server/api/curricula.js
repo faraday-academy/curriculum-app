@@ -10,6 +10,17 @@ const {
 const router = express.Router()
 const authRouter = express.Router()
 
+function checkIfAuthorizedUser(req, curriculum) {
+  // this function takes in the whole request object and one
+  // curriculum object from the database and returns a boolean
+  // based off of whether the user has permission to perform crud
+  // operation on Mongo object
+  const token = req.header('authorization').split(' ')[1]
+  const decodedToken = decodeToken(token)
+
+  return decodedToken.data.userId === curriculum.createdBy.toString()
+}
+
 router.route('/')
   .get(async function (req, res) {
     const curricula = await Curriculum.find()
@@ -39,43 +50,30 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
     const section = doc.sections.id(sectionId)
     const item = section[type].id(typeId)
 
-    console.log('***************************************')
-    console.log(doc)
-    console.log(section)
-    console.log(sectionId)
-    console.log(item)
-
     res.send(item)
   })
 authRouter.route('/:id/sections/:sectionId/:type/:typeId')
-  .put(async function (req, res) {
-    const { id, sectionId, type, typeId } = req.params
-    const { name, url } = req.body
-  })
   .patch(async function (req, res) {
     try {
       const { id, sectionId, type, typeId } = req.params
       const { isCompleted, name, url } = req.body
-      const token = req.header('authorization').split(' ')[1]
 
       const doc = await Curriculum.findById(id)
 
-      const decodedToken = decodeToken(token)
-      console.log(decodedToken)
-      // console.log(decodeToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOiI1ZWQxNDE5Nzk2MDAxMDE2N2QxYmZkOWUiLCJleHAiOjE1OTA4NTk1MjQ1MjV9.PQ9hH0sWvwsPEUGGc2/thpWVwcHkHGbGNXuEdW5gO2Z26Pvh0fPt/Pnah/ngApLXXZVIb4+Nz4dXmLcxzL+h6w=='))
-      res.send(decodedToken)
-      return true
-      
-      const section = doc.sections.id(sectionId)
-      let item = section[type].id(typeId)
+      if (checkIfAuthorizedUser(req, doc)) {
+        const section = doc.sections.id(sectionId)
+        let item = section[type].id(typeId)
 
-      item.isCompleted = isCompleted
-      item.name = name
-      item.url = url
+        item.isCompleted = isCompleted
+        item.name = name
+        item.url = url
 
-      await doc.save()
+        await doc.save()
 
-      res.send(item)
+        res.send(item)
+      } else {
+        res.status(403).send('Unauthorized')
+      }
     } catch(err) {
       res.status(500).send(err)
     }
@@ -100,6 +98,7 @@ authRouter.route('/:id/sections/:sectionId/:type/:typeId')
 
 router.route('/:id/sections/:sectionId/:type')
   .get(async function (req, res) {
+    console.log(req.params)
     try {
       const { id, sectionId, type } = req.params
 
@@ -121,18 +120,22 @@ authRouter.route('/:id/sections/:sectionId/:type')
 
       const doc = await Curriculum.findById(id)
 
-      const section = doc.sections.id(sectionId)
-      let items = section[type]
-      const itemId = mongoose.Types.ObjectId()
+      if (checkIfAuthorizedUser(req, doc)) {
+        const section = doc.sections.id(sectionId)
+        let items = section[type]
+        const itemId = mongoose.Types.ObjectId()
 
-      items.push({
-        _id: itemId,
-        name,
-        link,
-        isCompleted: false
-      })
+        items.push({
+          _id: itemId,
+          name,
+          link,
+          isCompleted: false
+        })
 
-      await doc.save()
+        await doc.save()
+      } else {
+        res.status(403).send('Unauthorized')
+      }
 
       const item = section[type].id(itemId)
 
@@ -143,27 +146,38 @@ authRouter.route('/:id/sections/:sectionId/:type')
   })
 
 router.route('/:id/sections/:sectionId')
+  .get(async function(req, res) {
+    const { id, sectionId } = req.params
+    const doc = await Curriculum.findById(id)
+    const section = doc.sections.id(sectionId)
+
+    res.send(section)
+  })
+authRouter.route('/:id/sections/:sectionId')
   .patch(async function (req, res) {
     try {
       const { id, sectionId, type, typeId } = req.params
       const { isCompleted, name, url } = req.body
       const doc = await Curriculum.findById(id)
 
-      const section = doc.sections.id(sectionId)
-      let item = section[type].id(typeId)
+      if (checkIfAuthorizedUser(req, doc)) {
+        const section = doc.sections.id(sectionId)
+        let item = section[type].id(typeId)
 
-      item.isCompleted = isCompleted
-      item.name = name
-      item.url = url
+        item.isCompleted = isCompleted
+        item.name = name
+        item.url = url
 
-      await doc.save()
+        await doc.save()
 
-      res.send(item)
+        res.send(item)
+      } else {
+        res.status(403).send('Unauthorized')
+      }
     } catch(err) {
       res.status(500).send(err)
     }
   })
-authRouter.route('/:id/sections/:sectionId')
   .delete(async function (req, res) {
     const { id, sectionId } = req.params
 
@@ -196,15 +210,20 @@ authRouter.route('/:id/sections')
     const sectionId = mongoose.Types.ObjectId()
 
     const doc = await Curriculum.findById(id)
-    doc.sections.push({
-      _id: sectionId,
-      name
-    })
-    await doc.save()
 
-    const section = await doc.sections.id(sectionId)
+    if (checkIfAuthorizedUser(req, doc)) {
+      doc.sections.push({
+        _id: sectionId,
+        name
+      })
+      await doc.save()
 
-    res.send(section)
+      const section = await doc.sections.id(sectionId)
+
+      res.send(section)
+    } else {
+      res.status(403).send('Unauthorized')
+    }
   })
 
 router.route('/:id')
@@ -215,15 +234,27 @@ router.route('/:id')
 authRouter.route('/:id')
   .patch(async function (req, res) {
     try {
-      await Curriculum.updateOne({ _id: req.params.id }, { ...req.body })
-      res.send('Success')
+      const doc = await Curriculum.findById(req.params.id)
+
+      if (checkIfAuthorizedUser(req, doc)) {
+        await Curriculum.updateOne({ _id: req.params.id }, { ...req.body })
+        res.send('Success')
+      } else {
+        res.status(403).send('Unauthorized')
+      }
     } catch(err) {
-      
+      res.status(500).send(err)
     }
   })
   .delete(async function (req, res) {
-    await Curriculum.deleteOne({ _id: req.params.id })
-    res.send('Success')
+    const doc = await Curriculum.findById(req.params.id)
+
+    if (checkIfAuthorizedUser(req, doc)) {
+      await Curriculum.deleteOne({ _id: req.params.id })
+      res.send('Success')
+    } else {
+      res.status(403).send('Unauthorized')
+    }
   })
 
 module.exports = {
