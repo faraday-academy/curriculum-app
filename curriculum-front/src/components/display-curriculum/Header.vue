@@ -34,39 +34,45 @@
         </template>
       </v-text-field>
 
-      <p
-        class="hover-icon-container"
-        v-if="editField !== 'goal'"
-      >
-        Goal: {{ selectedCurriculum.goal }}
-        <v-icon
-          color="gray lighten-1"
-          class="togglable-icon"
-          @click="toggleEdit('goal')"
-          small
+      <div v-if="selectedCurriculum.goal">
+        <p
+          class="hover-icon-container"
+          v-if="editField !== 'goal'"
         >
-          mdi-pencil-box-outline
-        </v-icon>
-      </p>
-      <v-text-field
-        v-else
-        v-model="selectedCurriculum.goal"
-      >
-        <template v-slot:append-outer>
-          <v-btn
+          Goal: {{ selectedCurriculum.goal }}
+          <v-icon
+            color="gray lighten-1"
+            class="togglable-icon"
+            @click="toggleEdit('goal')"
             small
-            outlined
-            color="primary"
-            class="mr-1"
-            @click="saveEdit('goal')"
           >
-            Save
-          </v-btn>
-          <v-btn outlined small @click="cancelEdit">
-            Cancel
-          </v-btn>
-        </template>
-      </v-text-field>
+            mdi-pencil-box-outline
+          </v-icon>
+        </p>
+        <v-text-field
+          v-else
+          v-model="selectedCurriculum.goal"
+        >
+          <template v-slot:append-outer>
+            <v-btn
+              small
+              outlined
+              color="primary"
+              class="mr-1"
+              @click="saveEdit('goal')"
+            >
+              Save
+            </v-btn>
+            <v-btn outlined small @click="cancelEdit">
+              Cancel
+            </v-btn>
+          </template>
+        </v-text-field>
+      </div>
+      <div v-else>
+        <!-- TODO: need to hook this button up -->
+        <v-btn color="info" small text>Add Goal</v-btn>
+      </div>
 
       <p
         class="hover-icon-container"

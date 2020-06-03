@@ -14,7 +14,7 @@
       </div>
 
       <v-tabs v-model="currentTab">
-        <v-tab>My Curricula</v-tab>
+        <v-tab v-if="user.token">My Curricula</v-tab>
         <v-tab>All Curricula</v-tab>
       </v-tabs>
 
@@ -30,7 +30,7 @@
               {{ curriculum.name }}
             </router-link>
             <v-icon
-              v-if="currentTab === 0"
+              v-if="currentTab === 0 && user.token"
               color="error lighten-1"
               class="ml-1 togglable-icon"
               @click="toggleDeleteDialog(curriculum._id)"
