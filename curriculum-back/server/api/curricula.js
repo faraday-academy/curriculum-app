@@ -2,9 +2,6 @@ const express = require('express')
 const mongoose = require('mongoose')
 mongoose.set('debug', true)
 
-const JWT = require('simple-jwt')
-const secret = 'gwenstacy'
-
 const { Curriculum } = require('@db')
 const {
   jwt: { decodeToken }
@@ -42,6 +39,12 @@ router.route('/:id/sections/:sectionId/:type/:typeId')
     const section = doc.sections.id(sectionId)
     const item = section[type].id(typeId)
 
+    console.log('***************************************')
+    console.log(doc)
+    console.log(section)
+    console.log(sectionId)
+    console.log(item)
+
     res.send(item)
   })
 authRouter.route('/:id/sections/:sectionId/:type/:typeId')
@@ -57,8 +60,8 @@ authRouter.route('/:id/sections/:sectionId/:type/:typeId')
 
       const doc = await Curriculum.findById(id)
 
-      const decodedToken = JWT.decode(token, secret)
-      console.log('hello')
+      const decodedToken = decodeToken(token)
+      console.log(decodedToken)
       // console.log(decodeToken('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOiI1ZWQxNDE5Nzk2MDAxMDE2N2QxYmZkOWUiLCJleHAiOjE1OTA4NTk1MjQ1MjV9.PQ9hH0sWvwsPEUGGc2/thpWVwcHkHGbGNXuEdW5gO2Z26Pvh0fPt/Pnah/ngApLXXZVIb4+Nz4dXmLcxzL+h6w=='))
       res.send(decodedToken)
       return true

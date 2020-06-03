@@ -1,4 +1,4 @@
-const JWT = require('simple-jwt')
+var jwt = require('jsonwebtoken')
 
 const secret = 'gwenstacy'
 const header = {
@@ -7,21 +7,24 @@ const header = {
 }
 
 function generateToken(userId) {
-  const payload = {
-    userId,
-    exp: new Date().getTime() + 86400000
-  }  
-  const token = JWT.getToken(header, payload, secret)
+  const data = {
+    userId
+  }
 
-  return token
+  return jwt.sign({ data }, secret, { expiresIn: '7d' })
 }
 
 function decodeToken(token) {
-  return JWT.decode(token, secret)
+  return jwt.verify(token, secret)
 }
 
 function checkToken(token) {
-  return JWT.verifyToken(token, secret)
+  try {
+    jwt.verify(token, secret)
+    return true
+  } catch (err) {
+    return false
+  }
 }
 
 module.exports = { generateToken, decodeToken, checkToken }
