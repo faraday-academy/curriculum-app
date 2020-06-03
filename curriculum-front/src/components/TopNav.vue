@@ -5,10 +5,10 @@
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
-      <v-btn to="/" text>
+      <v-btn to="/" exact text>
         Home
       </v-btn>
-      <v-btn to="/curricula" text>
+      <v-btn to="/curricula" exact text>
         View All
       </v-btn>
       <v-btn v-if="user.token" to="/curricula/create" text>

@@ -6,9 +6,13 @@
       sm="8"
       offset-sm="2"
     >
-      <div class="page-header">
+      <div class="page-header mb-5">
         <h1>Curricula</h1>
-        <v-btn v-if="user.token" @click="$router.push('/curricula/create')">
+        <v-btn
+          v-if="user.token"
+          color="accent"
+          @click="$router.push('/curricula/create')"
+        >
           Create New
         </v-btn>
       </div>

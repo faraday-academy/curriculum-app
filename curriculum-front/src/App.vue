@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
     <TopNav />
-    <v-content>
+    <v-content mb-8>
       <router-view/>
     </v-content>
     <v-snackbar
