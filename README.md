@@ -118,6 +118,12 @@ Color Palette:
 * patch
 * delete
 
+`/count`
+
+*get the ratio of completed tasks for each curriculum*
+
+* get
+
 ## MVP Features
 
 1. Home Page with list of curriculums
