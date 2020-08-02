@@ -1,6 +1,5 @@
 <template>
   <v-card
-    outlined
     class="section-card"
   >
     <v-card-title class="headline">Section #{{ parseInt(k) + 1 }}</v-card-title>
@@ -30,7 +29,7 @@
           />
         </v-col>
       </v-row>
-      <v-card class="resources-card">
+      <v-card class="resources-card my-2" outlined>
         <v-card-text>
           <v-row no-gutters>
             <v-col cols="12">
@@ -55,7 +54,11 @@
           </v-row>
           <v-row no-gutters>
             <v-col cols="12">
-              <v-btn @click="addItem('resource', k)" color="secondary" class="black--text">
+              <v-btn
+                @click="addItem('resource', k)"
+                color="secondary"
+                class="black--text"
+              >
                 Save Resource
               </v-btn>
             </v-col>
@@ -88,7 +91,7 @@
           </v-row>
         </v-card-text>
       </v-card>
-      <v-card class="projects-card">
+      <v-card class="projects-card my-2" outlined>
         <v-card-text>
           <v-row no-gutters>
             <v-col cols="12">

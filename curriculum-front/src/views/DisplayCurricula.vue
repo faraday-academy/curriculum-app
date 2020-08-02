@@ -131,7 +131,11 @@ export default {
     }
   },
   mounted() {
-    this.getUserCurricula(this.user.id)
+    if (this.user.id) {
+      this.getUserCurricula(this.user.id)
+    } else {
+      this.getCurricula()
+    }
   },
   created() {
     this.countAllCompleted()

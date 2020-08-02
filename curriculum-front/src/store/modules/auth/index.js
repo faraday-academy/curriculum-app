@@ -15,6 +15,10 @@ export default {
       )
       localStorage.setItem('token', res.data.token)
       commit('updateUser', res.data)
+
+      // have to set this here or else it will be undefined
+      // on initial api requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
       router.replace('/curricula')
     },
     async register({ commit }, payload) {

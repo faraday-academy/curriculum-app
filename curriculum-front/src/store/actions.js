@@ -7,6 +7,7 @@ export default {
     commit('updateCurricula', res.data)
   },
   async getUserCurricula({ commit }, userId) {
+    console.log(axios)
     const res = await axios.get(`users/${userId}/curricula`)
     commit('updateCurricula', res.data)
   },

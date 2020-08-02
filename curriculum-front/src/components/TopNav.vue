@@ -25,7 +25,8 @@
       >
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" color="secondary" class="black--text">
-            User
+            <v-icon left>mdi-account-outline</v-icon>
+            {{ user.username }}
           </v-btn>
         </template>
 
