@@ -65,7 +65,7 @@ Color Palette:
 
 ## Schema
 
-**curricula**
+**Curriculum**
 
 * id: UUID (pk)
 * name: string
@@ -81,8 +81,25 @@ Color Palette:
         * isCompleted: boolean (default: false)
         * name: string
         * url: string
+* createdBy: Mongo object id (userId, foreign key)
 * createdAt: timestamp
 * updatedAt: timestamp
+
+**User**
+
+* username: String
+* email: String
+* password: String (hashed password)
+* isVerified: Boolean
+* createdAt: timestamp
+* updatedAt: timestamp
+
+**Verification**
+
+*This is just to store and expire verification codes that are sent to user by email.*
+
+* userId: Mongo object id (userId, foreign key)
+* code: Number
 
 ## API
 
