@@ -42,7 +42,7 @@
                   mdi-plus-box-outline
                 </v-icon>
               </v-subheader>
-              
+
               <v-list-item-group
                 multiple
               >
@@ -171,7 +171,7 @@ export default {
     editItem: Function,
     removeItem: Function
   },
-  data() {
+  data () {
     return {
       showDeleteDialog: false,
       selectedIndex: null
@@ -182,11 +182,11 @@ export default {
   },
   methods: {
     ...mapActions(['deleteSection']),
-    toggleConfirmDelete(index) {
+    toggleConfirmDelete (index) {
       this.selectedIndex = index
       this.showDeleteDialog = !this.showDeleteDialog
     },
-    confirmDelete() {
+    confirmDelete () {
       const section = this.selectedCurriculum.sections[this.selectedIndex]
       const payload = {
         curriculumId: this.selectedCurriculum._id,

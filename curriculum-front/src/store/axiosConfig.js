@@ -1,5 +1,5 @@
 import axios from 'axios'
-import router from '../router'
+// import router from '../router'
 
 axios.defaults.baseURL = 'http://localhost:5000/api/v1'
 const token = localStorage.getItem('token')

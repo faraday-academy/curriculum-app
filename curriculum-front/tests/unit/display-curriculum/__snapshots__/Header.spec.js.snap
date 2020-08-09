@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header.vue if snapshot is correct 1`] = `
+<v-row-stub tag="div">
+  <v-col-stub tag="div">
+    <h1 class="hover-icon-container">
+      Learn Vue.js
+      <v-icon-stub color="gray lighten-1" class="togglable-icon">
+        mdi-pencil-box-outline
+      </v-icon-stub>
+    </h1>
+    <div>
+      <v-btn-stub color="info" tag="button" activeclass="" small="true" text="true" type="button">Add Goal</v-btn-stub>
+    </div>
+    <p class="hover-icon-container">
+
+      <v-icon-stub color="gray lighten-1" small="" class="togglable-icon">
+        mdi-pencil-box-outline
+      </v-icon-stub>
+    </p>
+  </v-col-stub>
+</v-row-stub>
+`;

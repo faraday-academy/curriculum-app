@@ -15,6 +15,7 @@
         </v-icon>
       </h1>
       <v-text-field
+        class="name-edit-field"
         v-else
         v-model="selectedCurriculum.name"
       >
@@ -119,6 +120,6 @@ export default {
     toggleEdit: Function,
     saveEdit: Function,
     cancelEdit: Function
-  }  
+  }
 }
 </script>
