@@ -15,7 +15,7 @@
         </v-icon>
       </h1>
       <v-text-field
-        class="name-edit-field"
+        data-test="name-edit-field"
         v-else
         v-model="selectedCurriculum.name"
       >

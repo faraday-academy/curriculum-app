@@ -27,7 +27,8 @@ describe('Header.vue', () => {
     })
 
     // TODO: find by a test id instead of class here
-    const input = wrapper.find('.name-edit-field')
+    // const input = wrapper.find('.name-edit-field')
+    const input = wrapper.find('[data-test="name-edit-field"]')
     expect(input.exists()).toBe(true)
   })
 })
