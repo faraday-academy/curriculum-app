@@ -6,7 +6,7 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 let localVue = createLocalVue()
-export const vuetify = new Vuetify({
+const vuetify = new Vuetify({
   theme: {
     themes: {
       light: {
@@ -23,3 +23,8 @@ export const vuetify = new Vuetify({
 })
 
 localVue.use(vuetify)
+
+export default {
+  localVue,
+  vuetify
+}

@@ -4,6 +4,11 @@ import AddItemDialog from '@/components/display-curriculum/AddItemDialog.vue'
 describe('AddItemDialog.vue', () => {
   test('if snapshot is correct', () => {
     const wrapper = mount(AddItemDialog, {
+      stubs: {
+        VDialog: {
+          template: '<div></div>'
+        }
+      },
       propsData: {
         saveItem: () => {},
         toggleDialog: () => {},

@@ -8,7 +8,7 @@ exports[`Sections.vue if snapshot is correct 1`] = `
           <div class="d-flex align-center justify-space-between"><span class="section-header-text">
               Section 1 - section 1
             </span> <span><i aria-hidden="true" class="v-icon notranslate mdi mdi-pencil-box-outline theme--light gray--text text--lighten-1"></i> <i role="button" class="v-icon notranslate v-icon--link mdi mdi-close-box-outline theme--light error--text text--lighten-1"></i></span></div>
-          <div class="v-expansion-panel-header__icon"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></div>
+          <div class="v-expansion-panel-header__icon"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">$expand</i></div>
         </button>
         <div class="v-expansion-panel-content" style="display: none;"></div>
       </div>
@@ -16,7 +16,7 @@ exports[`Sections.vue if snapshot is correct 1`] = `
           <div class="d-flex align-center justify-space-between"><span class="section-header-text">
               Section 2 - section 2
             </span> <span><i aria-hidden="true" class="v-icon notranslate mdi mdi-pencil-box-outline theme--light gray--text text--lighten-1"></i> <i role="button" class="v-icon notranslate v-icon--link mdi mdi-close-box-outline theme--light error--text text--lighten-1"></i></span></div>
-          <div class="v-expansion-panel-header__icon"><i aria-hidden="true" class="v-icon notranslate mdi mdi-chevron-down theme--light"></i></div>
+          <div class="v-expansion-panel-header__icon"><i aria-hidden="true" class="v-icon notranslate material-icons theme--light">$expand</i></div>
         </button>
         <div class="v-expansion-panel-content" style="display: none;"></div>
       </div>

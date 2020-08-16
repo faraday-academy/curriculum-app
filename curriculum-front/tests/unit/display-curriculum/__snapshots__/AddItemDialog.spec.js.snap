@@ -1,34 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AddItemDialog.vue if snapshot is correct 1`] = `
-<v-dialog-stub opendelay="0" closedelay="0" contentclass="" maxwidth="none" origin="center center" persistent="true" retainfocus="true" transition="dialog-transition" width="500">
-  <v-card-stub loaderheight="4" tag="div" class="resources-card">
-    <v-card-title-stub><span class="headline">
-
-      </span></v-card-title-stub>
-    <v-card-text-stub>
-      <v-row-stub tag="div" nogutters="true">
-        <v-col-stub cols="12" tag="div">
-          <v-text-field-stub errorcount="1" errormessages="" messages="" rules="" successmessages="" value="" backgroundcolor="" loaderheight="2" clearicon="$clear" placeholder="ENTER  NAME" type="text"></v-text-field-stub>
-        </v-col-stub>
-      </v-row-stub>
-      <v-row-stub tag="div" nogutters="true">
-        <v-col-stub cols="12" tag="div">
-          <v-text-field-stub errorcount="1" errormessages="" messages="" rules="" successmessages="" value="" backgroundcolor="" loaderheight="2" clearicon="$clear" placeholder="ENTER  LINK" type="text"></v-text-field-stub>
-        </v-col-stub>
-      </v-row-stub>
-      <v-row-stub tag="div" nogutters="true">
-        <v-col-stub cols="12" tag="div">
-          <v-btn-stub color="secondary" tag="button" activeclass="" type="button" class="black--text mr-2">
-            Create
-
-          </v-btn-stub>
-          <v-btn-stub tag="button" activeclass="" type="button">
-            Cancel
-          </v-btn-stub>
-        </v-col-stub>
-      </v-row-stub>
-    </v-card-text-stub>
-  </v-card-stub>
-</v-dialog-stub>
-`;
+exports[`AddItemDialog.vue if snapshot is correct 1`] = `<div width="500" persistent=""></div>`;

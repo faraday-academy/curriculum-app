@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import Sections from '@/components/display-curriculum/Sections.vue'
-import { vuetify } from '../setupTests'
 
 const transitionStub = () => ({
   render: function (h) {
@@ -11,7 +10,6 @@ const transitionStub = () => ({
 describe('Sections.vue', () => {
   test('if snapshot is correct', () => {
     const wrapper = mount(Sections, {
-      vuetify,
       stubs: {
         transition: transitionStub(),
         AddItemDialog: {

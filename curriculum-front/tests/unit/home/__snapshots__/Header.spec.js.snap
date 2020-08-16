@@ -9,10 +9,9 @@ exports[`home/Header.vue if snapshot is correct 1`] = `
         <h3 class="display-1 mb-6">
           Create, share, and track your learning curricula.<br>
           All for free!
-        </h3>
-        <router-link class="v-btn v-btn--depressed v-btn--flat v-btn--outlined v-btn--router theme--light v-size--large primary--text"><span class="v-btn__content">
+        </h3> <a class="v-btn v-btn--depressed v-btn--flat v-btn--outlined v-btn--router theme--light v-size--large primary--text"><span class="v-btn__content">
           Sign Up
-        </span></router-link>
+        </span></a>
       </div>
     </div>
   </div>
