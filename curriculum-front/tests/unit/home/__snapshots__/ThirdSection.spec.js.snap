@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ThirdSection.vue if snapshot is correct 1`] = `
+<div class="row home-section-three align-center">
+  <div class="col-sm-4 offset-sm-2 col">
+    <h2>Achieve Your Goals</h2>
+    <p>
+      Check off tasks and projects as you go and receive
+      badges as you achieve your goals.
+    </p>
+  </div>
+  <div class="col-sm-4 col"><img src="img/display_curriculum.png" class="demo-screenshot"></div>
+</div>
+`;

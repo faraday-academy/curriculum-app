@@ -3,7 +3,7 @@
     class="section-card"
   >
     <v-card-title class="headline">Section #{{ parseInt(k) + 1 }}</v-card-title>
-    
+
     <v-card-text>
       <v-row no-gutters>
         <v-col cols="3">
@@ -163,4 +163,3 @@ export default {
   }
 }
 </script>
-

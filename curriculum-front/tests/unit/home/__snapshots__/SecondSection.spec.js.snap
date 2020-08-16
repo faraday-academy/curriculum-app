@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SecondSection.vue if snapshot is correct 1`] = `
+<div class="row home-section-two align-center">
+  <div class="col-sm-4 offset-sm-2 col"><img src="img/user_dashboard.png" class="demo-screenshot"></div>
+  <div class="col-sm-4 col">
+    <h2>See your progress</h2>
+    <p>
+      Easily keep track of everything you are learning in one place.
+      Instant progress feedback helps you stay on track.
+    </p>
+  </div>
+</div>
+`;

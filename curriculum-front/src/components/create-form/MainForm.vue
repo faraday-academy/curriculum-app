@@ -69,7 +69,7 @@ export default {
   props: {
     saveCurriculum: Function
   },
-  data() {
+  data () {
     return {
       curriculumInfo: {
         name: '',
@@ -126,7 +126,7 @@ export default {
     }
   },
   computed: {
-    nameErrors() {
+    nameErrors () {
       const errors = []
       if (!this.$v.curriculumInfo.name.$dirty) return errors
       !this.$v.curriculumInfo.name.maxLength && errors.push('Name must be at most 20 characters long.')
@@ -135,20 +135,20 @@ export default {
     }
   },
   methods: {
-    sectionNameErrors(i) {
+    sectionNameErrors (i) {
       const errors = []
       if (!this.$v.sections.$each.$iter[i].name.$dirty) return errors
       !this.$v.sections.$each.$iter[i].name.maxLength && errors.push('Name must be at most 30 characters long.')
       !this.$v.sections.$each.$iter[i].name.required && errors.push('Name is required.')
       return errors
     },
-    sectionUrlErrors(i, type) {
+    sectionUrlErrors (i, type) {
       const errors = []
       if (!this.$v.sections.$each.$iter[i][`new${type}`].url.$model.length) return errors
       !this.$v.sections.$each.$iter[i][`new${type}`].url.url && errors.push('Must be a valid url.')
       return errors
     },
-    addSection() {
+    addSection () {
       this.sections.push({
         name: '',
         goal: '',
@@ -164,7 +164,7 @@ export default {
         projects: []
       })
     },
-    addItem(type, i) {
+    addItem (type, i) {
       let key = `new${type[0].toUpperCase()}${type.slice(1)}`
       const item = this.sections[i][key]
 
@@ -187,10 +187,10 @@ export default {
         this.updateSnackbar({ message, show: true, variant: 'error' })
       }
     },
-    deleteItem(type, sectionIndex, itemIndex) {
+    deleteItem (type, sectionIndex, itemIndex) {
       this.sections[sectionIndex][type].splice(itemIndex, 1)
     },
-    submit() {
+    submit () {
       this.$v.$touch()
       if (!this.$v.$anyError) {
         this.saveCurriculum(this.curriculumInfo, this.sections)

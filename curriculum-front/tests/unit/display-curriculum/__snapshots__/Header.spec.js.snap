@@ -1,23 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Header.vue if snapshot is correct 1`] = `
-<v-row-stub tag="div">
-  <v-col-stub tag="div">
+exports[`display-curriculum/Header.vue if snapshot is correct 1`] = `
+<div class="row">
+  <div class="col">
     <h1 class="hover-icon-container">
       Learn Vue.js
-      <v-icon-stub color="gray lighten-1" class="togglable-icon">
-        mdi-pencil-box-outline
-      </v-icon-stub>
-    </h1>
-    <div>
-      <v-btn-stub color="info" tag="button" activeclass="" small="true" text="true" type="button">Add Goal</v-btn-stub>
-    </div>
+      <i role="button" class="v-icon notranslate togglable-icon v-icon--link mdi mdi-pencil-box-outline theme--light gray--text text--lighten-1"></i></h1>
+    <div><button type="button" class="v-btn v-btn--flat v-btn--text theme--light v-size--small info--text"><span class="v-btn__content">Add Goal</span></button></div>
     <p class="hover-icon-container">
 
-      <v-icon-stub color="gray lighten-1" small="" class="togglable-icon">
-        mdi-pencil-box-outline
-      </v-icon-stub>
-    </p>
-  </v-col-stub>
-</v-row-stub>
+      <i role="button" class="v-icon notranslate togglable-icon v-icon--link mdi mdi-pencil-box-outline theme--light gray--text text--lighten-1" style="font-size: 16px;"></i></p>
+  </div>
+</div>
 `;

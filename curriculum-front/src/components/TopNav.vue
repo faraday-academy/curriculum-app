@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['logUserOut']),
-    logout() {
+    logout () {
       this.logUserOut()
     }
   }

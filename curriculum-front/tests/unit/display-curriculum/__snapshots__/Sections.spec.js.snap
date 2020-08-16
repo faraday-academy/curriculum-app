@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sections.vue if snapshot is correct 1`] = `
+<v-row-stub tag="div">
+  <v-col-stub tag="div">
+    <v-expansion-panels-stub activeclass="v-item--active" multiple="true"></v-expansion-panels-stub>
+  </v-col-stub>
+  <additemdialog-stub saveitem="() => {}" toggledialog="() => {}" dialog="[object Object]" name="slide-fade"></additemdialog-stub>
+  <v-dialog-stub opendelay="0" closedelay="0" contentclass="" maxwidth="290" origin="center center" persistent="true" retainfocus="true" transition="dialog-transition" width="auto">
+    <v-card-stub loaderheight="4" tag="div">
+      <v-card-title-stub class="headline">Do you really want to delete this section?</v-card-title-stub>
+      <v-card-actions-stub>
+        <v-spacer-stub></v-spacer-stub>
+        <v-btn-stub color="green darken-1" tag="button" activeclass="" text="true" type="button">Cancel</v-btn-stub>
+        <v-btn-stub color="green darken-1" tag="button" activeclass="" text="true" type="button">Confirm</v-btn-stub>
+      </v-card-actions-stub>
+    </v-card-stub>
+  </v-dialog-stub>
+</v-row-stub>
+`;
