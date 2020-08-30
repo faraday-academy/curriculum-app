@@ -31,7 +31,7 @@ export default {
   components: {
     AuthTemplate
   },
-  data() {
+  data () {
     return {
       code: '',
       email: ''
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['verify']),
-    submit() {
+    submit () {
       const payload = {
         email: this.email,
         code: this.code
@@ -50,7 +50,7 @@ export default {
       this.verify(payload)
     }
   },
-  mounted() {
+  mounted () {
     this.email = this.user.email
   }
 }

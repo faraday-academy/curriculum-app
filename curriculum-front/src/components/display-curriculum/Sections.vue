@@ -13,11 +13,13 @@
               </span>
               <span>
                 <v-icon
+                  v-if="canEdit()"
                   color="gray lighten-1"
                 >
                   mdi-pencil-box-outline
                 </v-icon>
                 <v-icon
+                  v-if="canEdit()"
                   color="error lighten-1"
                   @click="toggleConfirmDelete(i)"
                 >
@@ -35,6 +37,7 @@
               <v-subheader>
                 Resources
                 <v-icon
+                  v-if="canEdit()"
                   color="success lighten-1"
                   class="ml-1"
                   @click="toggleDialog('resource', i)"
@@ -62,6 +65,7 @@
                         {{ resource.name }}
                       </router-link>
                       <v-icon
+                        v-if="canEdit()"
                         color="gray lighten-1"
                         class="togglable-icon"
                         @click="toggleDialog('resource', i, j)"
@@ -69,6 +73,7 @@
                         mdi-pencil-box-outline
                       </v-icon>
                       <v-icon
+                        v-if="canEdit()"
                         color="error lighten-1"
                         class="ml-1 togglable-icon"
                         @click="removeItem('resources', i, j)"
@@ -88,6 +93,7 @@
               <v-subheader>
                 Projects
                 <v-icon
+                  v-if="canEdit()"
                   color="success lighten-1"
                   class="ml-1"
                   @click="toggleDialog('project', i)"
@@ -115,6 +121,7 @@
                         {{ project.name }}
                       </router-link>
                       <v-icon
+                        v-if="canEdit()"
                         color="gray lighten-1"
                         class="togglable-icon"
                         @click="toggleDialog('project', i, k)"
@@ -122,6 +129,7 @@
                         mdi-pencil-box-outline
                       </v-icon>
                       <v-icon
+                        v-if="canEdit()"
                         color="error lighten-1"
                         class="ml-1 togglable-icon"
                         @click.stop="removeItem('projects', i, j)"
@@ -169,7 +177,8 @@ export default {
     toggleDialog: Function,
     saveItem: Function,
     editItem: Function,
-    removeItem: Function
+    removeItem: Function,
+    canEdit: Function
   },
   data () {
     return {

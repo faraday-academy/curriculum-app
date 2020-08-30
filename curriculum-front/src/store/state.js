@@ -5,5 +5,6 @@ export default {
     variant: 'success',
     message: ''
   },
-  completeCounts: []
+  completeCounts: [],
+  selectedCurriculum: {}
 }

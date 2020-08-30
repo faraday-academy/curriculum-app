@@ -1,23 +1,26 @@
 import Vue from 'vue'
 
 export default {
-  updateCurricula(state, curricula) {
+  updateSelectedCurriculum (state, curriculum) {
+    state.selectedCurriculum = curriculum
+  },
+  updateCurricula (state, curricula) {
     state.curricula = curricula
   },
-  appendCurriculum(state, curriculum) {
+  appendCurriculum (state, curriculum) {
     state.curricula.push(curriculum)
   },
-  updateCurriculum(state, payload) {
+  updateCurriculum (state, payload) {
     // payload: { id, body }
     // find and update one curriculum
   },
-  removeCurriculum(state, curriculumId) {
+  removeCurriculum (state, curriculumId) {
     const cIndex = state.curricula.findIndex((obj) => {
       return obj._id === curriculumId
     })
-    state.curricula.splice(cIndex, 1) 
+    state.curricula.splice(cIndex, 1)
   },
-  updateSection(state, payload) {
+  updateSection (state, payload) {
     const { curriculumId, body } = payload
     const cIndex = state.curricula.findIndex((obj) => {
       return obj._id === curriculumId
@@ -25,7 +28,7 @@ export default {
     const len = state.curricula[cIndex].sections.length
     state.curricula[cIndex].sections.splice(len, 0, body)
   },
-  removeSection(state, payload) {
+  removeSection (state, payload) {
     const { curriculumId, sectionId } = payload
     const cIndex = state.curricula.findIndex((obj) => {
       return obj._id === curriculumId
@@ -35,7 +38,7 @@ export default {
     })
     state.curricula[cIndex].sections.splice(sIndex, 1)
   },
-  upsertItem(state, payload) {
+  upsertItem (state, payload) {
     const { curriculumId, sectionId, type, body } = payload
     const cIndex = state.curricula.findIndex((obj) => {
       return obj._id === curriculumId
@@ -65,7 +68,7 @@ export default {
       state.curricula[cIndex].sections[sIndex][type].push(body)
     }
   },
-  removeItem(state, payload) {
+  removeItem (state, payload) {
     const { curriculumId, sectionId, type, body } = payload
     const cIndex = state.curricula.findIndex((obj) => {
       return obj._id === curriculumId
@@ -78,13 +81,13 @@ export default {
     })
     state.curricula[cIndex].sections[sIndex][type].splice(iIndex, 1)
   },
-  updateSnackbar(state, settings) {
+  updateSnackbar (state, settings) {
     state.snackbar = {
       ...state.snackbar,
       ...settings
     }
   },
-  updateCount(state, count) {
+  updateCount (state, count) {
     state.completeCounts = count
   }
 }

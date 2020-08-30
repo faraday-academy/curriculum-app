@@ -7,6 +7,7 @@
       >
         {{ selectedCurriculum.name }}
         <v-icon
+          v-if="canEdit()"
           color="gray lighten-1"
           class="togglable-icon"
           @click="toggleEdit('name')"
@@ -16,7 +17,7 @@
       </h1>
       <v-text-field
         data-test="name-edit-field"
-        v-else
+        v-else-if="canEdit()"
         v-model="selectedCurriculum.name"
       >
         <template v-slot:append-outer>
@@ -42,6 +43,7 @@
         >
           Goal: {{ selectedCurriculum.goal }}
           <v-icon
+            v-if="canEdit()"
             color="gray lighten-1"
             class="togglable-icon"
             @click="toggleEdit('goal')"
@@ -51,7 +53,7 @@
           </v-icon>
         </p>
         <v-text-field
-          v-else
+          v-else-if="canEdit()"
           v-model="selectedCurriculum.goal"
         >
           <template v-slot:append-outer>
@@ -75,12 +77,19 @@
         <v-btn color="info" small text>Add Goal</v-btn>
       </div>
 
+      <div>
+        <p>
+          Created By: {{ selectedCurriculum.createdByName }}
+        </p>
+      </div>
+
       <p
         class="hover-icon-container"
         v-if="editField !== 'description'"
       >
         {{ selectedCurriculum.description }}
         <v-icon
+          v-if="canEdit()"
           color="gray lighten-1"
           class="togglable-icon"
           @click="toggleEdit('description')"
@@ -90,7 +99,7 @@
         </v-icon>
       </p>
       <v-text-field
-        v-else
+        v-else-if="canEdit()"
         v-model="selectedCurriculum.description"
       >
         <template v-slot:append-outer>
@@ -119,7 +128,8 @@ export default {
     selectedCurriculum: Object,
     toggleEdit: Function,
     saveEdit: Function,
-    cancelEdit: Function
+    cancelEdit: Function,
+    canEdit: Function
   }
 }
 </script>

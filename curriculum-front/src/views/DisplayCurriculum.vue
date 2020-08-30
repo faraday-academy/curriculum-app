@@ -12,6 +12,7 @@
         :toggleEdit="toggleEdit"
         :saveEdit="saveEdit"
         :cancelEdit="cancelEdit"
+        :canEdit="canEdit"
       />
 
       <Sections
@@ -21,6 +22,7 @@
         :saveItem="saveItem"
         :removeItem="removeItem"
         :toggleDialog="toggleDialog"
+        :canEdit="canEdit"
       />
 
       <FormSection
@@ -30,19 +32,20 @@
         :section="$v.tempSection"
         :sectionUrlErrors="sectionUrlErrors"
         :addItem="addItem"
+        :canEdit="canEdit"
       />
 
       <v-btn
-        v-if="!showSectionForm"
+        v-if="!showSectionForm && canEdit()"
         color="primary"
         @click="toggleSectionForm"
       >
         Add Section
       </v-btn>
-      <div v-else>
+      <div v-else-if="showSectionForm && canEdit()">
         <v-btn
           color="primary"
-          @click="saveSection" 
+          @click="saveSection"
         >
           Save Section
         </v-btn>
@@ -68,9 +71,8 @@ export default {
     Sections,
     FormSection
   },
-  data() {
+  data () {
     return {
-      selectedCurriculum: {},
       tempSection: {
         name: '',
         goal: '',
@@ -122,10 +124,12 @@ export default {
     }
   },
   computed: {
-    ...mapState(['curricula'])
+    ...mapState(['curricula', 'selectedCurriculum']),
+    ...mapState('auth', ['user'])
   },
   methods: {
     ...mapActions([
+      'getCurriculum',
       'patchCurriculum',
       'postSection',
       'patchItem',
@@ -133,7 +137,7 @@ export default {
       'putItem',
       'deleteItem'
     ]),
-    toggleComplete(type, sectionIndex, typeIndex) {
+    toggleComplete (type, sectionIndex, typeIndex) {
       const { sections, _id } = this.selectedCurriculum
       const section = sections[sectionIndex]
       const payload = {
@@ -144,13 +148,13 @@ export default {
       }
       this.patchItem(payload)
     },
-    toggleEdit(field) {
+    toggleEdit (field) {
       this.editField = field
     },
-    cancelEdit() {
+    cancelEdit () {
       this.editField = ''
     },
-    saveEdit(field) {
+    saveEdit (field) {
       const { _id } = this.selectedCurriculum
 
       const body = {
@@ -163,7 +167,7 @@ export default {
       this.patchCurriculum(payload)
       this.editField = ''
     },
-    toggleDialog(type, sectionIndex, itemIndex) {
+    toggleDialog (type, sectionIndex, itemIndex) {
       if (this.dialog.show) {
         this.dialog.name = ''
         this.dialog.url = ''
@@ -184,7 +188,7 @@ export default {
       this.dialog.show = !this.dialog.show
       this.dialog.type = type
     },
-    saveItem(type) {
+    saveItem (type) {
       // type == 'resources' or 'projects'
       const { sections, _id } = this.selectedCurriculum
       const { name, url, sectionIndex, itemIndex, isEditing } = this.dialog
@@ -212,7 +216,7 @@ export default {
       this.dialog.url = ''
       this.dialog.show = false
     },
-    removeItem(type, sectionIndex, itemIndex) {
+    removeItem (type, sectionIndex, itemIndex) {
       const { sections, _id } = this.selectedCurriculum
       const section = sections[sectionIndex]
 
@@ -224,7 +228,7 @@ export default {
       }
       this.deleteItem(payload)
     },
-    addItem(type, i) {
+    addItem (type, i) {
       let key = `new${type[0].toUpperCase()}${type.slice(1)}`
       const item = this.tempSection[key]
 
@@ -247,26 +251,26 @@ export default {
         this.updateSnackbar({ message, show: true, variant: 'error' })
       }
     },
-    sectionNameErrors(i) {
+    sectionNameErrors (i) {
       const errors = []
       if (!this.$v.tempSection.name.$dirty) return errors
       !this.$v.tempSection.name.maxLength && errors.push('Name must be at most 30 characters long.')
       !this.$v.tempSection.name.required && errors.push('Name is required.')
       return errors
     },
-    sectionUrlErrors(i, type) {
+    sectionUrlErrors (i, type) {
       const errors = []
       if (!this.$v.tempSection[`new${type}`].url.$model.length) return errors
       !this.$v.tempSection[`new${type}`].url.url && errors.push('Must be a valid url.')
       return errors
     },
-    toggleSectionForm() {
+    toggleSectionForm () {
       if (this.showSectionForm) {
         this.clearSectionForm()
       }
       this.showSectionForm = !this.showSectionForm
     },
-    clearSectionForm() {
+    clearSectionForm () {
       this.$v.$reset()
       this.tempSection = {
         name: '',
@@ -283,7 +287,7 @@ export default {
         projects: []
       }
     },
-    saveSection() {
+    saveSection () {
       const { name, goal, resources, projects } = this.tempSection
       const body = {
         name,
@@ -300,19 +304,27 @@ export default {
       this.clearSectionForm()
       this.toggleSectionForm()
     },
-    updateSection() {
+    updateSection () {
 
     },
-    removeSection() {
+    removeSection () {
 
+    },
+    canEdit () {
+      console.log(this.selectedCurriculum.createdBy, this.user.id)
+      if (this.selectedCurriculum.createdBy === this.user.id) {
+        return true
+      }
+      return false
     }
   },
-  mounted() {
+  mounted () {
     // TODO: make a call here to get fresh data
-    // instead of just pulling off of state 
-    this.selectedCurriculum = this.curricula.find((curriculum) => {
-      return curriculum._id === this.$route.params.id
-    })
+    // instead of just pulling off of state
+    this.getCurriculum(this.$route.params.id)
+    // this.selectedCurriculum = this.curricula.find((curriculum) => {
+    //   return curriculum._id === this.$route.params.id
+    // })
   }
 }
 </script>

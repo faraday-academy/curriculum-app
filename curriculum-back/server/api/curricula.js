@@ -2,7 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 mongoose.set('debug', true)
 
-const { Curriculum } = require('@db')
+const { Curriculum, User } = require('@db')
 const {
   jwt: { decodeToken }
 } = require('../utils')
@@ -229,7 +229,11 @@ authRouter.route('/:id/sections')
 router.route('/:id')
   .get(async function (req, res) {
     const curriculum = await Curriculum.findById(req.params.id)
-    res.send(curriculum)
+    // find username by id
+    const user = await User.findById(curriculum.createdBy)
+    curriculum.createdByName = user.username
+
+    res.send({ curriculum, createdByName: user.username})
   })
 authRouter.route('/:id')
   .patch(async function (req, res) {
