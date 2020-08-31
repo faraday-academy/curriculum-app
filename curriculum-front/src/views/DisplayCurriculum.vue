@@ -124,7 +124,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['curricula', 'selectedCurriculum']),
+    ...mapState(['selectedCurriculum']),
     ...mapState('auth', ['user'])
   },
   methods: {
@@ -132,6 +132,7 @@ export default {
       'getCurriculum',
       'patchCurriculum',
       'postSection',
+      'patchSection',
       'patchItem',
       'postItem',
       'putItem',
@@ -304,12 +305,6 @@ export default {
       this.clearSectionForm()
       this.toggleSectionForm()
     },
-    updateSection () {
-
-    },
-    removeSection () {
-
-    },
     canEdit () {
       if (this.selectedCurriculum.createdBy === this.user.id) {
         return true
@@ -318,12 +313,7 @@ export default {
     }
   },
   mounted () {
-    // TODO: make a call here to get fresh data
-    // instead of just pulling off of state
     this.getCurriculum(this.$route.params.id)
-    // this.selectedCurriculum = this.curricula.find((curriculum) => {
-    //   return curriculum._id === this.$route.params.id
-    // })
   }
 }
 </script>

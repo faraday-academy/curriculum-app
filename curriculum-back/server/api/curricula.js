@@ -156,21 +156,19 @@ router.route('/:id/sections/:sectionId')
 authRouter.route('/:id/sections/:sectionId')
   .patch(async function (req, res) {
     try {
-      const { id, sectionId, type, typeId } = req.params
-      const { isCompleted, name, url } = req.body
+      const { id, sectionId } = req.params
+      console.log(id, sectionId)
+      const { name, goal } = req.body
       const doc = await Curriculum.findById(id)
 
       if (checkIfAuthorizedUser(req, doc)) {
-        const section = doc.sections.id(sectionId)
-        let item = section[type].id(typeId)
-
-        item.isCompleted = isCompleted
-        item.name = name
-        item.url = url
+        let docSection = doc.sections.id(sectionId)
+        docSection.name = name
+        docSection.goal = goal
 
         await doc.save()
 
-        res.send(item)
+        res.send(docSection)
       } else {
         res.status(403).send('Unauthorized')
       }
@@ -229,7 +227,6 @@ authRouter.route('/:id/sections')
 router.route('/:id')
   .get(async function (req, res) {
     const curriculum = await Curriculum.findById(req.params.id)
-    // find username by id
     const user = await User.findById(curriculum.createdBy)
     curriculum.createdByName = user.username
 

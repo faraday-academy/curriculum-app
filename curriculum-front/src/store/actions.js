@@ -44,6 +44,17 @@ export default {
     updatedPayload.body = res.data
     commit('updateSection', updatedPayload)
   },
+  async patchSection ({ commit }, payload) {
+    const {
+      curriculumId,
+      section
+    } = payload
+    const res = await axios.patch(
+      `curricula/${curriculumId}/sections/${section._id}`,
+      { goal: section.goal, name: section.name }
+    )
+    // commit('upsertSection', section)
+  },
   async deleteSection ({ commit }, payload) {
     const { curriculumId, sectionId } = payload
     await axios.delete(
@@ -51,6 +62,7 @@ export default {
     )
     commit('removeSection', payload)
   },
+
   async postItem ({ commit }, payload) {
     let { curriculumId, sectionId, type, body } = payload
     const res = await axios.post(

@@ -15,13 +15,14 @@
                 <v-icon
                   v-if="canEdit()"
                   color="gray lighten-1"
+                  @click.stop="openEditSectionDialog(i)"
                 >
                   mdi-pencil-box-outline
                 </v-icon>
                 <v-icon
                   v-if="canEdit()"
                   color="error lighten-1"
-                  @click="toggleConfirmDelete(i)"
+                  @click.stop="toggleConfirmDelete(i)"
                 >
                   mdi-close-box-outline
                 </v-icon>
@@ -162,6 +163,34 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="showEditSectionDialog" persistent max-width="400">
+      <v-card>
+        <v-card-title class="headline">Edit Section Information</v-card-title>
+        <v-card-text>
+          <v-row no-gutters>
+            <v-col cols="12">
+              <v-text-field
+                placeholder="Section Name"
+                v-model="sectionEditing.name"
+              />
+            </v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="12">
+              <v-text-field
+                placeholder="Section Goal"
+                v-model="sectionEditing.url"
+              />
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" text @click="showEditSectionDialog = false">Cancel</v-btn>
+          <v-btn color="green darken-1" text @click="updateSection">Save</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 
@@ -183,17 +212,28 @@ export default {
   data () {
     return {
       showDeleteDialog: false,
-      selectedIndex: null
+      showEditSectionDialog: false,
+      selectedIndex: null,
+      sectionEditing: {}
     }
   },
   components: {
     AddItemDialog
   },
   methods: {
-    ...mapActions(['deleteSection']),
+    ...mapActions(['deleteSection', 'patchSection']),
     toggleConfirmDelete (index) {
       this.selectedIndex = index
       this.showDeleteDialog = !this.showDeleteDialog
+    },
+    openEditSectionDialog (index) {
+      this.selectedIndex = index
+      this.sectionEditing = this.selectedCurriculum.sections[index]
+      this.showEditSectionDialog = !this.showEditSectionDialog
+    },
+    closeEditSectionDialog (index) {
+      this.sectionEditing = {}
+      this.showEditSectionDialog = false
     },
     confirmDelete () {
       const section = this.selectedCurriculum.sections[this.selectedIndex]
@@ -203,6 +243,14 @@ export default {
       }
       this.deleteSection(payload)
       this.toggleConfirmDelete()
+    },
+    updateSection () {
+      const payload = {
+        curriculumId: this.selectedCurriculum._id,
+        section: this.sectionEditing
+      }
+      this.patchSection(payload)
+      this.closeEditSectionDialog()
     }
   }
 }
