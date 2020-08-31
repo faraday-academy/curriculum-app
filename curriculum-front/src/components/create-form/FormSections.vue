@@ -10,6 +10,7 @@
           :nameErrors="nameErrors"
           :sectionUrlErrors="sectionUrlErrors"
           :addItem="addItem"
+          :deleteSection="deleteSection"
         />
       </div>
     </v-col>
@@ -26,8 +27,9 @@ export default {
     deleteItem: Function,
     v: Object,
     nameErrors: Function,
-    sectionUrlErrors: Function
-  }, 
+    sectionUrlErrors: Function,
+    deleteSection: Function
+  },
   components: {
     FormSection
   }

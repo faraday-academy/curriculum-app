@@ -1,6 +1,9 @@
 <template>
   <v-toolbar color="info">
-    <v-toolbar-title>Curricula App</v-toolbar-title>
+    <v-toolbar-title>
+      <v-icon left>mdi-school</v-icon>
+      <b>Curricula App</b>
+    </v-toolbar-title>
 
     <v-spacer></v-spacer>
 

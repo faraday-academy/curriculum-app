@@ -46,6 +46,7 @@
       :v="$v"
       :nameErrors="sectionNameErrors"
       :sectionUrlErrors="sectionUrlErrors"
+      :deleteSection="deleteSection"
     />
 
     <v-row>
@@ -163,6 +164,9 @@ export default {
         },
         projects: []
       })
+    },
+    deleteSection (index) {
+      this.sections.splice(index, 1)
     },
     addItem (type, i) {
       let key = `new${type[0].toUpperCase()}${type.slice(1)}`

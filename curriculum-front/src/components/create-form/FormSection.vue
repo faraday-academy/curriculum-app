@@ -2,7 +2,10 @@
   <v-card
     class="section-card"
   >
-    <v-card-title class="headline">Section #{{ parseInt(k) + 1 }}</v-card-title>
+    <v-card-title class="headline d-flex justify-space-between">
+      Section #{{ parseInt(k) + 1 }}
+      <v-icon left @click="deleteSection(k)">mdi-close</v-icon>
+    </v-card-title>
 
     <v-card-text>
       <v-row no-gutters>
@@ -159,7 +162,8 @@ export default {
     section: Object,
     sectionUrlErrors: Function,
     nameErrors: Function,
-    addItem: Function
+    addItem: Function,
+    deleteSection: Function
   }
 }
 </script>

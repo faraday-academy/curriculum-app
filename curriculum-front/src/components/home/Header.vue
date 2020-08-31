@@ -17,6 +17,7 @@
             All for free!
           </h3>
           <v-btn
+            v-if="!user.username"
             light
             large
             outlined
@@ -30,3 +31,13 @@
     </v-container>
   </v-sheet>
 </template>
+
+<script>
+import { mapState } from 'vuex'
+
+export default {
+  computed: {
+    ...mapState('auth', ['user'])
+  }
+}
+</script>

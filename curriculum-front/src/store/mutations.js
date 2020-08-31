@@ -26,6 +26,7 @@ export default {
       return obj._id === curriculumId
     })
     const len = state.curricula[cIndex].sections.length
+    console.log(len, cIndex)
     state.curricula[cIndex].sections.splice(len, 0, body)
   },
   removeSection (state, payload) {

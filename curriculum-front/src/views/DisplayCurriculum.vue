@@ -311,7 +311,6 @@ export default {
 
     },
     canEdit () {
-      console.log(this.selectedCurriculum.createdBy, this.user.id)
       if (this.selectedCurriculum.createdBy === this.user.id) {
         return true
       }
