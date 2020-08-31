@@ -26,7 +26,6 @@ router.route('/')
     const curricula = await Curriculum.find()
     res.send(curricula)
   })
-
 authRouter.route('/')
   .post(async function (req, res) {
     const { name, goal, description, sections, createdBy } = req.body
