@@ -157,7 +157,6 @@ authRouter.route('/:id/sections/:sectionId')
   .patch(async function (req, res) {
     try {
       const { id, sectionId } = req.params
-      console.log(id, sectionId)
       const { name, goal } = req.body
       const doc = await Curriculum.findById(id)
 

@@ -55,6 +55,7 @@
                   :key="resource + j"
                 >
                   <v-checkbox
+                    v-if="canEdit()"
                     color="primary"
                     v-model="resource.isCompleted"
                     @change="toggleComplete('resources', i, j)"
@@ -179,7 +180,7 @@
             <v-col cols="12">
               <v-text-field
                 placeholder="Section Goal"
-                v-model="sectionEditing.url"
+                v-model="sectionEditing.goal"
               />
             </v-col>
           </v-row>
