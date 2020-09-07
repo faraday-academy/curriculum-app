@@ -16,7 +16,7 @@
     "start": "npx nodemon app.js",
     "debug": "npx nodemon --inspect app.js",
     "preprod": "npm i --production",
-    "prod": "cross-env NODE_ENV=production && node app.js",
+    "prod": "cross-env NODE_ENV=production node app.js",
     "db:seed": "node db/seeder/seed.js",
     "db:clean": "node db/seeder/clean.js"
   },
