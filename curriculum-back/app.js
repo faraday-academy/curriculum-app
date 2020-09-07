@@ -1,6 +1,7 @@
 console.log(`Node environment: ${process.env.NODE_ENV}`)
 if (process.env.NODE_ENV === 'production') {
-  require('dotenv').config({ path: '/root/devops/.env' })
+  // this will be setup for different environments:
+  require('dotenv').config()
 } else {
   require('dotenv').config()
 }

@@ -1,8 +1,18 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost:27017/curriculumapp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
+
+if (process.env.NODE_ENV === 'production') {
+  const username = process.env.MONGO_INITDB_ROOT_USERNAME
+  const password = process.env.MONGO_INITDB_ROOT_PASSWORD
+  mongoose.connect(`mongodb://${username}:${encodeURIComponent(password)}@localhost:27017/curriculumapp`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+} else {
+  mongoose.connect('mongodb://localhost:27017/curriculumapp', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+}
 
 const Curriculum = require('./Curriculum')
 const User = require('./User')

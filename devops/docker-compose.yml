@@ -1,16 +1,43 @@
 version: "3"
 services:
-  curriculum-front:
+  app:
+    container_name: curriculum-front
     image: index.docker.io/fuze365/curriculum-front:latest
+    env_file:
+      - .env.front
+    networks:
+      - local_net
+    depends_on:
+      - api
+      - db
     ports:
       - "8080:8080"
-  curriculum-back:
+  api:
+    container_name: curriculum-back
     image: index.docker.io/fuze365/curriculum-back:latest
+    env_file:
+      - .env.back
+      - .env.db
+    networks:
+      - local_net
+    depends_on:
+      - db
     ports:
       - "3000:3000"
+  db:
+    image: mongo:4.2.0-bionic
+    volumes:
+      - /data/db:/data/db
+    env_file:
+      - .env.db
+    networks:
+      - local_net
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.docker/config.json:/config.json
     command: --interval 30
+networks:
+  local_net:
+    driver: bridge
