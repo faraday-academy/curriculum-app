@@ -8,14 +8,8 @@ services:
     image: index.docker.io/fuze365/curriculum-back:latest
     ports:
       - "3000:3000"
-  # mongo:
-  #   image: mongo
-  #   restart: always
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: example
   watchtower:
-    image: kopfkrieg/watchtower
+    image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - $HOME/.docker/config.json:/config.json
