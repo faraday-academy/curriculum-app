@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
+import InfiniteLoading from 'vue-infinite-loading'
 
 import App from './App.vue'
 import router from './router'
@@ -10,6 +11,7 @@ import vuetify from './plugins/vuetify'
 import './sass/index.sass'
 
 Vue.use(Vuelidate)
+Vue.use(InfiniteLoading, { /* options */ })
 
 Vue.config.productionTip = false
 

@@ -5,7 +5,7 @@ export default {
     state.selectedCurriculum = curriculum
   },
   updateCurricula (state, curricula) {
-    state.curricula = curricula
+    state.curricula.push(...curricula)
   },
   appendCurriculum (state, curriculum) {
     state.curricula.push(curriculum)

@@ -7,12 +7,14 @@ export default {
     const curr = { ...data.curriculum, createdByName: data.createdByName }
     commit('updateSelectedCurriculum', curr)
   },
-  async getCurricula ({ commit }) {
-    const res = await axios.get('curricula')
-    commit('updateCurricula', res.data)
+  async getCurricula ({ commit }, payload) {
+    const { currentPage } = payload
+    const res = await axios.get(`curricula?page=${currentPage}`)
+    commit('updateCurricula', res.data.docs)
   },
-  async getUserCurricula ({ commit }, userId) {
-    const res = await axios.get(`users/${userId}/curricula`)
+  async getUserCurricula ({ commit }, payload) {
+    const { userId, currentPage } = payload
+    const res = await axios.get(`users/${userId}/curricula?page=${currentPage}`)
     commit('updateCurricula', res.data)
   },
   async postCurriculum ({ commit }, curriculum) {
