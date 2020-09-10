@@ -8,14 +8,22 @@ export default {
     commit('updateSelectedCurriculum', curr)
   },
   async getCurricula ({ commit }, payload) {
-    const { currentPage } = payload
-    const res = await axios.get(`curricula?page=${currentPage}`)
-    commit('updateCurricula', res.data.docs)
-  },
-  async getUserCurricula ({ commit }, payload) {
-    const { userId, currentPage } = payload
-    const res = await axios.get(`users/${userId}/curricula?page=${currentPage}`)
-    commit('updateCurricula', res.data)
+    const { currentPage, userId } = payload
+    let res = {}
+    if (userId) {
+      res = await axios.get(`users/${userId}/curricula?page=${currentPage}`)
+    } else {
+      res = await axios.get(`curricula?page=${currentPage}`)
+    }
+
+    let meta = { ...res.data }
+    delete meta.docs
+    commit('setCurriculaMeta', meta)
+    if (currentPage === 1) {
+      commit('setCurricula', res.data.docs)
+    } else {
+      commit('updateCurricula', res.data.docs)
+    }
   },
   async postCurriculum ({ commit }, curriculum) {
     const res = await axios.post(

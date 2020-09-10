@@ -73,13 +73,13 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
-      <infinite-loading @infinite="loadCurricula"></infinite-loading>
+      <infinite-loading :identifier="infiniteId" @infinite="loadCurricula" />
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'DisplayCurricula',
@@ -89,43 +89,45 @@ export default {
       currentTab: 0,
       showCurriculumDelete: false,
       selectedCurriculumId: '',
-      currentPage: 0
+      currentPage: 1,
+      infiniteId: +new Date()
     }
   },
   computed: {
-    ...mapState(['curricula', 'completeCounts']),
+    ...mapState(['curricula', 'completeCounts', 'curriculaMeta']),
     ...mapState('auth', ['user'])
   },
   watch: {
     currentTab (val) {
-      if (val === 0) {
-        this.getUserCurricula(this.user.id)
-      } else {
-        this.getCurricula()
-      }
+      this.currentPage = 1
+      this.setCurricula([])
+      this.infiniteId += 1
     }
   },
   methods: {
     ...mapActions([
       'getCurricula',
-      'getUserCurricula',
       'countAllCompleted',
       'deleteCurriculum'
+    ]),
+    ...mapMutations([
+      'setCurricula'
     ]),
     async loadCurricula ($state) {
       let payload = {
         currentPage: this.currentPage
       }
-      if (this.user.id) {
+      if (this.currentTab === 0 && this.user.id) {
         payload.userId = this.user.id
-        await this.getUserCurricula(payload)
-        $state.loaded()
-      } else {
-        await this.getCurricula(payload)
-        $state.loaded()
       }
-      $state.complete()
-      this.currentPage += 1
+      await this.getCurricula(payload)
+
+      if (this.curriculaMeta.hasNextPage) {
+        $state.loaded()
+        this.currentPage += 1
+      } else {
+        $state.complete()
+      }
     },
     retrieveCompleted (id) {
       // TODO: remove
@@ -153,17 +155,6 @@ export default {
     }
   },
   mounted () {
-    let payload = {
-      currentPage: this.currentPage
-    }
-    if (this.user.id) {
-      payload.userId = this.user.id
-      this.getUserCurricula(payload)
-    } else {
-      this.getCurricula(payload)
-    }
-  },
-  created () {
     this.countAllCompleted()
   }
 }

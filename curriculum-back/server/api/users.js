@@ -16,7 +16,11 @@ if (process.env.NODE_ENV !== 'production') {
 router.route('/:id/curricula')
   .get(async (req, res) => {
     const userId = req.params.id
-    const curricula = await Curriculum.find({ createdBy: userId })
+
+    const curricula = await Curriculum.paginate({ createdBy: userId }, {
+      page: parseInt(req.query.page) || 1,
+      limit: 5
+    })
     res.send(curricula)
   })
 
