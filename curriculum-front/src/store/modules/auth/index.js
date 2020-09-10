@@ -8,7 +8,7 @@ export default {
     user: {}
   },
   actions: {
-    async login({ commit }, payload) {
+    async login ({ commit }, payload) {
       const res = await axios.post(
         `auth/login`,
         payload
@@ -21,7 +21,7 @@ export default {
       axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
       router.replace('/curricula')
     },
-    async register({ commit }, payload) {
+    async register ({ commit }, payload) {
       const res = await axios.post(
         `auth/register`,
         payload
@@ -35,14 +35,14 @@ export default {
       commit('updateSnackbar', snackbar, { root: true })
       router.replace('/verify')
     },
-    async verify({ commit }, payload) {
+    async verify ({ commit }, payload) {
       try {
         const res = await axios.post(
           `auth/verify`,
           payload
         )
         router.replace('/login')
-      } catch(err) {
+      } catch (err) {
         const snackbar = {
           show: true,
           variant: 'error',
@@ -51,23 +51,23 @@ export default {
         commit('updateSnackbar', snackbar, { root: true })
       }
     },
-    async logUserOut({ commit }, payload) {
+    async logUserOut ({ commit }, payload) {
       commit('clearUserInfo')
       localStorage.removeItem('token')
       router.replace('/')
     },
-    async getUser() {
+    async getUser () {
 
     }
   },
   mutations: {
-    updateUser(state, payload) {
+    updateUser (state, payload) {
       state.user = {
         ...state.user,
         ...payload
       }
     },
-    clearUserInfo(state) {
+    clearUserInfo (state) {
       state.user = {}
     }
   },
