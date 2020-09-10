@@ -42,11 +42,11 @@
               mdi-trash-can-outline
             </v-icon>
           </v-card-title>
-          
+
           <v-card-subtitle>
             {{ curriculum.description }}
           </v-card-subtitle>
-          
+
           <v-card-text>
             <v-progress-linear
               :value="retrieveCompleted(curriculum._id)"
@@ -73,71 +73,88 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <infinite-loading :identifier="infiniteId" @infinite="loadCurricula" />
     </v-col>
   </v-row>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'DisplayCurricula',
-  data() {
+  data () {
     return {
       ratioCompleted: 35,
       currentTab: 0,
       showCurriculumDelete: false,
-      selectedCurriculumId: ''
+      selectedCurriculumId: '',
+      currentPage: 1,
+      infiniteId: +new Date()
     }
   },
   computed: {
-    ...mapState(['curricula', 'completeCounts']),
+    ...mapState(['curricula', 'completeCounts', 'curriculaMeta']),
     ...mapState('auth', ['user'])
   },
   watch: {
-    currentTab(val) {
-      if (val == 0) {
-        this.getUserCurricula(this.user.id)
-      } else {
-        this.getCurricula()
-      }
+    currentTab (val) {
+      this.currentPage = 1
+      this.setCurricula([])
+      this.infiniteId += 1
     }
   },
   methods: {
     ...mapActions([
       'getCurricula',
-      'getUserCurricula',
       'countAllCompleted',
       'deleteCurriculum'
     ]),
-    retrieveCompleted(id) {
-      if (this.curricula) {
-        const totals = this.completeCounts.find((obj) => {
-        return obj.id === id
-        })
-        return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
+    ...mapMutations([
+      'setCurricula'
+    ]),
+    async loadCurricula ($state) {
+      let payload = {
+        currentPage: this.currentPage
+      }
+      if (this.currentTab === 0 && this.user.id) {
+        payload.userId = this.user.id
+      }
+      await this.getCurricula(payload)
+
+      if (this.curriculaMeta.hasNextPage) {
+        $state.loaded()
+        this.currentPage += 1
+      } else {
+        $state.complete()
+      }
+    },
+    retrieveCompleted (id) {
+      // TODO: remove
+      try {
+        if (this.curricula) {
+          const totals = this.completeCounts.find((obj) => {
+            return obj.id === id
+          })
+          return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
+        }
+      } catch (err) {
+        console.error(err)
       }
       return 0
     },
-    toggleDeleteDialog(curriculumId) {
+    toggleDeleteDialog (curriculumId) {
       // I am just saving the current curriculum id here for delete
       // probably not the best thing long term, but works for now
       this.selectedCurriculumId = curriculumId
       this.showCurriculumDelete = !this.showCurriculumDelete
     },
-    confirmDelete() {
+    confirmDelete () {
       this.deleteCurriculum(this.selectedCurriculumId)
       this.showCurriculumDelete = false
     }
   },
-  mounted() {
-    if (this.user.id) {
-      this.getUserCurricula(this.user.id)
-    } else {
-      this.getCurricula()
-    }
-  },
-  created() {
+  mounted () {
     this.countAllCompleted()
   }
 }

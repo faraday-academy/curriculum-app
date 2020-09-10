@@ -4,8 +4,16 @@ export default {
   updateSelectedCurriculum (state, curriculum) {
     state.selectedCurriculum = curriculum
   },
-  updateCurricula (state, curricula) {
+  setCurriculaMeta (state, metaData) {
+    state.curriculaMeta = metaData
+  },
+  setCurricula (state, curricula) {
+    console.log('set', curricula)
     state.curricula = curricula
+  },
+  updateCurricula (state, curricula) {
+    console.log('update', curricula)
+    state.curricula.push(...curricula)
   },
   appendCurriculum (state, curriculum) {
     state.curricula.push(curriculum)

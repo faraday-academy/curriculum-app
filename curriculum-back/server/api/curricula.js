@@ -23,7 +23,10 @@ function checkIfAuthorizedUser(req, curriculum) {
 
 router.route('/')
   .get(async function (req, res) {
-    const curricula = await Curriculum.find()
+    const curricula = await Curriculum.paginate({}, {
+      page: parseInt(req.query.page) || 1,
+      limit: 5
+    })
     res.send(curricula)
   })
 authRouter.route('/')

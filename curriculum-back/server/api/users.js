@@ -2,7 +2,6 @@
 
 const express = require('express')
 const mongoose = require('mongoose')
-mongoose.set('debug', true)
 
 const { User, Curriculum } = require('@db')
 const bcrypt = require('bcrypt')
@@ -10,10 +9,18 @@ const { hashPassword } = require('../utils/auth')
 
 const router = express.Router()
 
+if (process.env.NODE_ENV !== 'production') {
+  mongoose.set('debug', true)
+}
+
 router.route('/:id/curricula')
   .get(async (req, res) => {
     const userId = req.params.id
-    const curricula = await Curriculum.find({ createdBy: userId })
+
+    const curricula = await Curriculum.paginate({ createdBy: userId }, {
+      page: parseInt(req.query.page) || 1,
+      limit: 5
+    })
     res.send(curricula)
   })
 

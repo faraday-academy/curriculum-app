@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const mongoosePaginate = require('mongoose-paginate-v2')
 
 const CurriculumSchema = new mongoose.Schema({
   name: {
@@ -52,6 +53,7 @@ const CurriculumSchema = new mongoose.Schema({
   }]
 }, { timestamps: true })
 
+CurriculumSchema.plugin(mongoosePaginate)
 const Curriculum = mongoose.model('Curriculum', CurriculumSchema)
 
 module.exports = Curriculum
