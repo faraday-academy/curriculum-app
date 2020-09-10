@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 if (process.env.NODE_ENV === 'production') {
   const username = process.env.MONGO_INITDB_ROOT_USERNAME
   const password = process.env.MONGO_INITDB_ROOT_PASSWORD
-  mongoose.connect(`mongodb://mongo/curriculumapp`, {
+  mongoose.connect(`mongodb://${username}:${password}@mongo/curriculumapp`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
