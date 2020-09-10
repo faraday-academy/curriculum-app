@@ -41,7 +41,7 @@ export default {
   components: {
     AuthTemplate
   },
-  data() {
+  data () {
     return {
       email: '',
       password: ''
@@ -60,14 +60,14 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['login']),
-    emailErrors() {
+    emailErrors () {
       const errors = []
       if (!this.$v.email.$dirty) return errors
       !this.$v.email.required && errors.push('E-mail is required.')
       !this.$v.email.email && errors.push('Invalid email.')
       return errors
     },
-    passwordErrors() {
+    passwordErrors () {
       const errors = []
       if (!this.$v.password.$dirty) return errors
       !this.$v.password.required && errors.push('Password is required.')
@@ -75,7 +75,7 @@ export default {
       !this.$v.password.maxLength && errors.push('Password must be at most 128 characters long.')
       return errors
     },
-    submit() {
+    submit () {
       const payload = {
         email: this.email,
         password: this.password

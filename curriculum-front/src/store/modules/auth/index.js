@@ -9,17 +9,27 @@ export default {
   },
   actions: {
     async login ({ commit }, payload) {
-      const res = await axios.post(
-        `auth/login`,
-        payload
-      )
-      localStorage.setItem('token', res.data.token)
-      commit('updateUser', res.data)
+      try {
+        const res = await axios.post(
+          `auth/login`,
+          payload
+        )
+        localStorage.setItem('token', res.data.token)
+        commit('updateUser', res.data)
 
-      // have to set this here or else it will be undefined
-      // on initial api requests
-      axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
-      router.replace('/curricula')
+        // have to set this here or else it will be undefined
+        // on initial api requests
+        axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
+        router.replace('/curricula')
+      } catch (err) {
+        console.error(err)
+        const snackbar = {
+          show: true,
+          variant: 'error',
+          message: 'Login failed.'
+        }
+        commit('updateSnackbar', snackbar, { root: true })
+      }
     },
     async register ({ commit }, payload) {
       const res = await axios.post(
@@ -30,6 +40,7 @@ export default {
 
       const snackbar = {
         show: true,
+        variant: 'success',
         message: 'Sign up successful!'
       }
       commit('updateSnackbar', snackbar, { root: true })

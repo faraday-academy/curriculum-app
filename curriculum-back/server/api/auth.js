@@ -16,29 +16,34 @@ const router = express.Router()
 
 router.route('/login')
   .post(async (req, res) => {
-    const { email, password } = req.body
-    const user = await User.findOne({ email })
+    try {
+      const { email, password } = req.body
+      const user = await User.findOne({ email })
 
-    const isValid = await bcrypt.compare(password, user.password)
-    if (!isValid) {
-      res.status(401).send('Invalid Login Credentials')
+      const isValid = await bcrypt.compare(password, user.password)
+      if (!isValid) {
+        res.status(401).send('Invalid Login Credentials')
+      }
+
+      const token = generateToken(user._id)
+
+      let payload = {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        token
+      }
+
+      res.send(payload)
+    } catch (err) {
+      console.error(err)
     }
-
-    const token = generateToken(user._id)
-
-    let payload = {
-      id: user._id,
-      username: user.username,
-      email: user.email,
-      token
-    }
-
-    res.send(payload)
   })
 
 router.route('/register')
   .post(async (req, res) => {
     const { username, email, password } = req.body
+    console.log(req.body)
 
     try {
       if (password.length >= 8) {
@@ -49,6 +54,7 @@ router.route('/register')
           password: hash
         })
         const userRes = await user.save()
+        console.log(userRes)
 
         const code = Math.floor(Math.random() * (999999 - 100000) + 100000)
         const verification = new Verification({
@@ -62,8 +68,9 @@ router.route('/register')
         }
         await sendEmail(payload)
         res.send(201, { username, email })
+      } else {
+        res.send('Invalid credentials').status(400)
       }
-      res.send(400)
     } catch(err) {
       console.error(err)
       res.send(400)
@@ -83,8 +90,10 @@ router.route('/verify')
         await user.save()
         res.send('Verified')
         return true
+      } else {
+        res.status(400).send('Invalid Code')
       }
-    } finally {
+    } catch (err) {
       res.status(400).send('Invalid Code')
     }
   })

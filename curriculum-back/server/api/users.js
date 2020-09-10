@@ -2,13 +2,16 @@
 
 const express = require('express')
 const mongoose = require('mongoose')
-mongoose.set('debug', true)
 
 const { User, Curriculum } = require('@db')
 const bcrypt = require('bcrypt')
 const { hashPassword } = require('../utils/auth')
 
 const router = express.Router()
+
+if (process.env.NODE_ENV !== 'production') {
+  mongoose.set('debug', true)
+}
 
 router.route('/:id/curricula')
   .get(async (req, res) => {
