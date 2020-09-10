@@ -23,7 +23,7 @@ services:
     depends_on:
       - db
     ports:
-      - "3000:3000"
+      - "5000:5000"
   db:
     image: mongo:4.2.0-bionic
     volumes:
