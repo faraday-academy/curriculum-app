@@ -25,6 +25,7 @@ services:
     ports:
       - "5000:5000"
   db:
+    container_name: mongo
     image: mongo:4.2.0-bionic
     volumes:
       - /data/db:/data/db
