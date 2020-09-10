@@ -88,7 +88,7 @@ export default {
       ...settings
     }
   },
-  updateCount (state, count) {
-    state.completeCounts = count
+  updateCount (state, payload) {
+    state.completeCounts = payload || []
   }
 }
