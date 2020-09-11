@@ -227,11 +227,15 @@ authRouter.route('/:id/sections')
 
 router.route('/:id')
   .get(async function (req, res) {
-    const curriculum = await Curriculum.findById(req.params.id)
-    const user = await User.findById(curriculum.createdBy)
-    curriculum.createdByName = user.username
+    try {
+      const curriculum = await Curriculum.findById(req.params.id)
+      const user = await User.findById(curriculum.createdBy)
+      curriculum.createdByName = user.username
 
-    res.send({ curriculum, createdByName: user.username})
+      res.send({ curriculum, createdByName: user.username})
+    } catch (err) {
+      res.status(404).send(err)
+    }
   })
 authRouter.route('/:id')
   .patch(async function (req, res) {
