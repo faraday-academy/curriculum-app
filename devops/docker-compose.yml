@@ -33,6 +33,8 @@ services:
       - .env.db
     networks:
       - local_net
+    ports:
+      - "27017:27017"
   watchtower:
     image: containrrr/watchtower
     volumes:
