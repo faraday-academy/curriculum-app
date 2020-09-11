@@ -64,7 +64,8 @@ router.route('/register')
         await verification.save()
 
         const payload = {
-          code
+          code,
+          email
         }
         await sendEmail(payload)
         res.send(201, { username, email })
