@@ -25,6 +25,7 @@
         v-else
         left
         bottom
+        offset-y
       >
         <template v-slot:activator="{ on }">
           <v-btn v-on="on" color="secondary" class="black--text">
