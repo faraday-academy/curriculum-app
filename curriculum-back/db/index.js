@@ -1,8 +1,7 @@
 const mongoose = require('mongoose')
 
 if (process.env.NODE_ENV === 'production') {
-  const { DB_USER, DB_PASSWORD } = process.env
-  mongoose.connect(`mongodb://${DB_USER}:${DB_PASSWORD}@mongo/curriculumapp`, {
+  mongoose.connect(`mongodb://mongo/curriculumapp`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
