@@ -4,7 +4,9 @@ import router from '../router'
 export default {
   async getCurriculum ({ commit }, id) {
     const { data } = await axios.get(`curricula/${id}`)
+    console.log(data)
     const curr = { ...data.curriculum, createdByName: data.createdByName }
+    console.log(curr)
     commit('updateSelectedCurriculum', curr)
   },
   async getCurricula ({ commit }, payload) {
