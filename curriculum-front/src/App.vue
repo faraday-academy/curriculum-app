@@ -38,13 +38,8 @@ export default {
   components: {
     TopNav
   },
-  data () {
-    return {
-      loading: false
-    }
-  },
   computed: {
-    ...mapState(['snackbar'])
+    ...mapState(['snackbar', 'loading'])
   },
   methods: {
     ...mapMutations(['updateSnackbar'])

@@ -3,7 +3,8 @@ import Router from 'vue-router'
 
 import routes from './routes'
 // import actions from '@/store/action'
-// import mutations from '@/store/mutations'
+import mutations from '@/store/mutations'
+import state from '@/store/state'
 
 Vue.use(Router)
 
@@ -29,7 +30,7 @@ router.beforeEach(async (to, from, next) => {
 
 router.afterEach((to, from) => {
   // turn off spinner
-  // mutations.toggleGlobalSpinner(state, false)
+  mutations.updateLoadingStatus(state, false)
 })
 
 export default router
