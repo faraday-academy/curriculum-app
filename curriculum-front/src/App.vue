@@ -21,6 +21,12 @@
         Close
       </v-btn>
     </v-snackbar>
+    <v-overlay :value="loading">
+      <rotate-loader
+        :loading="loading"
+        :color="'#fff'"
+      />
+    </v-overlay>
   </v-app>
 </template>
 
@@ -31,6 +37,11 @@ import TopNav from './components/TopNav.vue'
 export default {
   components: {
     TopNav
+  },
+  data () {
+    return {
+      loading: false
+    }
   },
   computed: {
     ...mapState(['snackbar'])
