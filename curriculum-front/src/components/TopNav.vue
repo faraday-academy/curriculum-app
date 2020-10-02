@@ -2,13 +2,14 @@
   <v-toolbar color="info">
     <v-toolbar-title>
       <v-icon left>mdi-school</v-icon>
-        <b
-        ><router-link
+      <b>
+        <router-link
           to="/"
           style="text-decoration: none; color: black; outline: none"
-          >Curricula App</router-link
-        ></b
-      >
+        >
+          Curricula App
+        </router-link>
+      </b>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
