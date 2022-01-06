@@ -31,7 +31,7 @@ To see the playlist where I livestream the building of this app, [click here](ht
 
 1. Open another terminal tab or window
 1. `cd curriculum-back`
-1. `npm setup`
+1. `npm run setup`
 1. `npm start`
 
 ## Tech Stack
