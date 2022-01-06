@@ -20,10 +20,19 @@ To see the playlist where I livestream the building of this app, [click here](ht
 
 ## Running Locally
 
+### Run the Front-End
+
 1. Clone this repo
 1. `cd curriculum-front`
 1. `npm i`
 1. `npm run serve`
+
+### Run the Back-End
+
+1. Open another terminal tab or window
+1. `cd curriculum-back`
+1. `npm setup`
+1. `npm start`
 
 ## Tech Stack
 
