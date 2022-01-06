@@ -67,6 +67,7 @@ router.route('/register')
           code,
           email
         }
+
         await sendEmail(payload)
         res.send(201, { username, email })
       } else {
@@ -74,7 +75,7 @@ router.route('/register')
       }
     } catch(err) {
       console.error(err)
-      res.send(400)
+      res.sendStatus(400)
     }
   })
 
