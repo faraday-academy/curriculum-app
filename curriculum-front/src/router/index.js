@@ -1,16 +1,13 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import routes from './routes'
 // import actions from '@/store/action'
-import mutations from '@/store/mutations'
+// import mutations from '@/store/mutations'
 import state from '@/store/state'
 
-Vue.use(Router)
-
-let router = new Router({
-  mode: 'history',
-  routes
+let router = createRouter({
+  history: createWebHistory(),
+  routes,
 })
 
 router.beforeEach(async (to, from, next) => {
@@ -30,7 +27,7 @@ router.beforeEach(async (to, from, next) => {
 
 router.afterEach((to, from) => {
   // turn off spinner
-  mutations.updateLoadingStatus(state, false)
+  // mutations.updateLoadingStatus(state, false)
 })
 
 export default router
