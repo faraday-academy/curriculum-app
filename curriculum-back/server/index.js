@@ -7,7 +7,7 @@ const routes = require('./api')
 require('../db')
 
 const app = express()
-const port = 5000
+const port = 5050
 
 // middleware
 app.use(morgan('dev'))
