@@ -9,7 +9,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker-compose up -f devops/docker-compose.yml'
+        sh 'cd curriculum-back && docker build .'
       }
     }
 
