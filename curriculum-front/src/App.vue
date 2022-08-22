@@ -1,12 +1,12 @@
 <template>
-  <v-app id="app">
-    <TopNav :openDrawer="openDrawer" />
-    <MobileDrawer :drawer="drawer" />
+  <v-app>
+    <!-- <TopNav :openDrawer="openDrawer" />
+    <MobileDrawer :drawer="drawer" /> -->
 
     <v-content mb-8>
       <router-view/>
     </v-content>
-    <v-snackbar
+    <!-- <v-snackbar
       v-model="snackbar.show"
       :multi-line="true"
       :right="true"
@@ -28,7 +28,7 @@
         :loading="loading"
         :color="'#fff'"
       />
-    </v-overlay>
+    </v-overlay> -->
   </v-app>
 </template>
 

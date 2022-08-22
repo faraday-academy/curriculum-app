@@ -1,26 +1,19 @@
-import Vue from 'vue'
-import Vuelidate from 'vuelidate'
-import InfiniteLoading from 'vue-infinite-loading'
-import RotateLoader from 'vue-spinner/src/RotateLoader.vue'
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import { createVuetify } from 'vuetify'
+import easySpinner from 'vue-easy-spinner'
+import 'vuetify/styles'
 
 import App from './App.vue'
 import router from './router'
-import store from './store'
-import './registerServiceWorker'
-import vuetify from './plugins/vuetify'
-
 import './sass/index.sass'
 
-Vue.use(Vuelidate)
-Vue.use(InfiniteLoading, { /* options */ })
+const vuetify = createVuetify()
+const app = createApp(App)
 
-Vue.component('rotate-loader', RotateLoader)
+app.use(createPinia())
+app.use(router)
+app.use(vuetify)
+app.use(easySpinner, { prefix: 'easy' })
 
-Vue.config.productionTip = false
-
-export default new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+app.mount('#app')
