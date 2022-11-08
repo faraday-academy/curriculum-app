@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:16.3.0-alpine
 WORKDIR /usr/src/app
 COPY curriculum-front/package*.json ./
 RUN ls -l
