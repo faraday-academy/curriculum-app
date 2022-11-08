@@ -1,9 +1,4 @@
 {
-  "scripts": {
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; gatsby build"
-  }
-},
-{
   "name": "curriculum-front",
   "version": "0.1.0",
   "private": true,
