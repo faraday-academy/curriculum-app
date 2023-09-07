@@ -1,4 +1,5 @@
 FROM node:lts-alpine
+RUN apk add --no-cache --update nodejs npm
 WORKDIR /usr/src/app
 COPY curriculum-back/package*.json ./
 RUN npm install

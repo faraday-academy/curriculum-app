@@ -1,4 +1,5 @@
 FROM node:lts-alpine
+RUN apk add --no-cache --update nodejs npm
 WORKDIR /usr/src/app
 COPY curriculum-front/package*.json ./
 RUN ls -l
