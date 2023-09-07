@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:14-alpine
 RUN apk add --no-cache --update nodejs npm
 WORKDIR /usr/src/app
 COPY curriculum-front/package*.json ./
