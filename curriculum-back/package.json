@@ -13,7 +13,7 @@
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
     "setup": "concurrently \"npm i\" \"cp sample-env .env\"",
-    "start": "npx nodemon app.js",
+    "start": "cross-env NODE_ENV=development npx nodemon app.js",
     "debug": "npx nodemon --inspect app.js",
     "preprod": "npm i --production",
     "prod": "cross-env NODE_ENV=production node app.js",
@@ -25,6 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "5.0.0",
+    "concurrently": "^8.2.2",
     "cors": "2.8.5",
     "cross-env": "7.0.2",
     "dotenv": "8.2.0",
