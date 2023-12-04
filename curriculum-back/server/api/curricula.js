@@ -40,7 +40,7 @@ authRouter.route('/')
       createdBy
     })
     const currRes = await curriculum.save()
-    res.send(201, currRes)
+    res.status(201).send(currRes)
   })
 
 router.route('/:id/sections/:sectionId/:type/:typeId')
