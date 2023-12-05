@@ -2,6 +2,7 @@ const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
 const morgan = require('morgan')
+const treblle = require('@treblle/express')
 
 const routes = require('./api')
 require('../db')
@@ -10,6 +11,7 @@ const app = express()
 const port = 5050
 
 // middleware
+app.use(treblle())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(helmet())
