@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
 import InfiniteLoading from 'vue-infinite-loading'
-import RotateLoader from 'vue-spinner/src/RotateLoader.vue'
+import { VueSpinners } from '@saeris/vue-spinners'
 
 import App from './App.vue'
 import router from './router'
@@ -13,8 +13,7 @@ import './sass/index.sass'
 
 Vue.use(Vuelidate)
 Vue.use(InfiniteLoading, { /* options */ })
-
-Vue.component('rotate-loader', RotateLoader)
+Vue.use(VueSpinners)
 
 Vue.config.productionTip = false
 

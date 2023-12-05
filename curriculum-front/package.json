@@ -10,13 +10,13 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
+    "@saeris/vue-spinners": "^1.0.8",
     "axios": "^0.27.2",
     "core-js": "^2.6.5",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-infinite-loading": "2.4.5",
     "vue-router": "^3.0.3",
-    "vue-spinner": "1.0.4",
     "vuelidate": "0.7.5",
     "vuetify": "^2.1.0",
     "vuex": "^3.0.1",
