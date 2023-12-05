@@ -24,7 +24,6 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
-    "@vue/cli-plugin-e2e-nightwatch": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-plugin-pwa": "^3.0.1",
     "@vue/cli-plugin-unit-jest": "^5.0.8",
