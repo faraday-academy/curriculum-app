@@ -96,6 +96,9 @@ export default {
       ...settings
     }
   },
+  updateLoadingStatus (state, isLoading) {
+    state.loading = isLoading
+  },
   updateCount (state, payload) {
     state.completeCounts = payload || []
   }

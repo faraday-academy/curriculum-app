@@ -13,7 +13,7 @@
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
     "setup": "concurrently \"npm i\" \"cp sample-env .env\"",
-    "start": "cross-env NODE_ENV=development npx nodemon app.js",
+    "start": "cross-env NODE_ENV=local npx nodemon app.js",
     "debug": "npx nodemon --inspect app.js",
     "preprod": "npm i --production",
     "prod": "cross-env NODE_ENV=production node app.js",
@@ -24,10 +24,11 @@
   "author": "Gwendolyn Faraday <gwenfaraday@pm.me> (https://gwenfaraday.com/)",
   "license": "MIT",
   "dependencies": {
+    "@treblle/express": "^0.0.7",
     "bcrypt": "5.0.0",
-    "concurrently": "^8.2.2",
+    "concurrently": "^7.0.0",
     "cors": "2.8.5",
-    "cross-env": "7.0.2",
+    "cross-env": "^7.0.2",
     "dotenv": "8.2.0",
     "express": "4.17.1",
     "helmet": "3.21.2",
@@ -42,7 +43,7 @@
   "devDependencies": {
     "babel-eslint": "10.0.3",
     "eslint": "6.8.0",
-    "husky": "4.2.0",
+    "husky": "4.3.8",
     "jest": "25.1.0"
   },
   "_moduleAliases": {

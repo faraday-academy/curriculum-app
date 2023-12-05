@@ -7,5 +7,6 @@ export default {
     message: ''
   },
   completeCounts: [],
-  selectedCurriculum: {}
+  selectedCurriculum: {},
+  loading: false
 }

@@ -1,6 +1,8 @@
 <template>
   <v-app id="app">
-    <TopNav />
+    <TopNav :openDrawer="openDrawer" />
+    <MobileDrawer :drawer="drawer" />
+
     <v-content mb-8>
       <router-view/>
     </v-content>
@@ -21,22 +23,39 @@
         Close
       </v-btn>
     </v-snackbar>
+    <v-overlay :value="loading">
+      <rotate-loader
+        :loading="loading"
+        :color="'#fff'"
+      />
+    </v-overlay>
   </v-app>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import TopNav from './components/TopNav.vue'
+
+import TopNav from '@/components/TopNav.vue'
+import MobileDrawer from '@/components/MobileDrawer.vue'
 
 export default {
   components: {
-    TopNav
+    TopNav,
+    MobileDrawer
+  },
+  data () {
+    return {
+      drawer: false
+    }
   },
   computed: {
-    ...mapState(['snackbar'])
+    ...mapState(['snackbar', 'loading'])
   },
   methods: {
-    ...mapMutations(['updateSnackbar'])
+    ...mapMutations(['updateSnackbar']),
+    openDrawer () {
+      this.drawer = true
+    }
   }
 }
 </script>

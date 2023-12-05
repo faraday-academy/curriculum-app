@@ -67,14 +67,19 @@ router.route('/register')
           code,
           email
         }
-        await sendEmail(payload)
-        res.send(201, { username, email })
+
+        try {
+          await sendEmail(payload)
+        } catch (err) {
+          console.error(err)
+        }
+        res.status(201).send({ username, email })
       } else {
         res.send('Invalid credentials').status(400)
       }
     } catch(err) {
       console.error(err)
-      res.send(400)
+      res.sendStatus(400)
     }
   })
 

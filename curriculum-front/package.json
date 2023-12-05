@@ -2,9 +2,6 @@
   "name": "curriculum-front",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=18.17.1"
-  },
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -13,12 +10,13 @@
     "test:e2e": "vue-cli-service test:e2e"
   },
   "dependencies": {
-    "axios": "0.19.0",
+    "axios": "^0.27.2",
     "core-js": "^2.6.5",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-infinite-loading": "2.4.5",
     "vue-router": "^3.0.3",
+    "vue-spinner": "1.0.4",
     "vuelidate": "0.7.5",
     "vuetify": "^2.1.0",
     "vuex": "^3.0.1",
@@ -26,9 +24,10 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
+    "@vue/cli-plugin-e2e-nightwatch": "^3.0.1",
     "@vue/cli-plugin-eslint": "^3.0.1",
     "@vue/cli-plugin-pwa": "^3.0.1",
-    "@vue/cli-plugin-unit-jest": "^3.0.1",
+    "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "1.0.0-beta.29",
@@ -38,7 +37,7 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "lint-staged": "^8.1.5",
-    "sass": "^1.67.0",
+    "sass": "^1.19.0",
     "sass-loader": "^8.0.0",
     "vue-cli-plugin-vuetify": "2.0.2",
     "vue-template-compiler": "^2.6.10",

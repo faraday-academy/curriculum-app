@@ -2,12 +2,31 @@
   <v-toolbar color="info">
     <v-toolbar-title>
       <v-icon left>mdi-school</v-icon>
-      <b>Curricula App</b>
+      <b>
+        <router-link
+          to="/"
+          style="text-decoration: none; color: black; outline: none"
+        >
+          Curricula App
+        </router-link>
+      </b>
     </v-toolbar-title>
 
     <v-spacer></v-spacer>
 
-    <v-toolbar-items>
+    <v-toolbar-items
+      v-if="$vuetify.breakpoint.xsOnly"
+    >
+      <v-btn
+        @click="openDrawer()"
+      >
+        Menu
+      </v-btn>
+    </v-toolbar-items>
+
+    <v-toolbar-items
+      v-else
+    >
       <v-btn to="/" exact text>
         Home
       </v-btn>
@@ -48,6 +67,7 @@
         </v-list>
       </v-menu>
     </v-toolbar-items>
+
   </v-toolbar>
 </template>
 
@@ -55,6 +75,16 @@
 import { mapState, mapActions } from 'vuex'
 
 export default {
+  props: {
+    openDrawer: {
+      type: Function,
+      required: true
+    }
+  },
+  data () {
+    return {
+    }
+  },
   computed: {
     ...mapState('auth', ['user'])
   },

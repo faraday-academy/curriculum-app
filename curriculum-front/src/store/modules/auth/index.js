@@ -10,6 +10,7 @@ export default {
   actions: {
     async login ({ commit }, payload) {
       try {
+        commit('updateLoadingStatus', true, { root: true })
         const res = await axios.post(
           `auth/login`,
           payload
@@ -21,6 +22,7 @@ export default {
         // on initial api requests
         axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
         router.replace('/curricula')
+        commit('updateLoadingStatus', false, { root: true })
       } catch (err) {
         console.error(err)
         const snackbar = {
@@ -28,6 +30,7 @@ export default {
           variant: 'error',
           message: 'Login failed.'
         }
+        commit('updateLoadingStatus', false, { root: true })
         commit('updateSnackbar', snackbar, { root: true })
       }
     },
