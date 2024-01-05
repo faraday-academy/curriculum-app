@@ -12,7 +12,7 @@
     "test": "jest --coverage",
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
-    "setup": "concurrently \"npm i\" \"cp sample-env .env\"",
+    "setup": "cp sample-env .env",
     "start": "cross-env NODE_ENV=local npx nodemon app.js",
     "debug": "npx nodemon --inspect app.js",
     "preprod": "npm i --production",
