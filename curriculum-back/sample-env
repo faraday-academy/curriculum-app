@@ -1,4 +1,2 @@
-PORT=5000
-DB_HOST=localhost
-DB_NAME=curriculumapp
 MAILGUN_KEY=1234
+DOMAIN=sandbox-123abc@mailgun.org
