@@ -22,8 +22,6 @@ services:
       - local_net
     depends_on:
       - db
-    ports:
-      - "5000:5000"
   db:
     container_name: mongo
     image: mongo:4.2.0-bionic
@@ -33,8 +31,6 @@ services:
       - .env.db
     networks:
       - local_net
-    ports:
-      - "27017:27017"
   watchtower:
     image: containrrr/watchtower
     volumes:
