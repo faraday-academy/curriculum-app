@@ -1,32 +1,57 @@
+# sudo docker-compose -f docker-compose-local.yml up --build --force-recreate --remove-orphans
 version: "3"
 services:
-  app:
+  app: # Example 1: Backend (api) visible - accessed via localhost 
     container_name: curriculum-front
     build:
       context: ../curriculum-front
+      dockerfile: ${APP_DOC_FILE:-Dockerfile}
+      args:
+        - VUE_APP_API_URL=http://localhost:8080
+    networks:
+      - curriculum_network
+    depends_on:
+     - db
+     - api
+    ports:
+     - "8080:80"
+  nginx: # Example 2: Backend (api) hidden - reverse proxy
+    # calls the api and db service, needs app because it serves as backend to app service
+    image: nginx:alpine
+    volumes:
+      # compile the frontent in curriculum-front folder:
+      # VUE_APP_API_URL=http://localhost:9999 npm run build --production
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+      - "../curriculum-front/dist:/usr/share/nginx/html"
+    ports:
+      - 9999:9999 
+    depends_on:
+      - api
+      - app
+      - db
+    networks:
+      - curriculum_network
+  api: # Runs nginx and nodejs, doesn't need the other services besided db
+    container_name: curriculum-back
+    build:
+      context: ../
+      dockerfile: ${API_DOC_FILE:-Dockerfile}
       args:
         - VUE_APP_API_URL=http://localhost:5050
     networks:
       - curriculum_network
     depends_on:
-      - api
       - db
     ports:
-      - "8080:8080"
-  api:
-    container_name: curriculum-back
-    build:
-      context: ../curriculum-back
-      dockerfile: ${API_DOC_FILE:-Dockerfile}
-    networks:
-      - curriculum_network
-    depends_on:
-      - db
+      - "5050:80" # nginx
+      - "5051:5050" # nodejs
   db:
     container_name: mongo
     image: mongo:4.2.0-bionic
     volumes:
       - /data/db:/data/db
+    ports:
+      - "27017:27017"
     networks:
       - curriculum_network
 networks:

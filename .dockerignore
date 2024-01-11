@@ -1,0 +1,12 @@
+Dockerfile
+.git
+.github
+.gitignore
+Jenkinsfile
+LICENSE
+mockups
+devops
+curriculum-back/node_modules
+curriculum-back/Dockerfile*
+curriculum-front/node_modules
+curriculum-front/Dockerfile*
