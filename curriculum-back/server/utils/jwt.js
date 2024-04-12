@@ -1,4 +1,4 @@
-var jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
 const secret = 'gwenstacy'
 const header = {

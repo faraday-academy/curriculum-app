@@ -1,12 +1,10 @@
-const express = require('express')
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+import express from 'express'
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
-const {
-  auth: { hashPassword },
-  jwt: { generateToken },
-  mailgun: { sendEmail }
-} = require('../utils')
+import { hashPassword } from '../utils/auth'
+import { generateToken } from '../utils/jwt'
+import { sendEmail } from '../utils/mailgun'
 
 mongoose.set('debug', true)
 
@@ -43,7 +41,6 @@ router.route('/login')
 router.route('/register')
   .post(async (req, res) => {
     const { username, email, password } = req.body
-    console.log(req.body)
 
     try {
       if (password.length >= 8) {

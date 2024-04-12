@@ -1,7 +1,8 @@
 if (process.env.NODE_ENV !== 'local') {
   var api_key = process.env.MAILGUN_KEY
   var domain = 'mg.studytracker.tech'
-  var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain})
+  // var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain})
+  var mailgun = { messages: () => ({ send: () => {} })
 }
 
 async function sendEmail(payload) {

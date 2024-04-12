@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const UserProfileSchema = new mongoose.Schema({
   userId: {

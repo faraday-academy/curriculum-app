@@ -1,8 +1,8 @@
-const express = require('express')
-const mongoose = require('mongoose')
+import express from 'express'
+import mongoose from 'mongoose'
 mongoose.set('debug', true)
 
-const { Curriculum, User } = require('@db')
+import { Curriculum, User } from '@db'
 const {
   jwt: { decodeToken }
 } = require('../utils')

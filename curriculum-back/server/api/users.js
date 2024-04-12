@@ -1,7 +1,7 @@
 // TODO: make /users/:username or email api endpoints
 
 const express = require('express')
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const { User, Curriculum } = require('@db')
 const bcrypt = require('bcrypt')

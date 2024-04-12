@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 if (process.env.NODE_ENV === 'production') {
   mongoose.connect(`mongodb://mongo/curriculumapp`, {

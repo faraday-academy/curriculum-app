@@ -1,5 +1,5 @@
 const express = require('express')
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 mongoose.set('debug', true)
 
 const { Curriculum } = require('@db')

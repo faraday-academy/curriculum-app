@@ -1,12 +1,12 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
 
-const authMiddleware = require('../middleware/auth')
+import authMiddleware from '../middleware/auth'
 
-const { curricula, authCurricula } = require('./curricula')
-const count = require('./count')
-const auth = require('./auth')
-const users = require('./users')
+import { curricula, authCurricula } from './curricula'
+import count from './count'
+import auth from './auth'
+import users from './users'
 
 router.use('/curricula', curricula)
 router.use('/curricula', authMiddleware, authCurricula)
