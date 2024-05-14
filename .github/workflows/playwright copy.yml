@@ -1,0 +1,165 @@
+name: Playwright Test Preparation
+
+pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  get-changed-files:
+    runs-on: ubuntu-latest
+    outputs:
+      changed-files: ${{ steps.changed_files.outputs.changed-files }} 
+    steps:
+      - name: Get Changed Files
+        id: changed_files
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { context } = require('@actions/github');
+            const fs = require('fs');
+            const changedFiles = fs.readFileSync(context.payload.pull_request.patch_url, 'utf-8')
+                .match(/^\+(?:\s*\w+\/)*(\S+\.ts)$/gm)
+                .map(line => line.replace('+', '').trim());
+            core.setOutput('changed-files', JSON.stringify(changedFiles)); 
+
+  analyze-and-trigger:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    steps:
+      - name: Call Test Selection API
+        id: test_selection
+        run: |
+          changed_files=${{ steps.changed_files.outputs.changed-files }}
+          tests=$(curl -X POST 'https://tests-selection.azurewebsites.net/api' \
+                    -H 'Content-Type: application/json' \
+                    -d "$changed_files")
+          echo "::set-output name=selected-tests::$tests"
+
+      - name: Analyze Test Timings and Determine Shard Count
+        uses: actions/github-script@v6
+        run: | 
+          const testsData = JSON.parse('${{ steps.test_selection.outputs.selected-tests }}');
+          const totalTestDuration = testsData.reduce((sum, test) => sum + test.duration, 0);
+          const targetDurationPerShard = 5 * 60; // assuming 5 minutes per shard
+          const optimalShardCount = Math.ceil(totalTestDuration / targetDurationPerShard);
+          const shardIndices = [];
+          for (let i = 1; i <= optimalShardCount; i++) {
+            shardIndices.push(i);
+          }
+          core.setOutput('optimal_shard_count', optimalShardCount);
+          core.setOutput('shard_indices', JSON.stringify(shardIndices));
+
+      - name: Trigger Workflow 2 with Shard Count
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: playwright.yml
+          inputs: '{"shardCount": "${{ optimal_shard_count }}"}' 
+
+
+name: Run Playwright Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      shardCount:
+        description: 'Number of shards to use'
+        required: true
+        type: string
+      shardIndices:
+        description: 'Array of shard indices to execute'
+        required: true
+        type: string
+
+jobs:
+  check-dependencies:
+    runs-on: ubuntu-latest
+    needs: get-changed-files
+    outputs:
+      should-install-fresh-deps: ${{ steps.check_deps.outputs.should-install }} 
+    steps:
+      - name: Check if package files changed
+        id: check_deps
+        run: |
+          changed_files=(${CHANGED_FILES})
+          if [[ " ${changed_files[*]} " =~ "package.json" || " ${changed_files[*]} " =~ "package-lock.json" ]]; then
+            echo "::set-output name=should-install::true"
+          else
+            echo "::set-output name=should-install::false"
+          fi
+
+  install-and-cache-node-deps: 
+    runs-on: ubuntu-latest
+    needs: check-dependencies 
+    if: steps.check_deps.outputs.should-install == 'true'
+    steps:
+      - name: Install dependencies (Vue app) 
+        working-directory: vue-app 
+        run: npm ci
+
+      - name: Cache Node Dependencies 
+        uses: actions/cache@v3 
+        with:
+          path: vue-app/node_modules 
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} 
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+  build-and-start-vue:
+    runs-on: ubuntu-latest
+    needs: check-dependencies
+    if: steps.check_deps.outputs.should-install == 'false'
+    steps:
+      - name: Use cached Node dependencies
+        uses: actions/cache@v3
+        with:
+          path: vue-app/node_modules 
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }} 
+          restore-keys: |
+            ${{ runner.os }}-node- 
+
+      - name: Start Vue app
+        run: npm run dev &  # Runs in background
+        
+      - name: Make sure Vue server is up and running
+        run: |
+          until $(curl --output /dev/null --silent --head --fail http://localhost:3000); do
+            printf '.'
+            sleep 3
+          done
+          echo "Vue server is up and running!"
+
+  playwright-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Playwright Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright  
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }} 
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      - name: Install Playwright (if not cached)
+        if: steps.cache.outputs.cache-hit != 'true' 
+        run: npx playwright install --with-deps
+
+  run-playwright-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: ${{ fromJson(github.event.inputs.outputs.shard_indices) }}
+        shardTotal: [ ${{ github.event.inputs.shardCount }} ]
+    timeout-minutes: 10
+    needs: [call-test-selection-api, get-changed-files, playwright-setup, build-and-start-vue] 
+    env:
+      CI: true
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run Playwright Tests
+        run: |
+          tests=${{ steps.test_selection.outputs.selected-tests }}
+          npx playwright test $tests --max-failures=2 --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
