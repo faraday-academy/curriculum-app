@@ -1,7 +1,7 @@
-module.exports = {
+export default {
   parser: 'babel-eslint',
   rules: {
-    indent: ['error', 2, {'SwitchCase': 1}],
+    indent: ['error', 2, { 'SwitchCase': 1 }],
     semi: ['error', 'never']
   }
 }

@@ -4,8 +4,8 @@ import cors from 'cors'
 import morgan from 'morgan'
 import treblle from '@treblle/express'
 
-import routes from './api'
-import '../db'
+import routes from './api/index.js'
+import '../db/index.js'
 
 const app = express()
 const port = 5050

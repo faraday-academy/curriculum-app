@@ -8,7 +8,7 @@ import { sendEmail } from '../utils/mailgun'
 
 mongoose.set('debug', true)
 
-const { User, Verification } = require('@db')
+import { User, Verification } from '@db'
 
 const router = express.Router()
 

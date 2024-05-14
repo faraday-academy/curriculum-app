@@ -1,4 +1,4 @@
-const express = require('express')
+import express from 'express'
 import mongoose from 'mongoose'
 mongoose.set('debug', true)
 

@@ -12,9 +12,9 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const Curriculum = require('./Curriculum')
-const User = require('./User')
-const Verification = require('./Verification')
+import Curriculum from './Curriculum'
+import User from './User'
+import Verification from './Verification'
 
 module.exports = {
   Curriculum,
