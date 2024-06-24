@@ -1,15 +1,9 @@
 import mongoose from 'mongoose'
 
 if (process.env.NODE_ENV === 'production') {
-  mongoose.connect(`mongodb://mongo/curriculumapp`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  mongoose.connect(`mongodb://mongo/curriculumapp`, {})
 } else {
-  mongoose.connect('mongodb://localhost:27017/curriculumapp', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
+  mongoose.connect('mongodb://localhost:27017/curriculumapp', {})
 }
 
 import Curriculum from './Curriculum.js'
