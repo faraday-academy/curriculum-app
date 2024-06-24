@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@saeris/vue-spinners": "^1.0.8",
-    "axios": "^0.27.2",
+    "axios": "^0.28.0",
     "core-js": "^2.6.5",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
