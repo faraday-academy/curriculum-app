@@ -19,7 +19,8 @@
     "preprod": "npm i --production",
     "prod": "cross-env NODE_ENV=production node app.js",
     "db:seed": "node db/seeder/seed.js",
-    "db:clean": "node db/seeder/clean.js"
+    "db:clean": "node db/seeder/clean.js",
+    "prepare": "cd .. && husky curriculum-back/.husky"
   },
   "keywords": [],
   "author": "Gwendolyn Faraday <gwenfaraday@pm.me> (https://gwenfaraday.com/)",
@@ -51,10 +52,5 @@
   },
   "_moduleAliases": {
     "@db": "db"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run lint:fix"
-    }
   }
 }
