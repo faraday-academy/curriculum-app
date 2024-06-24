@@ -2,7 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 mongoose.set('debug', true)
 
-const { Curriculum } = require('@db')
+import { Curriculum } from '@db'
 
 const router = express.Router()
 

@@ -1,4 +1,4 @@
-const { checkToken } = require('../utils/jwt')
+import { checkToken } from '../utils/jwt'
 
 function authMiddleware(req, res, next) {
   try {

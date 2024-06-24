@@ -1,11 +1,11 @@
 // TODO: make /users/:username or email api endpoints
 
-const express = require('express')
+import express from 'express'
 import mongoose from 'mongoose'
 
-const { User, Curriculum } = require('@db')
-const bcrypt = require('bcrypt')
-const { hashPassword } = require('../utils/auth')
+import { User, Curriculum } from '@db'
+import bcrypt from 'bcrypt'
+import { hashPassword } from '../utils/auth'
 
 const router = express.Router()
 
