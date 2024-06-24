@@ -56,4 +56,4 @@ const CurriculumSchema = new mongoose.Schema({
 CurriculumSchema.plugin(mongoosePaginate)
 const Curriculum = mongoose.model('Curriculum', CurriculumSchema)
 
-module.exports = Curriculum
+export default Curriculum

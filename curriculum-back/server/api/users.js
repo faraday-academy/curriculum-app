@@ -2,12 +2,13 @@
 
 import express from 'express'
 import mongoose from 'mongoose'
-
-import { User, Curriculum } from '@db'
 import bcrypt from 'bcrypt'
-import { hashPassword } from '../utils/auth'
+
+import models from '../../db/index.js'
+import { hashPassword } from '../utils/auth.js'
 
 const router = express.Router()
+const { User, Curriculum } = models
 
 if (process.env.NODE_ENV !== 'production') {
   mongoose.set('debug', true)
@@ -75,4 +76,4 @@ router.route('/')
     res.send(users)
   })
 
-module.exports = router
+export default router

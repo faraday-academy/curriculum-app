@@ -12,11 +12,11 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-import Curriculum from './Curriculum'
-import User from './User'
-import Verification from './Verification'
+import Curriculum from './Curriculum.js'
+import User from './User.js'
+import Verification from './Verification.js'
 
-module.exports = {
+export default {
   Curriculum,
   User,
   Verification

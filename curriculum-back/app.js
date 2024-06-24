@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import './server'
+import './server/index.js'
 
 console.log(`Node environment: ${process.env.NODE_ENV}`)
 

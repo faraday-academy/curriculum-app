@@ -2,13 +2,15 @@ import express from 'express'
 import mongoose from 'mongoose'
 import bcrypt from 'bcrypt'
 
-import { hashPassword } from '../utils/auth'
-import { generateToken } from '../utils/jwt'
-import { sendEmail } from '../utils/mailgun'
+import { hashPassword } from '../utils/auth.js'
+import { generateToken } from '../utils/jwt.js'
+import { sendEmail } from '../utils/mailgun.js'
 
 mongoose.set('debug', true)
 
-import { User, Verification } from '@db'
+import models from '../../db/index.js'
+const { User, Verification } = models
+
 
 const router = express.Router()
 
@@ -103,4 +105,4 @@ router.route('/verify')
 
 router.route('/logout')
 
-module.exports = router
+export default router

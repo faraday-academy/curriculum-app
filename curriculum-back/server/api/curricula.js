@@ -2,11 +2,13 @@ import express from 'express'
 import mongoose from 'mongoose'
 mongoose.set('debug', true)
 
-import { Curriculum, User } from '@db'
-import { jwt } from '../utils'
+import models from '../../db/index.js'
+import utils from '../utils/index.js'
 
 const router = express.Router()
 const authRouter = express.Router()
+const { Curriculum, User } = models
+const { jwt } = utils
 
 function checkIfAuthorizedUser(req, curriculum) {
   // this function takes in the whole request object and one
@@ -261,7 +263,7 @@ authRouter.route('/:id')
     }
   })
 
-module.exports = {
+export default {
   curricula: router,
   authCurricula: authRouter
 }

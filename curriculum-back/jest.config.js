@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   // bail: 0,
   clearMocks: true,
   collectCoverage: true,

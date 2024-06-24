@@ -2,7 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 mongoose.set('debug', true)
 
-import { Curriculum } from '@db'
+import models from '../../db/index.js'
+const { Curriculum } = models
 
 const router = express.Router()
 
@@ -35,4 +36,4 @@ router.route('/')
     }
   })
 
-module.exports = router
+export default router

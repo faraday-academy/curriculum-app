@@ -2,10 +2,10 @@ if (process.env.NODE_ENV !== 'local') {
   var api_key = process.env.MAILGUN_KEY
   var domain = 'mg.studytracker.tech'
   // var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain})
-  var mailgun = { messages: () => ({ send: () => {} })
+  var mailgun = { messages: () => ({ send: () => {} }) }
 }
 
-async function sendEmail(payload) {
+export async function sendEmail(payload) {
   /*
   For local development, logs email info to
   the console.
@@ -32,4 +32,4 @@ async function sendEmail(payload) {
   return true
 }
 
-module.exports = { sendEmail }
+export default { sendEmail }
