@@ -28,7 +28,7 @@
   "dependencies": {
     "@babel/eslint-parser": "^7.24.7",
     "@treblle/express": "^0.0.7",
-    "bcrypt": "5.0.0",
+    "bcrypt": "5.1.1",
     "concurrently": "^7.0.0",
     "cors": "2.8.5",
     "cross-env": "^7.0.2",
