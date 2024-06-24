@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const VerificationSchema = new mongoose.Schema({
   userId: {
@@ -16,4 +16,4 @@ const VerificationSchema = new mongoose.Schema({
 
 const Verification = mongoose.model('Verification', VerificationSchema)
 
-module.exports = Verification
+export default Verification

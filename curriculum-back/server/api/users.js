@@ -1,13 +1,14 @@
 // TODO: make /users/:username or email api endpoints
 
-const express = require('express')
-const mongoose = require('mongoose')
+import express from 'express'
+import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'
 
-const { User, Curriculum } = require('@db')
-const bcrypt = require('bcrypt')
-const { hashPassword } = require('../utils/auth')
+import models from '../../db/index.js'
+import { hashPassword } from '../utils/auth.js'
 
 const router = express.Router()
+const { User, Curriculum } = models
 
 if (process.env.NODE_ENV !== 'production') {
   mongoose.set('debug', true)
@@ -75,4 +76,4 @@ router.route('/')
     res.send(users)
   })
 
-module.exports = router
+export default router

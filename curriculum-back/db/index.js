@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 if (process.env.NODE_ENV === 'production') {
   mongoose.connect(`mongodb://mongo/curriculumapp`, {
@@ -12,11 +12,11 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-const Curriculum = require('./Curriculum')
-const User = require('./User')
-const Verification = require('./Verification')
+import Curriculum from './Curriculum.js'
+import User from './User.js'
+import Verification from './Verification.js'
 
-module.exports = {
+export default {
   Curriculum,
   User,
   Verification

@@ -1,1 +1,18 @@
-node_modules
+# Ignore node_modules directory
+node_modules/
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Linux system files
+Thumbs.db
+
+# Ignore Windows system files
+desktop.ini
+
+# Ignore Vim swap files
+*.swp
+# Ignore Vim backup files
+*.bak
+# Ignore Vim undo files
+*.un~

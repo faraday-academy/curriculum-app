@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 const UserProfileSchema = new mongoose.Schema({
   userId: {
@@ -35,4 +35,4 @@ const UserProfileSchema = new mongoose.Schema({
 
 const UserProfile = mongoose.model('User', UserProfileSchema)
 
-module.exports = UserProfile
+export default UserProfile

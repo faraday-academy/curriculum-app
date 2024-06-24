@@ -1,11 +1,11 @@
-const express = require('express')
-const helmet = require('helmet')
-const cors = require('cors')
-const morgan = require('morgan')
-const treblle = require('@treblle/express')
+import express from 'express'
+import helmet from 'helmet'
+import cors from 'cors'
+import morgan from 'morgan'
+import treblle from '@treblle/express'
 
-const routes = require('./api')
-require('../db')
+import routes from './api/index.js'
+import '../db/index.js'
 
 const app = express()
 const port = 5050

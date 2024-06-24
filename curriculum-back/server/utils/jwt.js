@@ -1,4 +1,4 @@
-var jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
 const secret = 'gwenstacy'
 const header = {
@@ -6,7 +6,7 @@ const header = {
   alg: 'HS512'
 }
 
-function generateToken(userId) {
+export function generateToken(userId) {
   const data = {
     userId
   }
@@ -14,11 +14,11 @@ function generateToken(userId) {
   return jwt.sign({ data }, secret, { expiresIn: '7d' })
 }
 
-function decodeToken(token) {
+export function decodeToken(token) {
   return jwt.verify(token, secret)
 }
 
-function checkToken(token) {
+export function checkToken(token) {
   try {
     jwt.verify(token, secret)
     return true
@@ -27,4 +27,4 @@ function checkToken(token) {
   }
 }
 
-module.exports = { generateToken, decodeToken, checkToken }
+export default { generateToken, decodeToken, checkToken }

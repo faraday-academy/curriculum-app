@@ -1,14 +1,14 @@
-const express = require('express')
-const mongoose = require('mongoose')
+import express from 'express'
+import mongoose from 'mongoose'
 mongoose.set('debug', true)
 
-const { Curriculum, User } = require('@db')
-const {
-  jwt: { decodeToken }
-} = require('../utils')
+import models from '../../db/index.js'
+import utils from '../utils/index.js'
 
 const router = express.Router()
 const authRouter = express.Router()
+const { Curriculum, User } = models
+const { jwt } = utils
 
 function checkIfAuthorizedUser(req, curriculum) {
   // this function takes in the whole request object and one
@@ -16,7 +16,7 @@ function checkIfAuthorizedUser(req, curriculum) {
   // based off of whether the user has permission to perform crud
   // operation on Mongo object
   const token = req.header('authorization').split(' ')[1]
-  const decodedToken = decodeToken(token)
+  const decodedToken = jwt.decodeToken(token)
 
   return decodedToken.data.userId === curriculum.createdBy.toString()
 }
@@ -263,7 +263,7 @@ authRouter.route('/:id')
     }
   })
 
-module.exports = {
+export default {
   curricula: router,
   authCurricula: authRouter
 }

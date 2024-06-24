@@ -1,8 +1,9 @@
-const express = require('express')
-const mongoose = require('mongoose')
+import express from 'express'
+import mongoose from 'mongoose'
 mongoose.set('debug', true)
 
-const { Curriculum } = require('@db')
+import models from '../../db/index.js'
+const { Curriculum } = models
 
 const router = express.Router()
 
@@ -35,4 +36,4 @@ router.route('/')
     }
   })
 
-module.exports = router
+export default router

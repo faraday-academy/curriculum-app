@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const mongoosePaginate = require('mongoose-paginate-v2')
+import mongoose from 'mongoose'
+import mongoosePaginate from 'mongoose-paginate-v2'
 
 const CurriculumSchema = new mongoose.Schema({
   name: {
@@ -56,4 +56,4 @@ const CurriculumSchema = new mongoose.Schema({
 CurriculumSchema.plugin(mongoosePaginate)
 const Curriculum = mongoose.model('Curriculum', CurriculumSchema)
 
-module.exports = Curriculum
+export default Curriculum
