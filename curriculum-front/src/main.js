@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
+// TODO: add this to the new project
 import InfiniteLoading from 'vue-infinite-loading'
 import { VueSpinners } from '@saeris/vue-spinners'
 
