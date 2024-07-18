@@ -195,64 +195,52 @@
   </v-row>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue'
 import AddItemDialog from './AddItemDialog.vue'
-import { mapActions } from 'vuex'
+import { useStore } from 'pinia'
 
-export default {
-  props: {
-    dialog: Object,
-    selectedCurriculum: Object,
-    toggleComplete: Function,
-    toggleDialog: Function,
-    saveItem: Function,
-    editItem: Function,
-    removeItem: Function,
-    canEdit: Function
-  },
-  data () {
-    return {
-      showDeleteDialog: false,
-      showEditSectionDialog: false,
-      selectedIndex: null,
-      sectionEditing: {}
-    }
-  },
-  components: {
-    AddItemDialog
-  },
-  methods: {
-    ...mapActions(['deleteSection', 'patchSection']),
-    toggleConfirmDelete (index) {
-      this.selectedIndex = index
-      this.showDeleteDialog = !this.showDeleteDialog
-    },
-    openEditSectionDialog (index) {
-      this.selectedIndex = index
-      this.sectionEditing = this.selectedCurriculum.sections[index]
-      this.showEditSectionDialog = !this.showEditSectionDialog
-    },
-    closeEditSectionDialog (index) {
-      this.sectionEditing = {}
-      this.showEditSectionDialog = false
-    },
-    confirmDelete () {
-      const section = this.selectedCurriculum.sections[this.selectedIndex]
-      const payload = {
-        curriculumId: this.selectedCurriculum._id,
-        sectionId: section._id
-      }
-      this.deleteSection(payload)
-      this.toggleConfirmDelete()
-    },
-    updateSection () {
-      const payload = {
-        curriculumId: this.selectedCurriculum._id,
-        section: this.sectionEditing
-      }
-      this.patchSection(payload)
-      this.closeEditSectionDialog()
-    }
-  }
+const showDeleteDialog = ref(false)
+const showEditSectionDialog = ref(false)
+const selectedIndex = ref(null)
+const sectionEditing = ref({})
+
+const toggleConfirmDelete = (index) => {
+  selectedIndex.value = index
+  showDeleteDialog.value = !showDeleteDialog.value
 }
+
+const openEditSectionDialog = (index) => {
+  selectedIndex.value = index
+  sectionEditing.value = props.selectedCurriculum.sections[index]
+  showEditSectionDialog.value = !showEditSectionDialog.value
+}
+
+const closeEditSectionDialog = (index) => {
+  sectionEditing.value = {}
+  showEditSectionDialog.value = false
+}
+
+const confirmDelete = () => {
+  const section = props.selectedCurriculum.sections[selectedIndex.value]
+  const payload = {
+    curriculumId: props.selectedCurriculum._id,
+    sectionId: section._id
+  }
+  store.deleteSection(payload)
+  toggleConfirmDelete()
+}
+
+const updateSection = () => {
+  const payload = {
+    curriculumId: props.selectedCurriculum._id,
+    section: sectionEditing.value
+  }
+  store.patchSection(payload)
+  closeEditSectionDialog()
+}
+
+const canEdit = computed(() => {
+  // Your canEdit logic here
+})
 </script>

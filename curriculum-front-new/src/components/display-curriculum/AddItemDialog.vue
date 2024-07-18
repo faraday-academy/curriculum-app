@@ -47,13 +47,16 @@
   </v-dialog>
 </template>
 
-<script>
-export default {
-  props: {
-    saveItem: Function,
-    toggleDialog: Function,
-    sectionIndex: Number,
-    dialog: Object
-  }
-}
+<script setup>
+import { defineProps } from 'vue';
+import { useStore } from 'pinia';
+
+defineProps({
+  saveItem: Function,
+  toggleDialog: Function,
+  sectionIndex: Number,
+  dialog: Object
+});
+
+const store = useStore();
 </script>

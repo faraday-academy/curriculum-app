@@ -121,15 +121,13 @@
   </v-row>
 </template>
 
-<script>
-export default {
-  props: {
-    editField: String,
-    selectedCurriculum: Object,
-    toggleEdit: Function,
-    saveEdit: Function,
-    cancelEdit: Function,
-    canEdit: Function
-  }
-}
+<script setup>
+defineProps({
+  editField: String,
+  selectedCurriculum: Object,
+  toggleEdit: Function,
+  saveEdit: Function,
+  cancelEdit: Function,
+  canEdit: Function
+})
 </script>

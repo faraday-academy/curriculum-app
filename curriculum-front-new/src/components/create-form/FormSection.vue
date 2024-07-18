@@ -155,15 +155,13 @@
   </v-card>
 </template>
 
-<script>
-export default {
-  props: {
-    k: String,
-    section: Object,
-    sectionUrlErrors: Function,
-    nameErrors: Function,
-    addItem: Function,
-    deleteSection: Function
-  }
-}
+<script setup>
+defineProps({
+  k: String,
+  section: Object,
+  sectionUrlErrors: Function,
+  nameErrors: Function,
+  addItem: Function,
+  deleteSection: Function
+})
 </script>

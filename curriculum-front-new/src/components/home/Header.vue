@@ -32,12 +32,10 @@
   </v-sheet>
 </template>
 
-<script>
-import { mapState } from 'vuex'
+<script setup>
+import { useStore } from 'pinia';
 
-export default {
-  computed: {
-    ...mapState('auth', ['user'])
-  }
-}
+const store = useStore();
+
+const user = store.state.auth.user;
 </script>

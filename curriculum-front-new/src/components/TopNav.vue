@@ -71,28 +71,16 @@
   </v-toolbar>
 </template>
 
-<script>
-import { mapState, mapActions } from 'vuex'
+<script setup>
+import { useStore } from 'pinia'
 
-export default {
-  props: {
-    openDrawer: {
-      type: Function,
-      required: true
-    }
-  },
-  data () {
-    return {
-    }
-  },
-  computed: {
-    ...mapState('auth', ['user'])
-  },
-  methods: {
-    ...mapActions('auth', ['logUserOut']),
-    logout () {
-      this.logUserOut()
-    }
-  }
+const openDrawer = ref(null)
+
+const logout = () => {
+  logUserOut()
 }
+
+const store = useStore()
+const { user } = store.auth
+const { logUserOut } = store.auth
 </script>

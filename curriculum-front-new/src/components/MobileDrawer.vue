@@ -24,27 +24,24 @@
   </v-navigation-drawer>
 </template>
 
-<script>
-export default {
-  props: {
-    drawer: {
-      type: Boolean,
-      default: false
-    }
-  },
-  data () {
-    return {
-      navItems: [
-        {
-          name: 'Home',
-          icon: 'home'
-        },
-        {
-          name: 'View All',
-          icon: 'magnify'
-        }
-      ]
-    }
+<script setup>
+import { ref } from 'vue'
+
+const props = defineProps({
+  drawer: {
+    type: Boolean,
+    default: false
   }
-}
+})
+
+const navItems = ref([
+  {
+    name: 'Home',
+    icon: 'home'
+  },
+  {
+    name: 'View All',
+    icon: 'magnify'
+  }
+])
 </script>
