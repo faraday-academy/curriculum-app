@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "unplugin-auto-import": "^0.18.0"
+  }
+}

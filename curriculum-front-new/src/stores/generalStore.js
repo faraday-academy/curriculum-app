@@ -1,29 +1,31 @@
 import { defineStore } from 'pinia'
 
-export const useGeneralStore = defineStore('generalStore', {
-  state: () => ({
-    // Define your state properties here
-    // For example:
-    count: 0,
-    message: 'Hello, world!',
-  }),
+export const useGeneralStore = defineStore('generalStore', () => {
+  // Define your state properties here
+  // For example:
+  const count = ref(0);
+  const message = ref('Hello, world!');
 
-  getters: {
-    // Define your getters here
-    // For example:
-    doubleCount() {
-      return this.count * 2;
-    },
-  },
+  // Define your getters here
+  // For example:
+  const doubleCount = computed(() => {
+    return count.value * 2;
+  });
 
-  actions: {
-    // Define your actions here
-    // For example:
-    increment() {
-      this.count++;
-    },
-    setMessage(newMessage) {
-      this.message = newMessage;
-    },
-  },
+  // Define your actions here
+  // For example:
+  const increment = () => {
+    count.value++;
+  };
+  const setMessage = (newMessage) => {
+    message.value = newMessage;
+  };
+
+  return {
+    count,
+    message,
+    doubleCount,
+    increment,
+    setMessage
+  };
 })
