@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { required, maxLength, url } from 'vuelidate/lib/validators'
+// import { required, maxLength, url } from 'vuelidate/lib/validators'
 import Header from '@/components/display-curriculum/Header.vue'
 import Sections from '@/components/display-curriculum/Sections.vue'
 import FormSection from '@/components/create-form/FormSection.vue'

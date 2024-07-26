@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from '../../axiosConfig'
+import axios from '@/utils/axiosConfig'
 
 export const useUserStore = defineStore('user', () => {
   const updateUser = async (payload) => {

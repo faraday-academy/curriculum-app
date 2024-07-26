@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import FormSection from './FormSection'
+import FormSection from './FormSection.vue'
 
 defineProps({
   sections: Array,

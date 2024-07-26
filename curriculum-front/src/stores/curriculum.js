@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import axios from './axiosConfig'
+import axios from '@/utils/axiosConfig'
 import router from '../router'
 import { reactive } from 'vue'
 

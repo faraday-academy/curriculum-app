@@ -26,30 +26,24 @@
   </AuthTemplate>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import AuthTemplate from './AuthTemplate'
+<script setup>
+import { ref } from 'vue'
 
-export default {
-  name: 'reset-password',
-  components: {
-    AuthTemplate
-  },
-  data() {
-    return {
-      code: '',
-      password: '',
-      confirmPassword: ''
-    }
-  },
-  methods: {
-    ...mapActions('auth', ['login']),
-    submit() {
-      const payload = {
-        password: this.password
-      }
-      this.login(payload)
-    }
+import { useAuthStore } from '@/stores/auth'
+import AuthTemplate from './AuthTemplate.vue'
+
+const { login } = useAuthStore()
+
+const code = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+
+const submit = () => {
+  const payload = {
+    code: code.value,
+    password: password.value,
+    confirmPassword: confirmPassword.value
   }
+  login(payload)
 }
 </script>

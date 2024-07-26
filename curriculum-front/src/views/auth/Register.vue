@@ -9,24 +9,18 @@
         v-model="username"
         :error-messages="usernameErrors()"
         required
-        @input="$v.username.$touch()"
-        @blur="$v.username.$touch()"
       />
       <v-text-field
         label="Email"
         v-model="email"
         :error-messages="emailErrors()"
         required
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
       />
       <v-text-field
         label="Password"
         v-model="password"
         :error-messages="passwordErrors()"
         required
-        @input="$v.password.$touch()"
-        @blur="$v.password.$touch()"
       />
     </template>
     <template #actions>
@@ -38,73 +32,69 @@
   </AuthTemplate>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
-import AuthTemplate from './AuthTemplate'
+<script setup>
+// import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
+import { ref } from 'vue'
 
-export default {
-  name: 'register',
-  components: {
-    AuthTemplate
-  },
-  data() {
-    return {
-      username: '',
-      email: '',
-      password: ''
-    }
-  },
-  validations: {
-    username: {
-      minLength: minLength(3),
-      maxLength: maxLength(20),
-      required
-    },
-    email: {
-      email,
-      required
-    },
-    password: {
-      minLength: minLength(8),
-      maxLength: maxLength(128),
-      required
-    }
-  },
-  methods: {
-    ...mapActions('auth', ['register']),
-    usernameErrors() {
-      const errors = []
-      if (!this.$v.username.$dirty) return errors
-      !this.$v.username.required && errors.push('Username is required.')
-      !this.$v.username.minLength && errors.push('Username must be at least 3 characters long.')
-      !this.$v.username.maxLength && errors.push('Username must be at most 20 characters long.')
-      return errors
-    },
-    emailErrors() {
-      const errors = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.required && errors.push('E-mail is required.')
-      !this.$v.email.email && errors.push('Invalid e-mail.')
-      return errors
-    },
-    passwordErrors() {
-      const errors = []
-      if (!this.$v.password.$dirty) return errors
-      !this.$v.password.required && errors.push('Password is required.')
-      !this.$v.password.minLength && errors.push('Password must be at least 8 characters long.')
-      !this.$v.password.maxLength && errors.push('Password must be at most 128 characters long.')
-      return errors
-    },
-    submit() {
-      // TODO: implement form validation
-      const payload = {
-        username: this.username,
-        email: this.email,
-        password: this.password
-      }
-      this.register(payload)
-    }
+import { useAuthStore } from '@/stores/auth'
+import AuthTemplate from './AuthTemplate.vue'
+
+const { register } = useAuthStore()
+
+const username = ref('')
+const email = ref('')
+const password = ref('')
+
+// validations: {
+//   username: {
+//     minLength: minLength(3),
+//     maxLength: maxLength(20),
+//     required
+//   },
+//   email: {
+//     email,
+//     required
+//   },
+//   password: {
+//     minLength: minLength(8),
+//     maxLength: maxLength(128),
+//     required
+//   }
+// },
+
+// function usernameErrors() {
+//   const errors = []
+//   if (!$v.username.$dirty) return errors
+//   !$v.username.required && errors.push('Username is required.')
+//   !$v.username.minLength && errors.push('Username must be at least 3 characters long.')
+//   !$v.username.maxLength && errors.push('Username must be at most 20 characters long.')
+//   return errors
+// }
+
+// function emailErrors() {
+//   const errors = []
+//   if (!$v.email.$dirty) return errors
+//   !$v.email.required && errors.push('E-mail is required.')
+//   !$v.email.email && errors.push('Invalid e-mail.')
+//   return errors
+// }
+
+// function passwordErrors() {
+//   const errors = []
+//   if (!$v.password.$dirty) return errors
+//   !$v.password.required && errors.push('Password is required.')
+//   !$v.password.minLength && errors.push('Password must be at least 8 characters long.')
+//   !$v.password.maxLength && errors.push('Password must be at most 128 characters long.')
+//   return errors
+// }
+
+function submit() {
+  // TODO: implement form validation
+  const payload = {
+    username: username.value,
+    email: email.value,
+    password: password.value,
   }
+  register(payload)
 }
 </script>
