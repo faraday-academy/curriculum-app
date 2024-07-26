@@ -1,26 +1,30 @@
-import Vue from 'vue'
-import Vuelidate from 'vuelidate'
-// TODO: add this to the new project
-import InfiniteLoading from 'vue-infinite-loading'
-import { VueSpinners } from '@saeris/vue-spinners'
+import 'vuetify/styles'
+import '@mdi/font/css/materialdesignicons.css'
+import './assets/main.css'
+import './sass/index.sass'
+
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
 import App from './App.vue'
 import router from './router'
-import store from './store'
-import './registerServiceWorker'
-import vuetify from './plugins/vuetify'
 
-import './sass/index.sass'
+const app = createApp(App)
+const vuetify = createVuetify({
+  components,
+  directives,
+})
 
-Vue.use(Vuelidate)
-Vue.use(InfiniteLoading, { /* options */ })
-Vue.use(VueSpinners)
+const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+app.use(pinia)
 
-Vue.config.productionTip = false
+app.use(router)
+app.use(vuetify)
 
-export default new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+app.mount('#app')

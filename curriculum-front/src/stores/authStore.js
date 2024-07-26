@@ -84,4 +84,6 @@ export const useAuthStore = defineStore('auth', () => {
     updateUser,
     clearUserInfo
   }
+}, {
+  persist: true,
 })
