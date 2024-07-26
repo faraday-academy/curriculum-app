@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer
     v-if="$vuetify.breakpoint.xsOnly"
-    v-model="drawer"
+    v-model="isDrawerOpen"
     app
     right
     temporary
@@ -25,14 +25,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, toRefs } from 'vue'
 
-const props = defineProps({
-  drawer: {
-    type: Boolean,
-    default: false
-  }
-})
+import { useGeneralStore } from '@/stores/general'
+
+const generalStore = useGeneralStore()
+const { isDrawerOpen } = toRefs(generalStore)
 
 const navItems = ref([
   {

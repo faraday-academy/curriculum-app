@@ -70,15 +70,18 @@
 </template>
 
 <script setup>
-import { required, minLength, maxLength, sameAs, email } from 'vuelidate/lib/validators'
-import { mapState, mapActions } from 'vuex'
+// import { required, minLength, maxLength, sameAs, email as emailValidator } from 'vuelidate/lib/validators'
+import { ref, toRefs } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { useUserStore } from '@/stores/user'
 
-const { user } = toRefs(useStore())
+const userStore = useUserStore()
+const { user } = toRefs(useAuthStore)
 
 const validUserForm = ref(true)
 const validPasswordForm = ref(true)
-const username = ref('')
-const email = ref('')
+const username = ref(user.value.username)
+const email = ref(user.value.email)
 const currentPassword = ref('')
 const newPassword = ref('')
 const confirmPassword = ref('')
@@ -109,32 +112,32 @@ const confirmPassword = ref('')
 //   }
 // },
 
-const usernameErrors = () => {
-  const errors = []
-  if (!$v.username.$dirty) return errors
-  !$v.username.minLength && errors.push('Username must be at least 3 characters long.')
-  !$v.username.maxLength && errors.push('Username must be at most 20 characters long.')
-  return errors
-}
+// const usernameErrors = () => {
+//   const errors = []
+//   if (!$v.username.$dirty) return errors
+//   !$v.username.minLength && errors.push('Username must be at least 3 characters long.')
+//   !$v.username.maxLength && errors.push('Username must be at most 20 characters long.')
+//   return errors
+// }
 
-const emailErrors = () => {
-  const errors = []
-  if (!$v.email.$dirty) return errors
-  !$v.email.email && errors.push('Invalid email.')
-  return errors
-}
+// const emailErrors = () => {
+//   const errors = []
+//   if (!$v.email.$dirty) return errors
+//   !$v.email.email && errors.push('Invalid email.')
+//   return errors
+// }
 
-const currentPasswordErrors = (fieldName) => {
-  const errors = []
-  if (!$v[fieldName].$dirty) return errors
-  !$v[fieldName].required && errors.push('Password is required.')
-  !$v[fieldName].minLength && errors.push('Password must be at least 8 characters long.')
-  !$v[fieldName].maxLength && errors.push('Password must be at most 128 characters long.')
-  if (fieldName === 'confirmPassword') {
-    !$v[fieldName].sameAs && errors.push('Passwords must match.')
-  }
-  return errors
-}
+// const currentPasswordErrors = (fieldName) => {
+//   const errors = []
+//   if (!$v[fieldName].$dirty) return errors
+//   !$v[fieldName].required && errors.push('Password is required.')
+//   !$v[fieldName].minLength && errors.push('Password must be at least 8 characters long.')
+//   !$v[fieldName].maxLength && errors.push('Password must be at most 128 characters long.')
+//   if (fieldName === 'confirmPassword') {
+//     !$v[fieldName].sameAs && errors.push('Passwords must match.')
+//   }
+//   return errors
+// }
 
 const reset = () => {
   username.value = user.value.username
@@ -147,27 +150,18 @@ const updateUserInfo = () => {
   }
 
   const payload = {}
-  if (username.value && !$v.username.$error) payload.username = username.value
-  if (email.value && !$v.email.$error) payload.email = email.value
-  updateUser(payload)
+  // if (username.value && !$v.username.$error) payload.username = username.value
+  // if (email.value && !$v.email.$error) payload.email = email.value
+  userStore.updateUser(payload)
 }
 
 const updatePassword = () => {
-  if (!$v.newPassword.$error && !$v.confirmPassword.$error) {
-    const payload = {
-      oldPassword: currentPassword.value,
-      newPassword: newPassword.value
-    }
-    updateUserPassword(payload)
-    currentPassword.value = ''
-    newPassword.value = ''
+  const payload = {
+    oldPassword: currentPassword.value,
+    newPassword: newPassword.value
   }
+  userStore.updateUserPassword(payload)
+  currentPassword.value = ''
+  newPassword.value = ''
 }
-
-onMounted(() => {
-  username.value = user.value.username
-  email.value = user.value.email
-})
-
-// ...mapActions('user', ['updateUser', 'updateUserPassword']),
 </script>

@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { required, maxLength, url } from 'vuelidate/lib/validators'
+// import { required, maxLength, url } from 'vuelidate/lib/validators'
 import { ref, computed } from 'vue'
 import { useStore } from 'pinia'
 import FormSections from './FormSections.vue'

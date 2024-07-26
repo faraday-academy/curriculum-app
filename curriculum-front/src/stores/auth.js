@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import axios from '../../axiosConfig'
-import router from '../../../router'
+import axios from '@/utils/axiosConfig'
+import router from '@/router'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref({})

@@ -9,16 +9,12 @@
         v-model="email"
         :error-messages="emailErrors()"
         required
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
       />
       <v-text-field
         label="Password"
         v-model="password"
         :error-messages="passwordErrors()"
         required
-        @input="$v.password.$touch()"
-        @blur="$v.password.$touch()"
       />
     </template>
     <template #actions>
@@ -31,57 +27,47 @@
   </AuthTemplate>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
-import AuthTemplate from './AuthTemplate'
+<script setup>
+// import { required, minLength, maxLength, email } from 'vuelidate/lib/validators'
+import { computed, ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import AuthTemplate from './AuthTemplate.vue'
 
-export default {
-  name: 'login',
-  components: {
-    AuthTemplate
-  },
-  data () {
-    return {
-      email: '',
-      password: ''
-    }
-  },
-  validations: {
-    email: {
-      email,
-      required
-    },
-    password: {
-      minLength: minLength(8),
-      maxLength: maxLength(128),
-      required
-    }
-  },
-  methods: {
-    ...mapActions('auth', ['login']),
-    emailErrors () {
-      const errors = []
-      if (!this.$v.email.$dirty) return errors
-      !this.$v.email.required && errors.push('E-mail is required.')
-      !this.$v.email.email && errors.push('Invalid email.')
-      return errors
-    },
-    passwordErrors () {
-      const errors = []
-      if (!this.$v.password.$dirty) return errors
-      !this.$v.password.required && errors.push('Password is required.')
-      !this.$v.password.minLength && errors.push('Password must be at least 8 characters long.')
-      !this.$v.password.maxLength && errors.push('Password must be at most 128 characters long.')
-      return errors
-    },
-    submit () {
-      const payload = {
-        email: this.email,
-        password: this.password
-      }
-      this.login(payload)
-    }
+const { login } = useAuthStore()
+
+const email = ref('')
+const password = ref('')
+// validations: {
+//   email: {
+//     email,
+//     required
+//   },
+//   password: {
+//     minLength: minLength(8),
+//     maxLength: maxLength(128),
+//     required
+//   }
+// },
+
+const emailErrors = computed(() => {
+  const errors = []
+  if (!email.value) return errors
+  !email.value.includes('@') && errors.push('Invalid email.')
+  return errors
+})
+
+const passwordErrors = computed(() => {
+  const errors = []
+  if (!password.value) return errors
+  password.value.length < 8 && errors.push('Password must be at least 8 characters long.')
+  return errors
+})
+
+const submit = () => {
+  const payload = {
+    email: email.value,
+    password: password.value
   }
+  login(payload)
 }
 </script>
