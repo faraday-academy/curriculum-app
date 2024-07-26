@@ -31,6 +31,7 @@
     "jsdom": "^24.1.0",
     "sass": "^1.77.6",
     "sass-loader": "^14.2.1",
+    "unplugin-auto-import": "^0.18.2",
     "vite": "^5.3.1",
     "vite-plugin-vue-devtools": "^7.3.1",
     "vitest": "^1.6.0"
