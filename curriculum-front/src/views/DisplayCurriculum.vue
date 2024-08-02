@@ -27,19 +27,53 @@
 
 <script setup>
 // import { required, maxLength, url } from 'vuelidate/lib/validators'
+import { onMounted, ref, toRefs } from 'vue'
+import { useRoute } from 'vue-router'
+
+import { useAuthStore } from '@/stores/auth'
+import { useCurriculumStore } from '@/stores/curriculum'
+import { useGeneralStore } from '@/stores/general'
+
 import Header from '@/components/display-curriculum/Header.vue'
 import Sections from '@/components/display-curriculum/Sections.vue'
 import FormSection from '@/components/create-form/FormSection.vue'
-import { onMounted } from 'vue'
 
-const { user } = toRefs(useStore())
+const authStore = useAuthStore()
+const curriculumStore = useCurriculumStore()
+const generalStore = useGeneralStore()
+const route = useRoute()
 
-const { selectedCurriculum } = toRefs(useStore())
+const { user } = toRefs(authStore)
+const { selectedCurriculum } = toRefs(curriculumStore)
 
-const { tempSection, showSectionForm, editField, dialog } = toRefs(useStore())
+const tempSection = ref({
+  name: '',
+  goal: '',
+  newResource: {
+    url: '',
+    name: ''
+  },
+  resources: [],
+  newProject: {
+    url: '',
+    name: ''
+  },
+  projects: []
+})
+const showSectionForm = ref(false)
+const editField = ref('')
+const dialog = ref({
+  show: false,
+  name: '',
+  url: '',
+  sectionIndex: null,
+  itemIndex: null,
+  type: '',
+  isEditing: false
+})
 
 const toggleComplete = (type, sectionIndex, typeIndex) => {
-  const { sections, _id } = selectedCurriculum.value
+  const { sections } = selectedCurriculum.value
   const section = sections[sectionIndex]
   const payload = {
     curriculum: selectedCurriculum.value,
@@ -47,7 +81,7 @@ const toggleComplete = (type, sectionIndex, typeIndex) => {
     sectionId: section._id,
     item: section[type][typeIndex]
   }
-  patchItem(payload)
+  curriculumStore.patchItem(payload)
 }
 
 const toggleEdit = (field) => {
@@ -68,7 +102,7 @@ const saveEdit = (field) => {
     curriculumId: _id,
     body
   }
-  patchCurriculum(payload)
+  curriculumStore.patchCurriculum(payload)
   editField.value = ''
 }
 
@@ -113,9 +147,9 @@ const saveItem = (type) => {
 
   if (isEditing) {
     payload.itemId = section[type][itemIndex]._id
-    putItem(payload)
+    curriculumStore.putItem(payload)
   } else {
-    postItem(payload)
+    curriculumStore.postItem(payload)
   }
 
   dialog.value.name = ''
@@ -133,10 +167,10 @@ const removeItem = (type, sectionIndex, itemIndex) => {
     type,
     itemId: section[type][itemIndex]._id
   }
-  deleteItem(payload)
+  curriculumStore.deleteItem(payload)
 }
 
-const addItem = (type, i) => {
+const addItem = (type) => {
   let key = `new${type[0].toUpperCase()}${type.slice(1)}`
   const item = tempSection.value[key]
 
@@ -156,11 +190,11 @@ const addItem = (type, i) => {
     const urlMessage = !urlCheck ? 'URL must be valid.' : ''
     const nameMessage = !nameCheck ? 'Must provide a name.' : ''
     const message = `${nameMessage} ${urlMessage}`
-    updateSnackbar({ message, show: true, variant: 'error' })
+    generalStore.updateSnackbar({ message, show: true, variant: 'error' })
   }
 }
 
-const sectionNameErrors = (i) => {
+const sectionNameErrors = () => {
   const errors = []
   if (!tempSection.value.$v.name.$dirty) return errors
   !tempSection.value.$v.name.maxLength && errors.push('Name must be at most 30 characters long.')
@@ -212,7 +246,7 @@ const saveSection = () => {
     curriculumId: selectedCurriculum.value._id,
     body
   }
-  postSection(payload)
+  curriculumStore.postSection(payload)
 
   clearSectionForm()
   toggleSectionForm()
@@ -226,7 +260,7 @@ const canEdit = () => {
 }
 
 onMounted(() => {
-  getCurriculum($route.params.id)
+  curriculumStore.getCurriculum(route.params.id)
 })
 </script>
 

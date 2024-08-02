@@ -1,20 +1,23 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+
 import axios from '@/utils/axiosConfig'
 import router from '@/router'
+import { useGeneralStore } from './general'
 
 export const useAuthStore = defineStore('auth', () => {
+  const generalStore = useGeneralStore()
   const user = ref({})
 
   async function login(payload) {
     try {
-      this.updateLoadingStatus(true, { root: true })
+      generalStore.isLoading = true
       const res = await axios.post(`auth/login`, payload)
       localStorage.setItem('token', res.data.token)
       updateUser(res.data)
       axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`
       router.replace('/curricula')
-      this.updateLoadingStatus(false, { root: true })
+      generalStore.isLoading = false
     } catch (err) {
       console.error(err)
       const snackbar = {
@@ -22,26 +25,26 @@ export const useAuthStore = defineStore('auth', () => {
         variant: 'error',
         message: 'Login failed.'
       }
-      this.updateLoadingStatus(false, { root: true })
-      this.updateSnackbar(snackbar, { root: true })
+      generalStore.isLoading = false
+      generalStore.updateSnackbar(snackbar)
     }
   }
 
   async function register(payload) {
-    const res = await axios.post(`auth/register`, payload)
+    await axios.post(`auth/register`, payload)
     updateUser({ email: payload.email })
     const snackbar = {
       show: true,
       variant: 'success',
       message: 'Sign up successful!'
     }
-    this.updateSnackbar(snackbar, { root: true })
+    this.updateSnackbar(snackbar)
     router.replace('/verify')
   }
 
   async function verify(payload) {
     try {
-      const res = await axios.post(`auth/verify`, payload)
+      await axios.post(`auth/verify`, payload)
       router.replace('/login')
     } catch (err) {
       const snackbar = {
@@ -49,18 +52,14 @@ export const useAuthStore = defineStore('auth', () => {
         variant: 'error',
         message: 'Invalid Code'
       }
-      this.updateSnackbar(snackbar, { root: true })
+      this.updateSnackbar(snackbar)
     }
   }
 
-  async function logUserOut(payload) {
+  async function logUserOut() {
     clearUserInfo()
     localStorage.removeItem('token')
     router.replace('/')
-  }
-
-  async function getUser() {
-    // Your implementation here
   }
 
   function updateUser(payload) {
@@ -80,7 +79,6 @@ export const useAuthStore = defineStore('auth', () => {
     register,
     verify,
     logUserOut,
-    getUser,
     updateUser,
     clearUserInfo
   }

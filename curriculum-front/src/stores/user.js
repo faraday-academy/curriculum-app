@@ -1,18 +1,24 @@
 import { defineStore } from 'pinia'
+
+import { useAuthStore } from './auth'
+import { useGeneralStore } from './general'
 import axios from '@/utils/axiosConfig'
 
 export const useUserStore = defineStore('user', () => {
+  const authStore = useAuthStore()
+  const generalStore = useGeneralStore()
+
   const updateUser = async (payload) => {
-    const res = await axios.patch(
-      `users/${this.$state.auth.user.id}`,
+    await axios.patch(
+      `users/${authStore.user.id}`,
       payload
     )
-    this.auth.updateUser(payload)
+    authStore.updateUser(payload)
   }
 
   const updateUserPassword = async (payload) => {
     const res = await axios.post(
-      `users/${this.$state.auth.user.id}/update-password`,
+      `users/${authStore.user.id}/update-password`,
       payload
     )
     const message = res.status == 200
@@ -22,11 +28,10 @@ export const useUserStore = defineStore('user', () => {
       show: true,
       message
     }
-    this.updateSnackbar(snackbar)
+    generalStore.updateSnackbar(snackbar)
   }
 
   return {
-    state,
     updateUser,
     updateUserPassword,
   }

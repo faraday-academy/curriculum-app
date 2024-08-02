@@ -9,8 +9,16 @@ export const useGeneralStore = defineStore('generalStore', () => {
   })
   const isLoading = ref(false)
 
+  const updateSnackbar = (settings) => {
+    snackbarOptions.value = {
+      ...snackbarOptions.value,
+      ...settings
+    }
+  }
+
   return {
     snackbarOptions,
     isLoading,
-  };
+    updateSnackbar,
+  }
 })

@@ -57,25 +57,24 @@
 </template>
 
 <script setup>
-import { toRef, ref, onMounted } from 'vue'
+import { toRefs, ref, onMounted } from 'vue'
 
-const { user } = toRefs(useStore())
-const { curricula, completeCounts, curriculaMeta } = toRefs(useStore())
+import { useAuthStore } from '@/stores/auth'
+import { useCurriculumStore } from '@/stores/curriculum'
 
-const { selectedCurriculum } = toRefs(useStore())
-const { tempSection, showSectionForm, editField, dialog } = toRefs(useStore())
+const authStore = useAuthStore()
+const curriculumStore = useCurriculumStore()
 
-const { patchItem, patchCurriculum } = useCurriculumStore()
-const { toggleComplete, toggleEdit, cancelEdit, saveEdit, toggleDialog } = useCurriculumStore()
+const { user } = toRefs(authStore)
+const { curricula, completeCounts, curriculaMeta } = toRefs(curriculumStore)
 
-const { addItem, saveSection, toggleSectionForm, removeItem } = useCurriculumStore()
-
-const { sectionNameErrors, sectionUrlErrors } = useCurriculumStore()
-
-const { countAllCompleted, deleteCurriculum } = useCurriculumStore()
+const { countAllCompleted, deleteCurriculum } = curriculumStore
 
 const currentPage = ref(1)
+const currentTab = ref(0)
 const infiniteId = ref(+new Date())
+const selectedCurriculumId = ref(null)
+const showCurriculumDelete = ref(false)
 
 const loadCurricula = async ($state) => {
   let payload = {
@@ -84,7 +83,7 @@ const loadCurricula = async ($state) => {
   if (currentTab.value === 0 && user.value.id) {
     payload.userId = user.value.id
   }
-  await getCurricula(payload)
+  await curriculumStore.getCurricula(payload)
 
   if (curriculaMeta.value.hasNextPage) {
     $state.loaded()

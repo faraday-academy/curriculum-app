@@ -11,13 +11,8 @@
         <v-subheader>Name *</v-subheader>
       </v-col>
       <v-col cols="9">
-        <v-text-field
-          v-model="$v.curriculumInfo.name.$model"
-          :error-messages="nameErrors"
-          required
-          @input="$v.curriculumInfo.name.$touch()"
-          @blur="$v.curriculumInfo.name.$touch()"
-        />
+        <v-text-field v-model="$v.curriculumInfo.name.$model" :error-messages="nameErrors" required
+          @input="$v.curriculumInfo.name.$touch()" @blur="$v.curriculumInfo.name.$touch()" />
       </v-col>
     </v-row>
     <v-row>
@@ -31,23 +26,12 @@
     <v-row>
       <v-col cols="12">
         <v-label>Description</v-label>
-        <v-textarea
-          solo
-          name="description"
-          v-model="curriculumInfo.description"
-        />
+        <v-textarea solo name="description" v-model="curriculumInfo.description" />
       </v-col>
     </v-row>
 
-    <FormSections
-      :sections="sections"
-      :addItem="addItem"
-      :deleteItem="deleteItem"
-      :v="$v"
-      :nameErrors="sectionNameErrors"
-      :sectionUrlErrors="sectionUrlErrors"
-      :deleteSection="deleteSection"
-    />
+    <FormSections :sections="sections" :addItem="addItem" :deleteItem="deleteItem" :v="$v"
+      :nameErrors="sectionNameErrors" :sectionUrlErrors="sectionUrlErrors" :deleteSection="deleteSection" />
 
     <v-row>
       <v-col cols="12">
@@ -62,8 +46,10 @@
 <script setup>
 // import { required, maxLength, url } from 'vuelidate/lib/validators'
 import { ref, computed } from 'vue'
-import { useStore } from 'pinia'
 import FormSections from './FormSections.vue'
+import { useCurriculumStore } from '@/stores/curriculum'
+
+const curriculumStore = useCurriculumStore()
 
 const curriculumInfo = ref({
   name: '',
@@ -87,8 +73,6 @@ const sections = ref([
     projects: []
   }
 ])
-
-const store = useStore()
 
 const nameErrors = computed(() => {
   const errors = []
@@ -163,8 +147,6 @@ const deleteItem = (type, sectionIndex, itemIndex) => {
 }
 
 const submit = () => {
-  if (!store.$v.$anyError) {
-    store.saveCurriculum(curriculumInfo.value, sections.value)
-  }
+  curriculumStore.saveCurriculum(curriculumInfo.value, sections.value)
 }
 </script>

@@ -1,20 +1,15 @@
 import { defineStore } from 'pinia'
+import { reactive } from 'vue'
+
 import axios from '@/utils/axiosConfig'
 import router from '../router'
-import { reactive } from 'vue'
 
 export const useCurriculumStore = defineStore('curriculum', () => {
   const state = reactive({
     curricula: [],
     curriculaMeta: {},
-    snackbar: {
-      show: false,
-      variant: 'success',
-      message: ''
-    },
     completeCounts: [],
     selectedCurriculum: {},
-    loading: false
   })
 
   const getCurriculum = async (id) => {
@@ -114,26 +109,6 @@ export const useCurriculumStore = defineStore('curriculum', () => {
     state.completeCounts = res.data || []
   }
 
-  const updateSelectedCurriculum = (curriculum) => {
-    state.selectedCurriculum = curriculum
-  }
-
-  const setCurriculaMeta = (metaData) => {
-    state.curriculaMeta = metaData
-  }
-
-  const setCurricula = (curricula) => {
-    state.curricula = curricula
-  }
-
-  const updateCurricula = (curricula) => {
-    state.curricula.push(...curricula)
-  }
-
-  const appendCurriculum = (curriculum) => {
-    state.curricula.push(curriculum)
-  }
-
   const removeCurriculum = (curriculumId) => {
     const cIndex = state.curricula.findIndex((obj) => obj._id === curriculumId)
     state.curricula.splice(cIndex, 1)
@@ -179,22 +154,11 @@ export const useCurriculumStore = defineStore('curriculum', () => {
   }
 
   const removeItem = (payload) => {
-    const { curriculumId, sectionId, type, body } = payload
+    const { curriculumId, sectionId, type } = payload
     const cIndex = state.curricula.findIndex((obj) => obj._id === curriculumId)
     const sIndex = state.curricula[cIndex].sections.findIndex((obj) => obj._id === sectionId)
     const iIndex = state.curricula[cIndex].sections[sIndex][type].findIndex((obj) => obj._id === payload.itemId)
     state.curricula[cIndex].sections[sIndex][type].splice(iIndex, 1)
-  }
-
-  const updateSnackbar = (settings) => {
-    state.snackbar = {
-      ...state.snackbar,
-      ...settings
-    }
-  }
-
-  const updateLoadingStatus = (isLoading) => {
-    state.loading = isLoading
   }
 
   const updateCount = (payload) => {
@@ -216,18 +180,11 @@ export const useCurriculumStore = defineStore('curriculum', () => {
     patchItem,
     deleteItem,
     countAllCompleted,
-    updateSelectedCurriculum,
-    setCurriculaMeta,
-    setCurricula,
-    updateCurricula,
-    appendCurriculum,
     removeCurriculum,
     updateSection,
     removeSection,
     upsertItem,
     removeItem,
-    updateSnackbar,
-    updateLoadingStatus,
     updateCount
   }
 })
