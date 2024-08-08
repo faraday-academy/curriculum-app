@@ -18,6 +18,6 @@
 </template>
 
 <script setup>
-const { useAuthStore } = '@/stores/auth'
+import { useAuthStore } from '@/stores/auth'
 const authStore = useAuthStore()
 </script>

@@ -1,7 +1,7 @@
 import axios from 'axios'
 // import router from '../router'
 
-axios.defaults.baseURL = `${process.env.VUE_APP_API_URL}/api/v1`
+axios.defaults.baseURL = `${import.meta.env.VUE_APP_API_URL}/api/v1`
 const token = localStorage.getItem('token')
 axios.defaults.headers.common['Authorization'] = token ? `Bearer ${token}` : ''
 

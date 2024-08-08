@@ -11,7 +11,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-toolbar-items v-if="$vuetify.breakpoint.xsOnly">
+    <v-toolbar-items v-if="mobile">
       <v-btn @click="openDrawer()">
         Menu
       </v-btn>
@@ -53,9 +53,12 @@
 </template>
 
 <script setup>
-import { useAuthStore } from '@/stores/auth'
 import { ref, toRefs } from 'vue'
+import { useDisplay } from 'vuetify'
 
+import { useAuthStore } from '@/stores/auth'
+
+const { mobile } = useDisplay()
 const openDrawer = ref(null)
 
 const logout = () => {

@@ -7,6 +7,10 @@ import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // use source maps
+  build: {
+    sourcemap: true
+  },
   plugins: [
     vue(),
     vueDevTools(),

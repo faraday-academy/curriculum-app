@@ -4,25 +4,16 @@
       Login
     </template>
     <template #form>
-      <v-text-field
-        label="Email"
-        v-model="email"
-        :error-messages="emailErrors()"
-        required
-      />
-      <v-text-field
-        label="Password"
-        v-model="password"
-        :error-messages="passwordErrors()"
-        required
-      />
+      <v-text-field label="Email" v-model="email" :error-messages="emailErrors" required />
+      <v-text-field label="Password" v-model="password" :error-messages="passwordErrors" required />
     </template>
     <template #actions>
       <v-btn @click="submit" color="primary">Submit</v-btn>
     </template>
     <template #link>
-      <p class="pa-2 mb-n1">Forgot Password? <router-link :to="{name: 'forgot-password'}">Update password here</router-link></p>
-      <p class="pa-2">Don't have an account? <router-link :to="{name: 'register'}">Register here</router-link></p>
+      <p class="pa-2 mb-n1">Forgot Password? <router-link :to="{ name: 'forgot-password' }">Update password
+          here</router-link></p>
+      <p class="pa-2">Don't have an account? <router-link :to="{ name: 'register' }">Register here</router-link></p>
     </template>
   </AuthTemplate>
 </template>

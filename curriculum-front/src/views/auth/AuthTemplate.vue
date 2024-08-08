@@ -1,6 +1,6 @@
 <template>
   <v-row class="auth-wrapper mt-10">
-    <v-col sm="6" offset-sm="3" md="4" offset-md="4">
+    <v-col md="4" offset-md="4" sm="6" offset-sm="3" cols="12">
       <v-form class="create-form">
         <v-card>
           <v-card-subtitle>
