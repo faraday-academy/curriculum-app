@@ -18,27 +18,16 @@
   </AuthTemplate>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import AuthTemplate from './AuthTemplate'
+<script setup>
+import { ref } from 'vue'
+import AuthTemplate from './AuthTemplate.vue'
 
-export default {
-  name: 'forgot-password',
-  components: {
-    AuthTemplate
-  },
-  data() {
-    return {
-      email: '',
-    }
-  },
-  methods: {
-    ...mapActions('auth', ['']),
-    submit() {
-      const payload = {
-        email: this.email
-      }
-    }
+const email = ref('')
+
+const submit = () => {
+  const payload = {
+    email: email.value
   }
+  console.log(payload)
 }
 </script>

@@ -8,7 +8,7 @@
       </p>
     </v-col>
     <v-col sm="4">
-      <img class="demo-screenshot" src="img/display_curriculum.png">
+      <img class="demo-screenshot" src="/img/display_curriculum.png">
     </v-col>
-  </v-row> 
+  </v-row>
 </template>

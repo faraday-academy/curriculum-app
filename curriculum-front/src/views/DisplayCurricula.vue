@@ -1,18 +1,9 @@
 <template>
   <v-row no-gutters class="display-curricula-page">
-    <v-col
-      md="6"
-      offset-md="3"
-      sm="8"
-      offset-sm="2"
-    >
+    <v-col md="6" offset-md="3" sm="8" offset-sm="2">
       <div class="page-header mb-5">
         <h1>Curricula</h1>
-        <v-btn
-          v-if="user.token"
-          color="accent"
-          @click="$router.push('/curricula/create')"
-        >
+        <v-btn v-if="user.token" color="accent" @click="$router.push('/curricula/create')">
           Create New
         </v-btn>
       </div>
@@ -23,22 +14,13 @@
       </v-tabs>
 
       <div class="curricula-list">
-        <v-card
-          class="curriculum-card"
-          outlined
-          v-for="curriculum in curricula"
-          :key="curriculum._id"
-        >
+        <v-card class="curriculum-card" outlined v-for="curriculum in curricula" :key="curriculum._id">
           <v-card-title class="headline d-flex justify-space-between">
             <router-link :to="`/curricula/${curriculum._id}`">
               {{ curriculum.name }}
             </router-link>
-            <v-icon
-              v-if="currentTab === 0 && user.token"
-              color="error lighten-1"
-              class="ml-1 togglable-icon"
-              @click="toggleDeleteDialog(curriculum._id)"
-            >
+            <v-icon v-if="currentTab === 0 && user.token" color="error lighten-1" class="ml-1 togglable-icon"
+              @click="toggleDeleteDialog(curriculum._id)">
               mdi-trash-can-outline
             </v-icon>
           </v-card-title>
@@ -48,11 +30,7 @@
           </v-card-subtitle>
 
           <v-card-text>
-            <v-progress-linear
-              :value="retrieveCompleted(curriculum._id)"
-              color="blue-grey"
-              height="25"
-            >
+            <v-progress-linear :value="retrieveCompleted(curriculum._id)" color="blue-grey" height="25">
               <template v-slot="{ value }">
                 <strong>{{ value }}%</strong>
               </template>
@@ -78,84 +56,68 @@
   </v-row>
 </template>
 
-<script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+<script setup>
+import { toRefs, ref, onMounted } from 'vue'
 
-export default {
-  name: 'DisplayCurricula',
-  data () {
-    return {
-      ratioCompleted: 35,
-      currentTab: 0,
-      showCurriculumDelete: false,
-      selectedCurriculumId: '',
-      currentPage: 1,
-      infiniteId: +new Date()
-    }
-  },
-  computed: {
-    ...mapState(['curricula', 'completeCounts', 'curriculaMeta']),
-    ...mapState('auth', ['user'])
-  },
-  watch: {
-    currentTab (val) {
-      this.currentPage = 1
-      this.setCurricula([])
-      this.infiniteId += 1
-    }
-  },
-  methods: {
-    ...mapActions([
-      'getCurricula',
-      'countAllCompleted',
-      'deleteCurriculum'
-    ]),
-    ...mapMutations([
-      'setCurricula'
-    ]),
-    async loadCurricula ($state) {
-      let payload = {
-        currentPage: this.currentPage
-      }
-      if (this.currentTab === 0 && this.user.id) {
-        payload.userId = this.user.id
-      }
-      await this.getCurricula(payload)
+import { useAuthStore } from '@/stores/auth'
+import { useCurriculumStore } from '@/stores/curriculum'
 
-      if (this.curriculaMeta.hasNextPage) {
-        $state.loaded()
-        this.currentPage += 1
-      } else {
-        $state.complete()
-      }
-    },
-    retrieveCompleted (id) {
-      // TODO: remove
-      try {
-        if (this.curricula) {
-          const totals = this.completeCounts.find((obj) => {
-            return obj.id === id
-          })
-          return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
-        }
-      } catch (err) {
-        console.error(err)
-      }
-      return 0
-    },
-    toggleDeleteDialog (curriculumId) {
-      // I am just saving the current curriculum id here for delete
-      // probably not the best thing long term, but works for now
-      this.selectedCurriculumId = curriculumId
-      this.showCurriculumDelete = !this.showCurriculumDelete
-    },
-    confirmDelete () {
-      this.deleteCurriculum(this.selectedCurriculumId)
-      this.showCurriculumDelete = false
-    }
-  },
-  mounted () {
-    this.countAllCompleted()
+const authStore = useAuthStore()
+const curriculumStore = useCurriculumStore()
+
+const { user } = toRefs(authStore)
+const { curricula, completeCounts, curriculaMeta } = toRefs(curriculumStore)
+
+const { countAllCompleted, deleteCurriculum } = curriculumStore
+
+const currentPage = ref(1)
+const currentTab = ref(0)
+const infiniteId = ref(+new Date())
+const selectedCurriculumId = ref(null)
+const showCurriculumDelete = ref(false)
+
+const loadCurricula = async ($state) => {
+  let payload = {
+    currentPage: currentPage.value
+  }
+  if (currentTab.value === 0 && user.value.id) {
+    payload.userId = user.value.id
+  }
+  await curriculumStore.getCurricula(payload)
+
+  if (curriculaMeta.value.hasNextPage) {
+    $state.loaded()
+    currentPage.value += 1
+  } else {
+    $state.complete()
   }
 }
+
+const retrieveCompleted = (id) => {
+  try {
+    if (curricula.value) {
+      const totals = completeCounts.value.find((obj) => {
+        return obj.id === id
+      })
+      return Math.floor((totals.numberCompleted / totals.totalNumber) * 100)
+    }
+  } catch (err) {
+    console.error(err)
+  }
+  return 0
+}
+
+const toggleDeleteDialog = (curriculumId) => {
+  selectedCurriculumId.value = curriculumId
+  showCurriculumDelete.value = !showCurriculumDelete.value
+}
+
+const confirmDelete = () => {
+  deleteCurriculum(selectedCurriculumId.value)
+  showCurriculumDelete.value = false
+}
+
+onMounted(() => {
+  countAllCompleted()
+})
 </script>

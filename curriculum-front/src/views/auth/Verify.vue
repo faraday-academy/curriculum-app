@@ -22,36 +22,23 @@
   </AuthTemplate>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex'
-import AuthTemplate from './AuthTemplate'
+<script setup>
+import { ref, toRefs } from 'vue'
 
-export default {
-  name: 'verify',
-  components: {
-    AuthTemplate
-  },
-  data () {
-    return {
-      code: '',
-      email: ''
-    }
-  },
-  computed: {
-    ...mapState('auth', ['user'])
-  },
-  methods: {
-    ...mapActions('auth', ['verify']),
-    submit () {
-      const payload = {
-        email: this.email,
-        code: this.code
-      }
-      this.verify(payload)
-    }
-  },
-  mounted () {
-    this.email = this.user.email
+import { useAuthStore } from '@/stores/auth'
+import AuthTemplate from './AuthTemplate.vue'
+
+const authStore = useAuthStore()
+const { user } = toRefs(authStore)
+
+const code = ref('')
+const email = ref(user.value.email)
+
+const submit = () => {
+  const payload = {
+    email: email.value,
+    code: code.value
   }
+  authStore.verify(payload)
 }
 </script>

@@ -69,8 +69,9 @@
           <v-row v-if="section.resources.$model.length">
             <v-col cols="12">
               <v-card tile>
-                <template v-for="(resource, m) in section.resources.$model">
+                <v-card-text>
                   <v-list-item
+                    v-for="(resource, m) in section.resources.$model"
                     :key="resource + m"
                   >
                     <v-list-item-content>
@@ -88,7 +89,7 @@
                     v-if="m + 1 < section.resources.length"
                     :key="m"
                   />
-                </template>
+                </v-card-text>
               </v-card>
             </v-col>
           </v-row>
@@ -126,8 +127,9 @@
           <v-row v-if="section.projects.$model.length">
             <v-col cols="12">
               <v-card tile>
-                <template v-for="(project, m) in section.projects.$model">
+                <v-card-text>
                   <v-list-item
+                    v-for="(project, m) in section.projects.$model"
                     :key="project + m"
                   >
                     <v-list-item-content>
@@ -145,7 +147,7 @@
                     v-if="m + 1 < section.projects.length"
                     :key="m"
                   />
-                </template>
+                </v-card-text>
               </v-card>
             </v-col>
           </v-row>
@@ -155,15 +157,13 @@
   </v-card>
 </template>
 
-<script>
-export default {
-  props: {
-    k: String,
-    section: Object,
-    sectionUrlErrors: Function,
-    nameErrors: Function,
-    addItem: Function,
-    deleteSection: Function
-  }
-}
+<script setup>
+defineProps({
+  k: String,
+  section: Object,
+  sectionUrlErrors: Function,
+  nameErrors: Function,
+  addItem: Function,
+  deleteSection: Function
+})
 </script>

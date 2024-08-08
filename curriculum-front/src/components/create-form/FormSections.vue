@@ -17,21 +17,16 @@
   </v-row>
 </template>
 
-<script>
-import FormSection from './FormSection'
+<script setup>
+import FormSection from './FormSection.vue'
 
-export default {
-  props: {
-    sections: Array,
-    addItem: Function,
-    deleteItem: Function,
-    v: Object,
-    nameErrors: Function,
-    sectionUrlErrors: Function,
-    deleteSection: Function
-  },
-  components: {
-    FormSection
-  }
-}
+defineProps({
+  sections: Array,
+  addItem: Function,
+  deleteItem: Function,
+  v: Object,
+  nameErrors: Function,
+  sectionUrlErrors: Function,
+  deleteSection: Function
+})
 </script>

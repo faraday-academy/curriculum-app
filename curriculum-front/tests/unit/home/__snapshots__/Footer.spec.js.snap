@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Footer.vue if snapshot is correct 1`] = `
-<footer class="v-footer font-weight-medium v-sheet v-sheet--tile theme--light v-footer--absolute" style="left: 0px; right: 0px; bottom: 0px;">
-  <div class="text-center col col-12">
-    © 2022 — <strong>Curricula App</strong></div>
-</footer>
-`;
