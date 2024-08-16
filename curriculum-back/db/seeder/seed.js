@@ -1,6 +1,6 @@
 import { faker } from 'https://esm.sh/@faker-js/faker'
-import User from '../User'
-import Curriculum from '../Curriculum'
+import User from 'db/User'
+import { hashPassword } from 'server/utils/auth.js'
 
 // Generate seed data for users
 const generateUsers = async (numUsers) => {

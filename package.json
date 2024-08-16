@@ -1,8 +1,13 @@
 {
-  "devDependencies": {
-    "husky": "^9.1.1"
-  },
   "scripts": {
-    "prepare": "husky"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "eslint": "^9.9.0",
+    "eslint-plugin-vue": "^9.27.0",
+    "globals": "^15.9.0",
+    "lefthook": "^1.7.13"
   }
 }

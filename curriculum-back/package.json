@@ -4,6 +4,12 @@
   "description": "",
   "type": "module",
   "main": "app.js",
+  "exports": {
+    ".": "./app.js",
+    "./db": "./db/index.js",
+    "./server": "./server/index.js",
+    "./utils": "./utils/index.js"
+  },
   "engines": {
     "node": ">=20.15.0",
     "npm": ">=10.7.0"
