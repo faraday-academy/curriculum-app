@@ -8,13 +8,17 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
-    "test:e2e": "playwright test",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "test:e2e": "cross-env CI=True playwright test",
+    "test:e2e-ui": "playwright test --ui",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "stylelint": "stylelint --fix \"src/**/*.*css\""
   },
   "dependencies": {
     "axios": "^1.7.2",
+    "cross-env": "^7.0.3",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "stylelint": "^16.8.2",
     "vee-validate": "^4.13.2",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3",

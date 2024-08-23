@@ -86,7 +86,7 @@ authRouter.route('/:id/sections/:sectionId/:type/:typeId')
     try {
       let result = await Curriculum.updateOne(
         { _id: id, 'sections._id': sectionId },
-        { $pull: 
+        { $pull:
           {[`sections.$.${type}`]:
             {'_id': typeId}
           }
@@ -114,7 +114,7 @@ router.route('/:id/sections/:sectionId/:type')
       res.status(500).send(err)
     }
   })
-authRouter.route('/:id/sections/:sectionId/:type')  
+authRouter.route('/:id/sections/:sectionId/:type')
   .post(async function (req, res) {
     try {
       const { id, sectionId, type } = req.params
@@ -135,13 +135,12 @@ authRouter.route('/:id/sections/:sectionId/:type')
         })
 
         await doc.save()
+
+        const item = section[type].id(itemId)
+        res.send(item)
       } else {
         res.status(403).send('Unauthorized')
       }
-
-      const item = section[type].id(itemId)
-
-      res.send(item)
     } catch(err) {
       res.status(500).send(err)
     }
@@ -183,7 +182,7 @@ authRouter.route('/:id/sections/:sectionId')
     try {
       let result = await Curriculum.updateOne(
         { _id: id },
-        { $pull: 
+        { $pull:
           {sections:
             {'_id': sectionId}
           }

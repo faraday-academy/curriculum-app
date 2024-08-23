@@ -99,6 +99,7 @@ router.route('/verify')
         res.status(400).send('Invalid Code')
       }
     } catch (err) {
+      console.error(err)
       res.status(400).send('Invalid Code')
     }
   })
