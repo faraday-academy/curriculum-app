@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken'
 
 const secret = 'gwenstacy'
-const header = {
-  typ: 'JWT',
-  alg: 'HS512'
-}
+// TODO: What should I do with this?
+// const header = {
+//   typ: 'JWT',
+//   alg: 'HS512'
+// }
 
 export function generateToken(userId) {
   const data = {
@@ -23,6 +24,7 @@ export function checkToken(token) {
     jwt.verify(token, secret)
     return true
   } catch (err) {
+    console.error(err)
     return false
   }
 }

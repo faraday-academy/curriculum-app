@@ -9,6 +9,7 @@ function authMiddleware(req, res, next) {
     }
     res.status(401).send('Not Authorized')
   } catch(err) {
+    console.error(err)
     res.status(401).send('Invalid Token')
   }
 }

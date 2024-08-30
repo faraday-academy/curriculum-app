@@ -32,7 +32,7 @@ router.route('/:id/update-password')
     if (newPassword.length >= 8) {
       res.send(400)
     }
-    
+
     const id = req.params.id
     const user = await User.findById(id)
 
@@ -45,7 +45,7 @@ router.route('/:id/update-password')
     await user.save()
 
     res.send(200)
-  })  
+  })
 
 router.route('/:id')
   .get(async (req, res) => {
@@ -67,11 +67,13 @@ router.route('/:id')
     res.send(201)
   })
   .delete(async (req, res) => {
-
+    const userId = req.params.id
+    await User.findByIdAndDelete(userId)
+    res.send(200)
   })
 
 router.route('/')
-  .get(async (req, res) => {
+  .get(async (_, res) => {
     const users = await User.find()
     res.send(users)
   })
