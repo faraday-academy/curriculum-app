@@ -7,10 +7,19 @@
 </template>
 
 <script setup>
+import { toRefs } from 'vue'
+
 import MainForm from '@/components/create-form/MainForm.vue'
 
+import { useAuthStore } from '@/stores/auth'
+import { useCurriculumStore } from '@/stores/curricula/curriculums'
+
+const authStore = useAuthStore()
+const { user } = toRefs(authStore)
+const { postCurriculum } = useCurriculumStore()
+
 const saveCurriculum = (curriculumInfo, sections) => {
-  const newSections = sections.map((section, i) => {
+  const newSections = sections.map((section) => {
     let updatedSection = { ...section }
     delete updatedSection.newResource
     delete updatedSection.newProject
@@ -20,7 +29,7 @@ const saveCurriculum = (curriculumInfo, sections) => {
   const curriculum = {
     ...curriculumInfo,
     sections: newSections,
-    createdBy: user.id
+    createdBy: user.value.id
   }
 
   postCurriculum(curriculum)

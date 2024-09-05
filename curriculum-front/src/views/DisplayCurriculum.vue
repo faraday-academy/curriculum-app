@@ -31,7 +31,7 @@ import { onMounted, ref, toRefs } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useAuthStore } from '@/stores/auth'
-import { useCurriculumStore } from '@/stores/curriculum'
+import { useCurriculumStore } from '@/stores/curricula/curriculums'
 import { useGeneralStore } from '@/stores/general'
 
 import Header from '@/components/display-curriculum/Header.vue'

@@ -38,7 +38,7 @@ export const useAuthStore = defineStore('auth', () => {
       variant: 'success',
       message: 'Sign up successful!'
     }
-    this.updateSnackbar(snackbar)
+    generalStore.updateSnackbar(snackbar)
     router.replace('/verify')
   }
 
@@ -46,13 +46,13 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       await axios.post(`auth/verify`, payload)
       router.replace('/login')
-    } catch (err) {
+    } catch {
       const snackbar = {
         show: true,
         variant: 'error',
         message: 'Invalid Code'
       }
-      this.updateSnackbar(snackbar)
+      generalStore.updateSnackbar(snackbar)
     }
   }
 

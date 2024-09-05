@@ -2,31 +2,20 @@
   <v-row>
     <v-col cols="12">
       <div class="curricula-list">
-        <FormSection
-          v-for="(section, k) in v.sections.$each.$iter"
-          :key="section.name + k"
-          :k="k"
-          :section="section"
-          :nameErrors="nameErrors"
-          :sectionUrlErrors="sectionUrlErrors"
-          :addItem="addItem"
-          :deleteSection="deleteSection"
-        />
+        <FormSection v-for="(section, index) in state.selectedCurriculum.sections" :key="section.name + index"
+          :section_index="index" v-mode:section="section" :addItem="curriculumStore.addItem"
+          :deleteSection="curriculumStore.deleteSection" />
       </div>
     </v-col>
   </v-row>
 </template>
 
 <script setup>
+import { toRefs } from 'vue'
+
+import { useCurriculumStore } from '@/stores/curricula/curriculums'
 import FormSection from './FormSection.vue'
 
-defineProps({
-  sections: Array,
-  addItem: Function,
-  deleteItem: Function,
-  v: Object,
-  nameErrors: Function,
-  sectionUrlErrors: Function,
-  deleteSection: Function
-})
+const curriculumStore = useCurriculumStore()
+const { state } = toRefs(curriculumStore)
 </script>
