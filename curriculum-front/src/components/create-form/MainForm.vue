@@ -44,7 +44,7 @@
 <script setup>
 import { computed, toRefs } from 'vue'
 import FormSections from './FormSections.vue'
-import { useCurriculumStore } from '@/stores/curricula/curriculums'
+import { useCurriculumStore } from '@/stores/curricula'
 
 const curriculumStore = useCurriculumStore()
 

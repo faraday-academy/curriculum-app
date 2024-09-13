@@ -126,7 +126,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-import { useCurriculumStore } from '@/stores/curricula/curriculums'
+import { useCurriculumStore } from '@/stores/curricula'
 import AddItemDialog from './AddItemDialog.vue'
 
 const curriculumStore = useCurriculumStore()

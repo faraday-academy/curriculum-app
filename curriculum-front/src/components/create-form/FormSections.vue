@@ -13,7 +13,7 @@
 <script setup>
 import { toRefs } from 'vue'
 
-import { useCurriculumStore } from '@/stores/curricula/curriculums'
+import { useCurriculumStore } from '@/stores/curricula'
 import FormSection from './FormSection.vue'
 
 const curriculumStore = useCurriculumStore()

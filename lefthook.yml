@@ -3,8 +3,10 @@
 #   Refer for explanation to following link:
 #   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
 #
-# pre-push:
-#   commands:
+pre-push:
+  commands:
+    # playwright-tests:
+    #   run: npm --prefix ./curriculum-front run test:e2e
 #     packages-audit:
 #       tags: frontend security
 #       run: yarn audit
@@ -21,8 +23,6 @@ pre-commit:
     frontend-style:
       glob: "*.{css,scss,sass}"
       run: npm --prefix ./curriculum-front run stylelint {staged_files}
-    # playwright-tests:
-    #   run: npm --prefix ./curriculum-front run test:e2e
 
 all-files:
   parallel: true
@@ -30,3 +30,8 @@ all-files:
     eslint:
       glob: "*.{js,ts,jsx,tsx}"
       run: npm run lint:fix {all_files}
+    frontend-style:
+      glob: "*.{css,scss,sass}"
+      run: npm --prefix ./curriculum-front run stylelint {all_files}
+    playwright-tests:
+      run: npm --prefix ./curriculum-front run test:e2e
