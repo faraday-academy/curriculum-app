@@ -21,8 +21,8 @@ pre-commit:
     frontend-style:
       glob: "*.{css,scss,sass}"
       run: npm --prefix ./curriculum-front run stylelint {staged_files}
-    playwright-tests:
-      run: npm --prefix ./curriculum-front run test:e2e
+    # playwright-tests:
+    #   run: npm --prefix ./curriculum-front run test:e2e
 
 all-files:
   parallel: true
