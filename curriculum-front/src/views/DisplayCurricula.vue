@@ -60,7 +60,7 @@
 import { toRefs, ref, onMounted } from 'vue'
 
 import { useAuthStore } from '@/stores/auth'
-import { useCurriculumStore } from '@/stores/curriculum'
+import { useCurriculumStore } from '@/stores/curricula'
 
 const authStore = useAuthStore()
 const curriculumStore = useCurriculumStore()

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 import axios from '@/utils/axiosConfig'
-import router from '../router'
+import router from '@/router'
 
 export const useCurriculumStore = defineStore('curriculum', () => {
   const state = ref({

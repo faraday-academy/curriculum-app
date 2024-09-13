@@ -12,7 +12,7 @@ import { toRefs } from 'vue'
 import MainForm from '@/components/create-form/MainForm.vue'
 
 import { useAuthStore } from '@/stores/auth'
-import { useCurriculumStore } from '@/stores/curricula/curriculums'
+import { useCurriculumStore } from '@/stores/curricula'
 
 const authStore = useAuthStore()
 const { user } = toRefs(authStore)
