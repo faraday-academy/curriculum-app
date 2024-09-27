@@ -30,4 +30,7 @@ import MobileDrawer from '@/components/MobileDrawer.vue'
 const generalStore = useGeneralStore()
 const { snackbarOptions, isLoading } = toRefs(generalStore)
 const theme = ref('light')
+
+console.log("Vue app")
+console.log(import.meta.env.VUE_APP_API_URL)
 </script>
