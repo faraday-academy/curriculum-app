@@ -1,9 +1,9 @@
 <template>
-  <v-app>
-    <TopNav :openDrawer="openDrawer" />
+  <v-app :theme="theme">
+    <TopNav :openDrawer="openDrawer" v-model:theme="theme" />
     <MobileDrawer />
 
-    <v-content mb-8>
+    <v-content>
       <RouterView />
     </v-content>
     <v-snackbar v-model="snackbarOptions.show" :multi-line="true" :right="true" :top="true" :timeout="6000"
@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 import { RouterView } from 'vue-router'
 import { useGeneralStore } from '@/stores/general'
 
@@ -29,4 +29,5 @@ import MobileDrawer from '@/components/MobileDrawer.vue'
 
 const generalStore = useGeneralStore()
 const { snackbarOptions, isLoading } = toRefs(generalStore)
+const theme = ref('light')
 </script>

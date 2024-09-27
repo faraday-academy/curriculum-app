@@ -11,6 +11,9 @@
 
     <v-spacer></v-spacer>
 
+    <v-btn :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'" text="Toggle Theme" slim
+      @click="toggleTheme" variant="outlined" class="mr-4" />
+
     <v-toolbar-items v-if="mobile">
       <v-btn @click="openDrawer()">
         Menu
@@ -27,13 +30,13 @@
       <v-btn v-if="user.token" to="/curricula/create" text>
         Create
       </v-btn>
-      <v-btn v-if="!user.token" to="/login" color="secondary" class="black--text">
+      <v-btn v-if="!user.token" to="/login">
         Log In
       </v-btn>
 
       <v-menu v-else left bottom offset-y>
         <template v-slot:activator="{ on }">
-          <v-btn v-on="on" color="secondary" class="black--text">
+          <v-btn v-on="on" color="secondary">
             <v-icon left>mdi-account-outline</v-icon>
             {{ user.username }}
           </v-btn>
@@ -67,4 +70,18 @@ const logout = () => {
 
 const authStore = useAuthStore()
 const { user } = toRefs(authStore)
+
+const props = defineProps({
+  theme: {
+    type: String,
+    required: true,
+  }
+})
+
+const emit = defineEmits(['update:theme'])
+
+function toggleTheme() {
+  const newTheme = props.theme === 'light' ? 'dark' : 'light'
+  emit('update:theme', newTheme)
+}
 </script>
