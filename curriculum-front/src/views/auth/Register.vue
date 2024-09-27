@@ -4,15 +4,15 @@
       Register
     </template>
     <template #form>
-      <v-text-field label="Username" v-model="username" required />
-      <v-text-field label="Email" v-model="email" required />
-      <v-text-field label="Password" v-model="password" required />
+      <v-text-field label="Username" v-model="username" required variant="outlined" />
+      <v-text-field label="Email" v-model="email" required variant="outlined" />
+      <v-text-field label="Password" v-model="password" required variant="outlined" />
     </template>
     <template #actions>
-      <v-btn @click="submit" color="primary">Submit</v-btn>
+      <v-btn @click="submit" color="primary" variant="outlined">Submit</v-btn>
     </template>
     <template #link>
-      <p class="pa-2">Already have an account? <router-link :to="{ name: 'login' }">Login here</router-link></p>
+      <p class="mb-1 mt-4">Already have an account? <router-link :to="{ name: 'login' }">Login here</router-link></p>
     </template>
   </AuthTemplate>
 </template>

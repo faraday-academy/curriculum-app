@@ -4,16 +4,14 @@
       Forgot Password
     </template>
     <template #form>
-      <v-text-field
-        label="Email"
-        v-model="email"
-      />
+      <v-text-field label="Email" v-model="email" variant="outlined" />
     </template>
     <template #actions>
-      <v-btn @click="submit" color="primary">Submit</v-btn>
+      <v-btn @click="submit" color="primary" variant="outlined">Submit</v-btn>
     </template>
     <template #link>
-      <p class="pa-2">Don't have an account? <router-link :to="{name: 'register'}">Register here</router-link></p>
+      <p class="mb-1 mt-4">Don't have an account? <router-link :to="{ name: 'register' }">Register here</router-link>
+      </p>
     </template>
   </AuthTemplate>
 </template>

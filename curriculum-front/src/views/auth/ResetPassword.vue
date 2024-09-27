@@ -4,24 +4,16 @@
       Reset Password
     </template>
     <template #form>
-      <v-text-field
-        label="Code"
-        v-model="code"
-      />
-      <v-text-field
-        label="New Password"
-        v-model="password"
-      />
-      <v-text-field
-        label="Confirm Password"
-        v-model="confirmPassword"
-      />
+      <v-text-field label="Code" variant="outlined" v-model="code" />
+      <v-text-field label="New Password" variant="outlined" v-model="password" />
+      <v-text-field label="Confirm Password" variant="outlined" v-model="confirmPassword" />
     </template>
     <template #actions>
-      <v-btn @click="submit" color="primary">Submit</v-btn>
+      <v-btn @click="submit" color="primary" variant="outlined">Submit</v-btn>
     </template>
     <template #link>
-      <p class="pa-2">Don't have an account? <router-link :to="{name: 'register'}">Register here</router-link></p>
+      <p class="mb-1 mt-4">Don't have an account? <router-link :to="{ name: 'register' }">Register here</router-link>
+      </p>
     </template>
   </AuthTemplate>
 </template>
