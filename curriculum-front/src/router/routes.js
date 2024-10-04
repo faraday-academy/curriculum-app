@@ -9,6 +9,8 @@ import ResetPassword from '@/views/auth/ResetPassword.vue'
 import Verify from '@/views/auth/Verify.vue'
 import Settings from '@/views/Settings.vue'
 
+import { useAuthStore } from '@/stores/auth'
+
 export default [
   {
     path: '/',
@@ -39,6 +41,16 @@ export default [
     path: '/verify',
     name: 'verify',
     component: Verify
+  },
+  {
+    path: '/logout',
+    name: 'logout',
+    beforeEnter: (to, from, next) => {
+      const authStore = useAuthStore()
+      authStore.logUserOut()
+      localStorage.removeItem('token')
+      next('/login')
+    },
   },
   {
     path: '/settings',

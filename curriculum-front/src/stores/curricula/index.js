@@ -39,7 +39,8 @@ export const useCurriculumStore = defineStore('curriculum', () => {
     }
   }
 
-  const postCurriculum = async (curriculum) => {
+  const postCurriculum = async () => {
+    const curriculum = state.value.selectedCurriculum
     const res = await axios.post('curricula', curriculum)
     state.value.curricula.push(res.data)
     router.push(`/curricula/${res.data._id}`)
@@ -47,7 +48,8 @@ export const useCurriculumStore = defineStore('curriculum', () => {
 
   const patchCurriculum = async () => {
     const { _id: curriculumId } = state.value.selectedCurriculum
-    await axios.patch(`curricula/${curriculumId}`, state.value.selectedCurriculum)
+    const res = await axios.patch(`curricula/${curriculumId}`, state.value.selectedCurriculum)
+    state.value.selectedCurriculum = res.data
   }
 
   const deleteCurriculum = async (curriculumId) => {
