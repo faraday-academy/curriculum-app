@@ -1,11 +1,11 @@
 <template>
   <v-app :theme="theme">
-    <TopNav :openDrawer="openDrawer" v-model:theme="theme" />
+    <TopNav v-model:theme="theme" />
     <MobileDrawer />
 
-    <v-content>
+    <v-main>
       <RouterView />
-    </v-content>
+    </v-main>
     <v-snackbar v-model="snackbarOptions.show" :multi-line="true" :right="true" :top="true" :timeout="6000"
       :color="snackbarOptions.variant">
       {{ snackbarOptions.message }}

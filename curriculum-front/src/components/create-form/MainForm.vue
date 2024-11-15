@@ -11,7 +11,7 @@
         <v-subheader>Name *</v-subheader>
       </v-col>
       <v-col cols="9">
-        <v-text-field v-model="state.selectedCurriculum.name" :error-messages="nameErrors" />
+        <v-text-field v-model="state.selectedCurriculum.name" />
       </v-col>
     </v-row>
     <v-row>
@@ -42,38 +42,20 @@
 </template>
 
 <script setup>
-import { computed, toRefs } from 'vue'
+import { toRefs } from 'vue'
+
 import FormSections from './FormSections.vue'
+import { useAuthStore } from '@/stores/auth'
 import { useCurriculumStore } from '@/stores/curricula'
 
 const curriculumStore = useCurriculumStore()
+const authStore = useAuthStore()
+const { user } = toRefs(authStore)
 
 const { state } = toRefs(curriculumStore)
 
-const nameErrors = computed(() => {
-  const errors = []
-  if (!state.value.selectedCurriculum.value.name.$dirty) return errors
-  !state.value.selectedCurriculum.value.name.maxLength && errors.push('Name must be at most 20 characters long.')
-  !state.value.selectedCurriculum.value.name.required && errors.push('Name is required.')
-  return errors
-})
-
-// const sectionNameErrors = (i) => {
-//   const errors = []
-//   if (!sections.value[i].name.$dirty) return errors
-//   !sections.value[i].name.maxLength && errors.push('Name must be at most 30 characters long.')
-//   !sections.value[i].name.required && errors.push('Name is required.')
-//   return errors
-// }
-
-// const sectionUrlErrors = (i, type) => {
-//   const errors = []
-//   if (!sections.value[i][`new${type}`].url.$model.length) return errors
-//   !sections.value[i][`new${type}`].url.url && errors.push('Must be a valid url.')
-//   return errors
-// }
-
 const submit = () => {
-  curriculumStore.patchCurriculum()
+  state.value.selectedCurriculum.createdBy = user.value.id
+  curriculumStore.postCurriculum()
 }
 </script>

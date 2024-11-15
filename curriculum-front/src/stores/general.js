@@ -8,6 +8,7 @@ export const useGeneralStore = defineStore('generalStore', () => {
     message: '',
   })
   const isLoading = ref(false)
+  const isDrawerOpen = ref(false)
 
   const updateSnackbar = (settings) => {
     snackbarOptions.value = {
@@ -19,6 +20,7 @@ export const useGeneralStore = defineStore('generalStore', () => {
   return {
     snackbarOptions,
     isLoading,
+    isDrawerOpen,
     updateSnackbar,
   }
 })

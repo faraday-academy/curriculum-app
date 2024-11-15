@@ -15,7 +15,7 @@
       @click="toggleTheme" variant="outlined" class="mr-4" />
 
     <v-toolbar-items v-if="mobile">
-      <v-btn @click="openDrawer()">
+      <v-btn @click="generalStore.isDrawerOpen = true">
         Menu
       </v-btn>
     </v-toolbar-items>
@@ -56,26 +56,27 @@
 </template>
 
 <script setup>
-import { ref, toRefs } from 'vue'
+import { toRefs } from 'vue'
 import { useDisplay } from 'vuetify'
 
 import { useAuthStore } from '@/stores/auth'
+import { useGeneralStore } from '@/stores/general'
 
 const { mobile } = useDisplay()
-const openDrawer = ref(null)
 
 const logout = () => {
   authStore.logUserOut()
 }
 
 const authStore = useAuthStore()
+const generalStore = useGeneralStore()
 const { user } = toRefs(authStore)
 
 const props = defineProps({
   theme: {
     type: String,
     required: true,
-  }
+  },
 })
 
 const emit = defineEmits(['update:theme'])
