@@ -74,7 +74,7 @@ router.route('/register')
         }
         res.status(201).send({ username, email })
       } else {
-        res.send('Invalid credentials').status(400)
+        res.status(400).send('Invalid credentials')
       }
     } catch(err) {
       console.error(err)

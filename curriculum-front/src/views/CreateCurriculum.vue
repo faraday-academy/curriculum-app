@@ -8,12 +8,4 @@
 
 <script setup>
 import MainForm from '@/components/create-form/MainForm.vue'
-
-// computed: {
-//   ...mapState('auth', ['user'])
-// },
-// methods: {
-//   ...mapActions(['postCurriculum']),
-//   ...mapMutations(['updateSnackbar']),
-// }
 </script>

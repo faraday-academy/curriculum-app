@@ -57,7 +57,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logUserOut() {
-    router.replace('/logout')
+    localStorage.removeItem('token')
+    clearUserInfo()
   }
 
   function updateUser(payload) {

@@ -55,7 +55,7 @@ const { user } = toRefs(authStore)
 const { state } = toRefs(curriculumStore)
 
 const submit = () => {
-  state.value.selectedCurriculum.createdBy = user.value._id
+  state.value.selectedCurriculum.createdBy = user.value.id
   curriculumStore.postCurriculum()
 }
 </script>

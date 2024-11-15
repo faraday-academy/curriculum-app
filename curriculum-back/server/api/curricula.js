@@ -32,6 +32,8 @@ router.route('/')
 authRouter.route('/')
   .post(async function (req, res) {
     const { name, goal, description, sections, createdBy } = req.body
+    console.log("*" * 10)
+    console.log(req.body)
     const curriculum = new Curriculum({
       name,
       goal,

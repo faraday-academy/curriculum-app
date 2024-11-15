@@ -48,7 +48,6 @@ export default [
     beforeEnter: (to, from, next) => {
       const authStore = useAuthStore()
       authStore.logUserOut()
-      localStorage.removeItem('token')
       next('/login')
     },
   },

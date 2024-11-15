@@ -44,7 +44,7 @@ const generalStore = useGeneralStore()
 const route = useRoute()
 
 const { user } = toRefs(authStore)
-const { selectedCurriculum } = toRefs(curriculumStore)
+const { selectedCurriculum } = toRefs(curriculumStore.state)
 
 const tempSection = ref({
   name: '',

@@ -82,7 +82,7 @@ const props = defineProps({
 const emit = defineEmits(['selectCurriculum:update'])
 
 const curriculum_ = computed({
-  get: () => props.selectCurriculum,
+  get: () => props.selectedCurriculum,
   set: () => {
     emit('selectCurriculum:update', props.selectedCurriculum)
   }

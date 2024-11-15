@@ -4,20 +4,15 @@
       Verify E-mail
     </template>
     <template #form>
-      <v-text-field
-        label="E-mail"
-        v-model="email"
-      />
-      <v-text-field
-        label="Code"
-        v-model="code"
-      />
+      <v-text-field label="Email" v-model="email" :error-messages="emailErrors" required variant="outlined" />
+      <v-text-field label="Code" v-model="code" :error-messages="emailErrors" required variant="outlined" />
     </template>
     <template #actions>
-      <v-btn @click="submit" color="primary">Verify</v-btn>
+      <v-btn @click="submit" color="primary" variant="outlined">Verify</v-btn>
     </template>
     <template #link>
-      <p class="pa-2">Don't have an account? <router-link :to="{name: 'register'}">Register here</router-link></p>
+      <p class="mb-1 mt-4">Don't have an account? <router-link :to="{ name: 'register' }">Register here</router-link>
+      </p>
     </template>
   </AuthTemplate>
 </template>
