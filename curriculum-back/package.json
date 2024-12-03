@@ -44,7 +44,7 @@
     "jsonwebtoken": "^9.0.2",
     "mailgun-js": "^0.22.0",
     "module-alias": "^2.2.3",
-    "mongoose": "^8.4.3",
+    "mongoose": "^8.8.3",
     "mongoose-paginate-v2": "^1.8.2",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.4"
